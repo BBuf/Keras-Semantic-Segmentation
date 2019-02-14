@@ -35,3 +35,7 @@ python test.py
 - 如果需要引入Segnet中通过保留编码网络中最大池化过程中最大值的索引，可以自行修改，我如果修改完成也会更新。
 - 论文讲解博客：https://blog.csdn.net/just_sort/article/details/87176238
 - 开源不易，觉得有用请点个Star，有问题请Issue留言。
+
+# 参考
+https://github.com/divamgupta/image-segmentation-keras
+https://github.com/PavlosMelissinos/enet-keras
