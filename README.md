@@ -12,7 +12,7 @@
 使用labelImg将mask画出来生成json文件之后，再把json文件通过labelme转为png图片，可以参考下这个博客：https://blog.csdn.net/u010103202/article/details/81635436
 # 训练
 使用命令：
-```python
+```c++
 python  train.py --save_weights_path=weights/ex1 
 --train_images="data/dataset1/images_prepped_train/" 
 --train_annotations="data/dataset1/annotations_prepped_train/" 
@@ -23,7 +23,7 @@ python  train.py --save_weights_path=weights/ex1
 训练完成后模型会保存在weights文件夹下面，我们可以利用保存的模型来进行测试工作。
 
 # 测试
-```python
+```c++
 python test.py
 ```
 
