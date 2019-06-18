@@ -1,4 +1,4 @@
-﻿# 使用Keras实现FCN,UNet,Segnet,PSPNet等语义分割网络
+﻿# 使用Keras实现ENet,FCN,UNet,Segnet,PSPNet等语义分割网络
 
 使用Keras实现深度学习中的一些语义分割模型
 
