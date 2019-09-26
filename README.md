@@ -66,6 +66,10 @@ python visualizeDataset.py --images="data/dataset1/images_prepped_train/"
  --val_annotations="data/dataset1/annotations_prepped_test/" \
  --n_classes=2 --input_height=512 --input_width=512 --model_name="fcn8" 
 ```
+## 注意
+
+ICNet这里不可用。要使用ICNet可以参考https://github.com/aitorzip/Keras-ICNet 的语义分割标签输入方式。
+
 ## 测试
 
 ```python
