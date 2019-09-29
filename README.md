@@ -43,7 +43,7 @@
 
 ## 制作数据
 
-使用labelImg将mask画出来生成json文件之后，再把json文件通过labelme转为png图片，可以参考下这个博客：https://blog.csdn.net/u010103202/article/details/81635436
+使用labelImg将mask画出来生成json文件之后，再把json文件通过labelme转为png图片，可以参考下这个博客：https://blog.csdn.net/u014513323/article/details/81166997
 
 ## 可视化mask标签数据
 
