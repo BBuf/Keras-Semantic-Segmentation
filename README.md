@@ -89,3 +89,10 @@ python test.py
 
 
 
+# 维护了一个微信公众号，分享论文，算法，比赛，生活，欢迎加入。
+
+- 图片要是没加载出来直接搜GiantPandaCV 就好。
+
+![](image/weixin.jpg)
+
+
