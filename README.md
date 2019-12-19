@@ -1,11 +1,11 @@
-﻿# 使用Keras实现ENet,FCN,UNet,Segnet,PSPNet等语义分割网络
+﻿# Keras-Sematic-Segmentation
 
 使用Keras实现深度学习中的一些语义分割模型
 
+![](image/yuyi.png)
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/sunshineatnoon/Paper-Collection/master/images/FCN1.png" width="50%" >
-</p>
+# 目录结构
+
 
 - LoadBatches.py 加载1个batch的原始图片和分割标签图片
 - train.py 训练特定网络的模型并保存
