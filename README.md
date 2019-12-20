@@ -10,7 +10,6 @@
 - LoadBatches.py 加载1个batch的原始图片和分割标签图片
 - train.py 训练特定网络的模型并保存
 - test.py 测试模型在新图片上得到的预测结果和单张图片前向推理需要的时间
-- visualizeDataset.py 可视化ground truth标签
 ## 已支持的分割模型
 
 |model_name|Base Model|Segmentation Model|
