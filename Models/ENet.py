@@ -1,5 +1,4 @@
 #coding=utf-8
-
 from keras.layers.advanced_activations import PReLU
 from keras.layers.convolutional import Conv2D, Conv2DTranspose, UpSampling2D, ZeroPadding2D
 from keras.layers.core import SpatialDropout2D, Permute, Activation, Reshape

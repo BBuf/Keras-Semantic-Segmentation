@@ -11,7 +11,7 @@ def getImage(path, width, height):
     return img
 
 def getLable(path, n_classes, width, height):
-    seg_labels = np.zeros((height, width, n_classes))
+    seg_labels = np.zeros((width, height, n_classes))
     img = cv2.imread(path, 0)
     img = cv2.resize(img, (width, height))
     for c in range(n_classes):
