@@ -8,7 +8,6 @@ from Models import ENet
 from Models import FCN8
 from Models import FCN32
 from Models import Segnet
-from Models import MiniUnet
 from Models import Unet
 from Models import PSPNet
 from Models import ICNet
@@ -29,8 +28,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--train_images", type = str, default="data/train_image/")
 parser.add_argument("--train_annotations", type = str, default="data/train_label/")
 parser.add_argument("--n_classes", type=int, default=2)
-parser.add_argument("--input_height", type=int, default = 512)
-parser.add_argument("--input_width", type=int, default = 512)
+parser.add_argument("--input_height", type=int, default = 224)
+parser.add_argument("--input_width", type=int, default = 224)
 parser.add_argument('--validate', type=bool, default=True)
 parser.add_argument("--val_images", type = str, default = "data/val_image/")
 parser.add_argument("--val_annotations", type = str, default = "data/val_label/")
@@ -75,7 +74,6 @@ modelFns = {'enet':Models.ENet.ENet,
 			'fcn8':Models.FCN8.FCN8,
 			'fcn32':Models.FCN32.FCN32,
 			'unet':Models.Unet.Unet,
-			'mini_unet':Models.MiniUnet.MiniUnet,
 			'segnet':Models.Segnet.Segnet,
 			'pspnet':Models.PSPNet.PSPNet,
 			'icnet':Models.ICNet.ICNet,
@@ -98,7 +96,7 @@ model = modelFN(n_classes, input_height=input_height, input_width=input_width)
 
 # 模型回调函数
 early_stop = EarlyStopping('loss', min_delta=0.1, patience=patience, verbose=1)
-reduce_lr = ReduceLROnPlateau('loss', factor=0.1, patience=int(patience/2), verbose=1)
+reduce_lr = ReduceLROnPlateau('loss', factor=0.01, patience=int(patience/2), verbose=1)
 csv_logger = CSVLogger(log_file_path, append=False)
 model_names = train_save_path + '.{epoch:02d}-{acc:2f}.hdf5'
 model_checkpoint = ModelCheckpoint(model_names, monitor='loss', save_best_only=True, save_weights_only=False)
