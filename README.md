@@ -18,27 +18,27 @@
 - test.py 模型测试
 ## 已支持的分割模型
 
-|model_name|Base Model|Segmentation Model|BUG Fix|
-| ---|---|---|---|
-|enet|ENet|Enet||
-|fcn8|Vanilla CNN|FCN8||
-|fcn32|Vanilla CNN|FCN32||
-|unet|Vanilla CNN|UNet||
-|segnet|Vanilla CNN|SegNet||
-|pspnet|Vanilla CNN|PSPNet||
-|icnet|PSPNet|ICNet||
-|vgg_segnet|VGG 16|VGG_SegNet||
-|vgg_unet|VGG 16|VGG_Unet||
-|vgg_fcn8|VGG 16|VGG_FCN8||
-|vgg_fcn32|VGG 16|VGG_FCN32||
-|resnet50_fcn8|Resnet-50|ResNet50_FCN8||
-|resnet50_fcn32|Resnet-50|ResNet50_FCN32||
-|resnet50_segnet|Resnet-50|ResNet50_SegNet||
-|resnet50_unet|Resnet-50|ResNet50_Unet||
-|mobilenet_unet|MobileNet|MobileNetUnet||
-|mobilenet_fcn8|MobileNet|MobileNetFCN8||
-|mobilenet_fcn32|MobileNet|MobileNetFCN32||
-|mobilenet_segnet|MobileNet|MobileNetSegNet||
+|Epoch|model_name|Base Model|Segmentation Model|Acc|Available|
+| ---|---|---|---|---|---|
+|50|enet|ENet|Enet|||
+|50|fcn8|Vanilla CNN|FCN8|||
+|50|fcn32|Vanilla CNN|FCN32|||
+|50|unet|Vanilla CNN|UNet|||
+|50|segnet|Vanilla CNN|SegNet|||
+|50|pspnet|Vanilla CNN|PSPNet|||
+|50|icnet|PSPNet|ICNet|||
+|50|vgg_segnet|VGG 16|VGG_SegNet|||
+|50|vgg_unet|VGG 16|VGG_Unet|||
+|50|vgg_fcn8|VGG 16|VGG_FCN8|||
+|50|vgg_fcn32|VGG 16|VGG_FCN32|||
+|50|resnet50_fcn8|Resnet-50|ResNet50_FCN8|||
+|50|resnet50_fcn32|Resnet-50|ResNet50_FCN32|||
+|50|resnet50_segnet|Resnet-50|ResNet50_SegNet|||
+|50|resnet50_unet|Resnet-50|ResNet50_Unet|||
+|50|mobilenet_unet|MobileNet|MobileNetUnet|||
+|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|||
+|50|mobilenet_fcn32|MobileNet|MobileNetFCN32|||
+|50|mobilenet_segnet|MobileNet|MobileNetSegNet|||
 
 
 ## 训练
