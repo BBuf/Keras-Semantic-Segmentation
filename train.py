@@ -26,14 +26,14 @@ from Models import MobileNetFCN32
 from Models import MobileNetSegnet
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--train_images", type = str, default="data/train_image")
-parser.add_argument("--train_annotations", type = str, default="data/train_label")
+parser.add_argument("--train_images", type = str, default="data/train_image/")
+parser.add_argument("--train_annotations", type = str, default="data/train_label/")
 parser.add_argument("--n_classes", type=int, default=2)
 parser.add_argument("--input_height", type=int, default = 512)
 parser.add_argument("--input_width", type=int, default = 512)
 parser.add_argument('--validate', type=bool, default=True)
-parser.add_argument("--val_images", type = str, default = "data/val_image")
-parser.add_argument("--val_annotations", type = str, default = "data/val_label")
+parser.add_argument("--val_images", type = str, default = "data/val_image/")
+parser.add_argument("--val_annotations", type = str, default = "data/val_label/")
 parser.add_argument("--epochs", type = int, default = 20)
 parser.add_argument("--train_batch_size", type = int, default = 4)
 parser.add_argument("--val_batch_size", type = int, default = 2)
@@ -52,7 +52,7 @@ log_file_path = 'weights/log.csv'
 
 train_images = args.train_images
 train_segs = args.train_annotations
-train_batch_size = args.batch_size
+train_batch_size = args.train_batch_size
 
 validate = args.validate
 n_classes = args.n_classes
@@ -122,6 +122,6 @@ if validate:
 											 n_classes, input_height, input_width, output_height, output_width)
 
 if not validate:
-	model.fit_generator(train_ge, epochs=100, call_backs=call_backs, verbose=1, shuffle=True)
+	model.fit_generator(train_ge, epochs=100, callbacks=call_backs, steps_per_epoch=10, verbose=1, shuffle=True)
 else:
-	model.fit_generator(train_ge, epochs=100, call_backs=call_backs, verbose=1, shuffle=True, validation_steps=5)
+	model.fit_generator(train_ge, epochs=100, callbacks=call_backs, verbose=1, steps_per_epoch=10,shuffle=True, validation_steps=5)
