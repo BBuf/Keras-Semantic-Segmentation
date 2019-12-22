@@ -7,6 +7,7 @@ import data
 import argparse
 import datetime
 import Models
+from Models import ENet
 from Models import FCN8
 from Models import FCN32
 from Models import Segnet
@@ -51,6 +52,7 @@ n_class = args.classes
 modelFns = {'fcn8':Models.FCN8.FCN8,
 			'fcn32':Models.FCN32.FCN32,
 			'unet':Models.Unet.Unet,
+			'enet':Models.ENet.ENet,
 			'segnet':Models.Segnet.Segnet,
 			'pspnet':Models.PSPNet.PSPNet,
 			'icnet':Models.ICNet.ICNet,

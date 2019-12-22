@@ -5,15 +5,18 @@ import glob
 import itertools
 
 def getImage(path, width, height):
-    img = cv2.imread(path)
+    img = cv2.imread(path, 1)
     # resize到网络输入大小
-    img = cv2.resize(img, dsize=(width, height))
+    img = cv2.resize(img, (width, height))
+    img = img.astype(np.float32)
+    img /= 255.0
     return img
 
 def getLable(path, n_classes, width, height):
     seg_labels = np.zeros((width, height, n_classes))
-    img = cv2.imread(path, 0)
-    img = cv2.resize(img, (width, height))
+    img = cv2.imread(path, 1)
+    img = cv2.resize(img, (width, height), interpolation=cv2.INTER_NEAREST)
+    img = img[:, :, 0]
     for c in range(n_classes):
         seg_labels[:, :, c] = (img == c).astype(int)
     seg_labels = np.reshape(seg_labels, (width * height, n_classes))

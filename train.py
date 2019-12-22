@@ -35,7 +35,7 @@ parser.add_argument("--val_images", type = str, default = "data/val_image/")
 parser.add_argument("--val_annotations", type = str, default = "data/val_label/")
 parser.add_argument("--epochs", type = int, default = 50)
 parser.add_argument("--train_batch_size", type = int, default = 4)
-parser.add_argument("--val_batch_size", type = int, default = 2)
+parser.add_argument("--val_batch_size", type = int, default = 4)
 parser.add_argument("--train_save_path", type = str, default = "weights/unet")
 parser.add_argument("--resume", type=str, default="")
 parser.add_argument("--model_name", type = str, default = "unet")
@@ -45,7 +45,7 @@ args = parser.parse_args()
 
 # 再定义一些keras回调函数需要的参数
 # patience：没有提升的轮次，即训练过程中最多容忍多少次没有提升
-patience = 10
+patience = 50
 # log_file_path：日志保存的路径
 log_file_path = 'weights/log.csv'
 
@@ -106,7 +106,7 @@ model.compile(loss='categorical_crossentropy', optimizer= optimizer_name, metric
 
 
 if len(load_weights) > 0:
-	model.load(load_weights)
+	model.load_weights(load_weights)
 print("Model output shape : ",  model.output_shape)
 
 output_height = model.outputHeight
@@ -120,6 +120,6 @@ if validate:
 											 n_classes, input_height, input_width, output_height, output_width)
 
 if not validate:
-	model.fit_generator(train_ge, epochs=100, callbacks=call_backs, steps_per_epoch=10, verbose=1, shuffle=True)
+	model.fit_generator(train_ge, epochs=epochs, callbacks=call_backs, steps_per_epoch=96, verbose=1, shuffle=True)
 else:
-	model.fit_generator(train_ge, epochs=100, callbacks=call_backs, verbose=1, steps_per_epoch=10,shuffle=True, validation_steps=5)
+	model.fit_generator(train_ge, validation_data=val_ge,epochs=epochs, callbacks=call_backs, verbose=1, steps_per_epoch=96,shuffle=True, validation_steps=5)

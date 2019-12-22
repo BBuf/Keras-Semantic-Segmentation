@@ -18,12 +18,12 @@
 - test.py 模型测试
 ## 已支持的分割模型
 
-|Epoch|model_name|Base Model|Segmentation Model|Acc|Available|
+|Epoch|model_name|Base Model|Segmentation Model|Train Acc|Available|
 | ---|---|---|---|---|---|
-|50|enet|ENet|Enet|||
+|50|enet|ENet|Enet|0.97|True|
 |50|fcn8|Vanilla CNN|FCN8|||
 |50|fcn32|Vanilla CNN|FCN32|||
-|50|unet|Vanilla CNN|UNet|||
+|50|unet|Vanilla CNN|UNet|0.99|True|
 |50|segnet|Vanilla CNN|SegNet|||
 |50|pspnet|Vanilla CNN|PSPNet|||
 |50|icnet|PSPNet|ICNet|||
@@ -60,10 +60,9 @@ python test.py
 
 |     Input Image      | Output Segmentation Image |
 | :------------------: | :-----------------------: |
-| ![](data/test/1.png) |  ![](data/output/1.png)   |
+| ![](image/origin.jpg) |  ![](image/label.jpg)   |
 
 ## TODO
-- 所有模型训练并测试是否存在BUG。
 - 在大型数据集上进行测试。
 - 增加letter-box resize方式。
 - 数据增强策略。
