@@ -15,7 +15,6 @@ from Models import PSPNet
 from Models import ICNet
 from Models import MobileNetUnet
 from Models import MobileNetFCN8
-from Models import MobileNetSegnet
 from keras.models import load_model
 
 EPS = 1e-12
@@ -46,8 +45,7 @@ modelFns = {'fcn8':Models.FCN8.FCN8,
 			'pspnet':Models.PSPNet.PSPNet,
 			'icnet':Models.ICNet.ICNet,
 			'mobilenet_unet':Models.MobileNetUnet.MobileNetUnet,
-			'mobilenet_fcn8':Models.MobileNetFCN8.MobileNetFCN8,
-			'mobilenet_segnet':Models.MobileNetSegnet.MobileNetSegnet
+			'mobilenet_fcn8':Models.MobileNetFCN8.MobileNetFCN8
 			}
 
 modelFN = modelFns[model_name]

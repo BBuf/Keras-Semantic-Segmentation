@@ -4,9 +4,6 @@ from keras.layers import *
 import keras
 import keras.backend as K
 
-BASE_WEIGHT_PATH = ('https://github.com/fchollet/deep-learning-models/releases/download/v0.6/')
-
-
 def relu6(x):
     return K.relu(x, max_value=6)
 
@@ -28,88 +25,66 @@ def depthwise_conv_block(inputs, pointwise_conv_filters, alpha, depth_multiplier
     x = BatchNormalization(axis=3, name='conv_pw_%d_bn' % block_id)(x)
     return Activation(relu6, name='conv_pw_%d_relu' % block_id)(x)
 
-def crop(o1, o2, i):
-    o_shape2 = Model(i, o2).output_shape
-    outputHeight2 = o_shape2[1]
-    outputWidth2 = o_shape2[2]
-
-    o_shape1 = Model(i, o1).output_shape
-    outputHeight1 = o_shape1[1]
-    outputWidth1 = o_shape1[2]
-
-    cx = abs(outputWidth1 - outputWidth2)
-    cy = abs(outputHeight2 - outputHeight1)
-
-    if outputWidth1 > outputWidth2:
-        o1 = Cropping2D(cropping=((0, 0), (0, cx)))(o1)
-    else:
-        o2 = Cropping2D(cropping=((0, 0), (0, cx)))(o2)
-
-    if outputHeight1 > outputHeight2:
-        o1 = Cropping2D(cropping=((0, cy), (0, 0)))(o1)
-    else:
-        o2 = Cropping2D(cropping=((0, cy), (0, 0)))(o2)
-
-    return o1, o2
 
 def MobileNetFCN8 (nClasses, optimizer=None, input_width=512, input_height=512,  pretrained='imagenet'):
     input_size = (input_height, input_width, 3)
     img_input = Input(input_size)
     alpha = 1.0
     depth_multiplier = 1
-    dropout = 1e-3
     x = conv_block(img_input, 32, alpha, strides=(2, 2))
-    x = depthwise_conv_block(x, 64, alpha, depth_multiplier, block_id=1)
+    x = depthwise_conv_block(x, 32, alpha, depth_multiplier, block_id=1)
     f1 = x
-    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, strides=(2, 2), block_id=2)
-    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, block_id=3)
+    x = depthwise_conv_block(x, 64, alpha, depth_multiplier, strides=(2, 2), block_id=2)
+    x = depthwise_conv_block(x, 64, alpha, depth_multiplier, block_id=3)
     f2 = x
-    x = depthwise_conv_block(x, 256, alpha, depth_multiplier, strides=(2, 2), block_id=4)
-    x = depthwise_conv_block(x, 256, alpha, depth_multiplier, block_id=5)
+    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, strides=(2, 2), block_id=4)
+    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, block_id=5)
     f3 = x
-    x = depthwise_conv_block(x, 512, alpha, depth_multiplier, strides=(2, 2), block_id=6)
-    x = depthwise_conv_block(x, 512, alpha, depth_multiplier, block_id=7)
-    x = depthwise_conv_block(x, 512, alpha, depth_multiplier, block_id=8)
-    x = depthwise_conv_block(x, 512, alpha, depth_multiplier, block_id=9)
-    x = depthwise_conv_block(x, 512, alpha, depth_multiplier, block_id=10)
-    x = depthwise_conv_block(x, 512, alpha, depth_multiplier, block_id=11)
+    x = depthwise_conv_block(x, 256, alpha, depth_multiplier, strides=(2, 2), block_id=6)
+    x = depthwise_conv_block(x, 256, alpha, depth_multiplier, block_id=7)
+    x = depthwise_conv_block(x, 256, alpha, depth_multiplier, block_id=8)
+    x = depthwise_conv_block(x, 256, alpha, depth_multiplier, block_id=9)
+    x = depthwise_conv_block(x, 256, alpha, depth_multiplier, block_id=10)
+    x = depthwise_conv_block(x, 256, alpha, depth_multiplier, block_id=11)
     f4 = x
-    x = depthwise_conv_block(x, 1024, alpha, depth_multiplier, strides=(2, 2), block_id=12)
-    x = depthwise_conv_block(x, 1024, alpha, depth_multiplier, block_id=13)
+    x = depthwise_conv_block(x, 256, alpha, depth_multiplier, strides=(2, 2), block_id=12)
+    x = depthwise_conv_block(x, 256, alpha, depth_multiplier, block_id=13)
     f5 = x
 
     o = f5
 
-    o = (Conv2D(4096, (7, 7), activation='relu', padding='same'))(o)
-    o = Dropout(0.5)(o)
-    o = (Conv2D(4096, (1, 1), activation='relu', padding='same'))(o)
-    o = Dropout(0.5)(o)
+    o = (Conv2D(256, (7, 7), activation='relu', padding='same'))(o)
+    o = BatchNormalization()(o)
 
-    o = (Conv2D(nClasses, (1, 1), kernel_initializer='he_normal'))(o)
-    o = Conv2DTranspose(nClasses, kernel_size=(4, 4), strides=(2, 2), use_bias=False)(o)
+
+    o = (Conv2D(nClasses, (1, 1)))(o)
+    # W = (N - 1) * S - 2P + F = 6 * 2 - 0 + 2 = 14
+    o = Conv2DTranspose(nClasses, kernel_size=(2, 2), strides=(2, 2), padding="valid")(o)
+    # 14 x 14
 
     o2 = f4
-    o2 = (Conv2D(nClasses, (1, 1), kernel_initializer='he_normal'))(o2)
+    o2 = (Conv2D(nClasses, (1, 1)))(o2)
 
-    o, o2 = crop(o, o2, img_input)
+    # (14 x 14) (14 x 14)
 
     o = Add()([o, o2])
-
-    o = Conv2DTranspose(nClasses, kernel_size=(4, 4), strides=(2, 2), use_bias=False)(o)
-    o2 = f3
-    o2 = (Conv2D(nClasses, (1, 1), kernel_initializer='he_normal'))(o2)
-    o2, o = crop(o2, o, img_input)
+    # W = (N - 1) * S - 2P + F = 13 * 2 - 0 + 2 = 28
+    o = Conv2DTranspose(nClasses, kernel_size=(2, 2),  strides=(2, 2), padding="valid")(o)
+    o2 = f3 
+    o2 = (Conv2D(nClasses,  (1, 1)))(o2)
+    # (28 x 28) (28 x 28)
     o = Add()([o2, o])
 
-    o = Conv2DTranspose(nClasses, kernel_size=(16, 16), strides=(8, 8), use_bias=False)(o)
+    # 224 x 224
+    # W = (N - 1) * S - 2P + F = 27 * 8 + 8 = 224
+    o = Conv2DTranspose(nClasses , kernel_size=(8,8),  strides=(8,8), padding="valid")(o)
 
     o_shape = Model(img_input, o).output_shape
 
     outputHeight = o_shape[1]
     outputWidth = o_shape[2]
 
-    o = (Reshape((-1, outputHeight * outputWidth)))(o)
-    o = (Permute((2, 1)))(o)
+    o = (Reshape((outputHeight*outputWidth, nClasses)))(o)
     o = (Activation('softmax'))(o)
     model = Model(img_input, o)
     model.outputWidth = outputWidth

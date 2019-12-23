@@ -4,7 +4,6 @@ from keras.layers import *
 import keras
 import keras.backend as K
 
-BASE_WEIGHT_PATH = ('https://github.com/fchollet/deep-learning-models/releases/download/v0.6/')
 
 
 def relu6(x):
@@ -28,69 +27,67 @@ def depthwise_conv_block(inputs, pointwise_conv_filters, alpha, depth_multiplier
     x = BatchNormalization(axis=3, name='conv_pw_%d_bn' % block_id)(x)
     return Activation(relu6, name='conv_pw_%d_relu' % block_id)(x)
 
-def MobileNetUnet (nClasses, optimizer=None, input_width=512, input_height=512,  pretrained='imagenet'):
+def MobileNetUnet (nClasses, input_width=224, input_height=224):
     input_size = (input_height, input_width, 3)
     inputs = Input(input_size)
     alpha = 1.0
     depth_multiplier = 1
-    dropout = 1e-3
     x = conv_block(inputs, 32, alpha, strides=(2, 2))
-    x = depthwise_conv_block(x, 64, alpha, depth_multiplier, block_id=1)
+    x = depthwise_conv_block(x, 32, alpha, depth_multiplier, block_id=1)
     f1 = x
-    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, strides=(2, 2), block_id=2)
-    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, block_id=3)
+    x = depthwise_conv_block(x, 64, alpha, depth_multiplier, strides=(2, 2), block_id=2)
+    x = depthwise_conv_block(x, 64, alpha, depth_multiplier, block_id=3)
     f2 = x
-    x = depthwise_conv_block(x, 256, alpha, depth_multiplier, strides=(2, 2), block_id=4)
-    x = depthwise_conv_block(x, 256, alpha, depth_multiplier, block_id=5)
+    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, strides=(2, 2), block_id=4)
+    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, block_id=5)
     f3 = x
-    x = depthwise_conv_block(x, 512, alpha, depth_multiplier, strides=(2, 2), block_id=6)
-    x = depthwise_conv_block(x, 512, alpha, depth_multiplier, block_id=7)
-    x = depthwise_conv_block(x, 512, alpha, depth_multiplier, block_id=8)
-    x = depthwise_conv_block(x, 512, alpha, depth_multiplier, block_id=9)
-    x = depthwise_conv_block(x, 512, alpha, depth_multiplier, block_id=10)
-    x = depthwise_conv_block(x, 512, alpha, depth_multiplier, block_id=11)
+    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, strides=(2, 2), block_id=6)
+    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, block_id=7)
+    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, block_id=8)
+    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, block_id=9)
+    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, block_id=10)
+    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, block_id=11)
     f4 = x
-    x = depthwise_conv_block(x, 1024, alpha, depth_multiplier, strides=(2, 2), block_id=12)
-    x = depthwise_conv_block(x, 1024, alpha, depth_multiplier, block_id=13)
+    x = depthwise_conv_block(x, 256, alpha, depth_multiplier, strides=(2, 2), block_id=12)
+    x = depthwise_conv_block(x, 256, alpha, depth_multiplier, block_id=13)
     f5 = x
 
-    #if pretrained == 'imagenet':
-    #    model_name = 'mobilenet_%s_%d_tf_no_top.h5' % ('1_0', 224)
-    #    weight_path = BASE_WEIGHT_PATH + model_name
-    #    weights_path = keras.utils.get_file(model_name, weight_path)
-    #    Model(img_input, x).load_weights(weights_path)
-        # Decoder
-    o = f4
+    o = f5
 
-    o = (ZeroPadding2D((1, 1)))(o)
-    o = (Conv2D(512, (3, 3), padding='valid'))(o)
-    o = (BatchNormalization())(o)
-
-    o = (UpSampling2D((2, 2)))(o)
-    o = (concatenate([o, f3], axis=3))
     o = (ZeroPadding2D((1, 1)))(o)
     o = (Conv2D(256, (3, 3), padding='valid'))(o)
     o = (BatchNormalization())(o)
 
     o = (UpSampling2D((2, 2)))(o)
-    o = (concatenate([o, f2], axis=3))
+    o = (concatenate([o, f4], axis=3))
+    o = (ZeroPadding2D((1, 1)))(o)
+    o = (Conv2D(256, (3, 3), padding='valid'))(o)
+    o = (BatchNormalization())(o)	
+
+    o = (UpSampling2D((2, 2)))(o)
+    o = (concatenate([o, f3], axis=3))
     o = (ZeroPadding2D((1, 1)))(o)
     o = (Conv2D(128, (3, 3), padding='valid'))(o)
     o = (BatchNormalization())(o)
 
     o = (UpSampling2D((2, 2)))(o)
-    o = (concatenate([o, f1], axis=3))
+    o = (concatenate([o, f2], axis=3))
     o = (ZeroPadding2D((1, 1)))(o)
     o = (Conv2D(64, (3, 3), padding='valid'))(o)
     o = (BatchNormalization())(o)
 
-    o = Conv2D(nClasses, (3, 3), padding='same')(o)
+    o = (UpSampling2D((2, 2)))(o)
+    o = (concatenate([o, f1], axis=3))
+    o = (ZeroPadding2D((1, 1)))(o)
+    o = (Conv2D(32, (3, 3), padding='valid'))(o)
+    o = (BatchNormalization())(o)
+
+    o = Conv2D(nClasses, (1, 1), padding='same')(o)
     o_shape = Model(inputs, o).output_shape
     outputHeight = o_shape[1]
     outputWidth = o_shape[2]
 
-    o = (Reshape((nClasses, outputHeight * outputWidth)))(o)
-    o = (Permute((2, 1)))(o)
+    o = (Reshape((outputHeight*outputWidth, nClasses)))(o)
     o = (Activation('softmax'))(o)
     model = Model(inputs, o)
     model.outputWidth = outputWidth

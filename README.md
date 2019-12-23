@@ -6,7 +6,7 @@
 
 # 配置
 - tensorflow 1.8.0
-- keras 2.1.0
+- keras 2.2.4
 - GTX 2070/CPU
 
 # 目录结构
@@ -24,27 +24,25 @@
 |50|fcn8|Vanilla CNN|FCN8|0.97|True|
 |50|unet|Vanilla CNN|UNet|0.99|True|
 |50|segnet|Vanilla CNN|SegNet|0.99|True|
-|50|pspnet|Vanilla CNN|PSPNet|||
-|50|icnet|PSPNet|ICNet|||
-|50|mobilenet_unet|MobileNet|MobileNetUnet|||
-|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|||
-|50|mobilenet_fcn32|MobileNet|MobileNetFCN32|||
-|50|mobilenet_segnet|MobileNet|MobileNetSegNet|||
+|50|icnet|PSPNet|ICNet|0.96|True|
+|50|pspnet|Vanilla CNN|PSPNet|0.98|True|
+|50|mobilenet_unet|MobileNet|MobileNetUnet|0.98|True|
+|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|0.97|True|
 
 
 ## 训练
 
-使用下面的命令训练和保存模型，模型保存路径，训练超参数需要灵活修改。
+使用下面的命令训练和保存模型，模型保存路径，训练超参数需要灵活设置。
 
 ```python
-python train.py
+python train.py --model_name unet --train_save_path weights/unet
 ```
 
 ## 测试
-使用下面的命令测试模型，加载模型的路径，图像输入分辨率等参数需要灵活修改。
+使用下面的命令测试模型，加载模型的路径，图像输入分辨率等参数需要灵活设置。
 
 ```python
-python test.py
+python test.py --model_name unet --weights_path weights/unet.hdf5
 ```
 
 ## 自带数据集分割可视化结果
