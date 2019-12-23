@@ -22,9 +22,10 @@
 | ---|---|---|---|---|---|
 |50|enet|ENet|Enet|0.97|True|
 |50|fcn8|Vanilla CNN|FCN8|0.97|True|
+|50|fcn16|Vanilla CNN|FCN8|0.97||
 |50|fcn32|Vanilla CNN|FCN32|||
 |50|unet|Vanilla CNN|UNet|0.99|True|
-|50|segnet|Vanilla CNN|SegNet|||
+|50|segnet|Vanilla CNN|SegNet|0.99|True|
 |50|pspnet|Vanilla CNN|PSPNet|||
 |50|icnet|PSPNet|ICNet|||
 |50|mobilenet_unet|MobileNet|MobileNetUnet|||

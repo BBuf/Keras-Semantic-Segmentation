@@ -9,6 +9,7 @@ import datetime
 import Models
 from Models import ENet
 from Models import FCN8
+from Models import FCN16
 from Models import FCN32
 from Models import Segnet
 from Models import Unet
@@ -42,6 +43,7 @@ input_width = args.input_width
 n_class = args.classes
 
 modelFns = {'fcn8':Models.FCN8.FCN8,
+			'fcn16':Models.FCN16.FCN16,
 			'fcn32':Models.FCN32.FCN32,
 			'unet':Models.Unet.Unet,
 			'enet':Models.ENet.ENet,

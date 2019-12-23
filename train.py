@@ -6,6 +6,7 @@ import Models
 from keras.callbacks import EarlyStopping, ReduceLROnPlateau, CSVLogger, ModelCheckpoint
 from Models import ENet
 from Models import FCN8
+from Models import FCN16
 from Models import FCN32
 from Models import Segnet
 from Models import Unet
@@ -64,6 +65,7 @@ if validate:
 
 modelFns = {'enet':Models.ENet.ENet,
 			'fcn8':Models.FCN8.FCN8,
+			'fcn16':Models.FCN16.FCN16,
 			'fcn32':Models.FCN32.FCN32,
 			'unet':Models.Unet.Unet,
 			'segnet':Models.Segnet.Segnet,
