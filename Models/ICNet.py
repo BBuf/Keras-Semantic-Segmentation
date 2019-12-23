@@ -228,7 +228,7 @@ def ICNet(nClasses, input_height=224, input_width=224):
     y = Activation('relu', name='sub12_sum/relu')(y)
     y = Lambda(lambda x: tf.image.resize_bilinear(x, size=(int(x.shape[1])*2, int(x.shape[2])*2)), name='sub12_sum_interp')(y)
     
-    o = Conv2D(nClasses, 1, activation='softmax', name='conv6_cls')(y)
+    o = Conv2D(nClasses, 1, name='conv6_cls')(y)
 
     
     o_shape = Model(inputs, o).output_shape
