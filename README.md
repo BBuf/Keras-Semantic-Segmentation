@@ -27,14 +27,6 @@
 |50|segnet|Vanilla CNN|SegNet|||
 |50|pspnet|Vanilla CNN|PSPNet|||
 |50|icnet|PSPNet|ICNet|||
-|50|vgg_segnet|VGG 16|VGG_SegNet|||
-|50|vgg_unet|VGG 16|VGG_Unet|||
-|50|vgg_fcn8|VGG 16|VGG_FCN8|||
-|50|vgg_fcn32|VGG 16|VGG_FCN32|||
-|50|resnet50_fcn8|Resnet-50|ResNet50_FCN8|||
-|50|resnet50_fcn32|Resnet-50|ResNet50_FCN32|||
-|50|resnet50_segnet|Resnet-50|ResNet50_SegNet|||
-|50|resnet50_unet|Resnet-50|ResNet50_Unet|||
 |50|mobilenet_unet|MobileNet|MobileNetUnet|||
 |50|mobilenet_fcn8|MobileNet|MobileNetFCN8|||
 |50|mobilenet_fcn32|MobileNet|MobileNetFCN32|||

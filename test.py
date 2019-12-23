@@ -14,14 +14,6 @@ from Models import Segnet
 from Models import Unet
 from Models import PSPNet
 from Models import ICNet
-from Models import VGGSegnet
-from Models import VGGUnet
-from Models import VGGFCN8
-from Models import VGGFCN32
-from Models import ResNet50_Segnet
-from Models import ResNet50_Unet
-from Models import ResNet50_FCN8
-from Models import ResNet50_FCN32
 from Models import MobileNetUnet
 from Models import MobileNetFCN8
 from Models import MobileNetFCN32
@@ -57,14 +49,6 @@ modelFns = {'fcn8':Models.FCN8.FCN8,
 			'pspnet':Models.PSPNet.PSPNet,
 			'icnet':Models.ICNet.ICNet,
 			'icnet_bn':Models.ICNet.ICNet_BN,
-			'vgg_segnet':Models.VGGSegnet.VGGSegnet,
-			'vgg_unet':Models.VGGUnet.VGGUnet,
-			'vgg_fcn8':Models.VGGFCN8.VGG_FCN8,
-			'vgg_fcn32':Models.VGGFCN32.VGG_FCN32,
-			'resnet50_segnet':Models.ResNet50_Segnet.Resnet_Segnet,
-			'resnet50_unet':Models.ResNet50_Unet.Resnet_Unet,
-			'resnet50_fcn8':Models.ResNet50_FCN8.Resnet_FCN8,
-			'resnet50_fcn32':Models.ResNet50_FCN32.Resnet_FCN32,
 			'mobilenet_unet':Models.MobileNetUnet.MobileNetUnet,
 			'mobilenet_fcn8':Models.MobileNetFCN8.MobileNetFCN8,
 			'mobilenet_fcn32':Models.MobileNetFCN32.MobileNetFCN32,
