@@ -6,15 +6,12 @@ import Models
 from keras.callbacks import EarlyStopping, ReduceLROnPlateau, CSVLogger, ModelCheckpoint
 from Models import ENet
 from Models import FCN8
-from Models import FCN16
-from Models import FCN32
 from Models import Segnet
 from Models import Unet
 from Models import PSPNet
 from Models import ICNet
 from Models import MobileNetUnet
 from Models import MobileNetFCN8
-from Models import MobileNetFCN32
 from Models import MobileNetSegnet
 
 parser = argparse.ArgumentParser()
@@ -65,16 +62,12 @@ if validate:
 
 modelFns = {'enet':Models.ENet.ENet,
 			'fcn8':Models.FCN8.FCN8,
-			'fcn16':Models.FCN16.FCN16,
-			'fcn32':Models.FCN32.FCN32,
 			'unet':Models.Unet.Unet,
 			'segnet':Models.Segnet.Segnet,
 			'pspnet':Models.PSPNet.PSPNet,
 			'icnet':Models.ICNet.ICNet,
-			'icnet_bn':Models.ICNet.ICNet_BN,
 			'mobilenet_unet':Models.MobileNetUnet.MobileNetUnet,
 			'mobilenet_fcn8':Models.MobileNetFCN8.MobileNetFCN8,
-			'mobilenet_fcn32':Models.MobileNetFCN32.MobileNetFCN32,
 			'mobilenet_segnet':Models.MobileNetSegnet.MobileNetSegnet
 			}
 modelFN = modelFns[model_name]
