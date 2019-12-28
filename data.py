@@ -13,7 +13,7 @@ def getImage(path, width, height):
     return img
 
 def getLable(path, n_classes, width, height):
-    seg_labels = np.zeros((width, height, n_classes))
+    seg_labels = np.zeros((height, width, n_classes))
     img = cv2.imread(path, 1)
     img = cv2.resize(img, (width, height), interpolation=cv2.INTER_NEAREST)
     img = img[:, :, 0]
@@ -41,6 +41,5 @@ def imageSegmentationGenerator(images_path, segs_path, batch_size, n_classes,
             X.append(getImage(im, input_width, input_height))
             Y.append(getLable(seg, n_classes, output_width, output_height))
         yield np.array(X), np.array(Y)
-
 
 
