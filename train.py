@@ -2,6 +2,7 @@
 import keras
 import argparse
 import data
+import glob
 import Models
 from keras.callbacks import EarlyStopping, ReduceLROnPlateau, CSVLogger, ModelCheckpoint
 from Models import ENet
@@ -71,6 +72,13 @@ modelFns = {'enet':Models.ENet.ENet,
 modelFN = modelFns[model_name]
 model = modelFN(n_classes, input_height=input_height, input_width=input_width)
 
+# 统计一下训练集/验证集样本数，确定每一个epoch需要训练的iter
+images = glob.glob(train_images + "*.jpg") + glob.glob(train_images + "*.png") + glob.glob(train_images + "*.jpeg")
+num_train = len(images)
+
+images = glob.glob(val_images + "*.jpg") + glob.glob(val_images + "*.png") + glob.glob(val_images + "*.jpeg")
+num_val = len(images)
+
 # 模型回调函数
 early_stop = EarlyStopping('loss', min_delta=0.1, patience=patience, verbose=1)
 reduce_lr = ReduceLROnPlateau('loss', factor=0.01, patience=int(patience/2), verbose=1)
@@ -97,6 +105,7 @@ if validate:
 											 n_classes, input_height, input_width, output_height, output_width)
 
 if not validate:
-	model.fit_generator(train_ge, epochs=epochs, callbacks=call_backs, steps_per_epoch=96, verbose=1, shuffle=True)
+	model.fit_generator(train_ge, epochs=epochs, callbacks=call_backs, steps_per_epoch=int(num_train / train_batch_size), verbose=1, shuffle=True)
 else:
-	model.fit_generator(train_ge, validation_data=val_ge,epochs=epochs, callbacks=call_backs, verbose=1, steps_per_epoch=96,shuffle=True, validation_steps=5)
+
+	model.fit_generator(train_ge, validation_data=val_ge,epochs=epochs, callbacks=call_backs, verbose=1, steps_per_epoch=int(num_train / train_batch_size),shuffle=True, validation_steps=int(num_val / val_batch_size))
