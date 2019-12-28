@@ -97,6 +97,8 @@ python test.py
 
 ## 个人制作2个类别小零件数据集分割结果
 
+
+
 |Epoch|model_name|Base Model|Segmentation Model|Train Acc|Train Loss|Test Acc|Test mIOU|
 | ---|---|---|---|---|---|---|---|---|
 |50|enet|ENet|Enet|True|||||
@@ -107,9 +109,13 @@ python test.py
 |50|pspnet|Vanilla CNN|PSPNet|True|||||
 |50|mobilenet_unet|MobileNet|MobileNetUnet|True|||||
 |50|mobilenet_fcn8|MobileNet|MobileNetFCN8|True|||||
+
+
 
 ## 图森科技2个类别车道线数据集分割结果
 
+
+
 |Epoch|model_name|Base Model|Segmentation Model|Train Acc|Train Loss|Test Acc|Test mIOU|
 | ---|---|---|---|---|---|---|---|---|
 |50|enet|ENet|Enet|True|||||
@@ -122,7 +128,10 @@ python test.py
 |50|mobilenet_fcn8|MobileNet|MobileNetFCN8|True|||||
 
 
+
 ## 未知来源51个类别的城市数据集分割结果
+
+
 
 |Epoch|model_name|Base Model|Segmentation Model|Train Acc|Train Loss|Test Acc|Test mIOU|
 | ---|---|---|---|---|---|---|---|---|
@@ -141,11 +150,16 @@ python test.py
 
 ## 个人制作2个类别小零件数据集分割可视化结果
 
+
+
 |     Input Image      | Output Segmentation Image |
 | :------------------: | :-----------------------: |
 | ![](image/origin.jpg) |  ![](image/label.jpg)   |
 
+
+
 ## TODO
+
 - BenchMark。
 - 增加letter-box resize方式。
 - 数据增强策略。
