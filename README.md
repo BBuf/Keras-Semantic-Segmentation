@@ -100,15 +100,15 @@ python test.py
 
 
 |Epoch|model_name|Base Model|Segmentation Model|Train Acc|Train Loss|Test Acc|Test mIOU|
-| ---|---|---|---|---|---|---|---|---|
-|50|enet|ENet|Enet|True|||||
-|50|fcn8|Vanilla CNN|FCN8|True|||||
-|50|unet|Vanilla CNN|UNet|True|||||
-|50|segnet|Vanilla CNN|SegNet|True|||||
-|50|icnet|PSPNet|ICNet|True|||||
-|50|pspnet|Vanilla CNN|PSPNet|True|||||
-|50|mobilenet_unet|MobileNet|MobileNetUnet|True|||||
-|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|True|||||
+| ---|---|---|---|---|---|---|---|
+|50|enet|ENet|Enet|||||
+|50|fcn8|Vanilla CNN|FCN8|||||
+|50|unet|Vanilla CNN|UNet|||||
+|50|segnet|Vanilla CNN|SegNet|||||
+|50|icnet|PSPNet|ICNet|||||
+|50|pspnet|Vanilla CNN|PSPNet|||||
+|50|mobilenet_unet|MobileNet|MobileNetUnet|||||
+|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|||||
 
 
 
@@ -117,15 +117,15 @@ python test.py
 
 
 |Epoch|model_name|Base Model|Segmentation Model|Train Acc|Train Loss|Test Acc|Test mIOU|
-| ---|---|---|---|---|---|---|---|---|
-|50|enet|ENet|Enet|True|||||
-|50|fcn8|Vanilla CNN|FCN8|True|||||
-|50|unet|Vanilla CNN|UNet|True|||||
-|50|segnet|Vanilla CNN|SegNet|True|||||
-|50|icnet|PSPNet|ICNet|True|||||
-|50|pspnet|Vanilla CNN|PSPNet|True|||||
-|50|mobilenet_unet|MobileNet|MobileNetUnet|True|||||
-|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|True|||||
+| ---|---|---|---|---|---|---|---|
+|50|enet|ENet|Enet|||||
+|50|fcn8|Vanilla CNN|FCN8|||||
+|50|unet|Vanilla CNN|UNet|||||
+|50|segnet|Vanilla CNN|SegNet|||||
+|50|icnet|PSPNet|ICNet|||||
+|50|pspnet|Vanilla CNN|PSPNet|||||
+|50|mobilenet_unet|MobileNet|MobileNetUnet|||||
+|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|||||
 
 
 
@@ -134,15 +134,15 @@ python test.py
 
 
 |Epoch|model_name|Base Model|Segmentation Model|Train Acc|Train Loss|Test Acc|Test mIOU|
-| ---|---|---|---|---|---|---|---|---|
-|50|enet|ENet|Enet|True|||||
-|50|fcn8|Vanilla CNN|FCN8|True|||||
-|50|unet|Vanilla CNN|UNet|True|||||
-|50|segnet|Vanilla CNN|SegNet|True|||||
-|50|icnet|PSPNet|ICNet|True|||||
-|50|pspnet|Vanilla CNN|PSPNet|True|||||
-|50|mobilenet_unet|MobileNet|MobileNetUnet|True|||||
-|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|True|||||
+| ---|---|---|---|---|---|---|---|
+|50|enet|ENet|Enet|||||
+|50|fcn8|Vanilla CNN|FCN8|||||
+|50|unet|Vanilla CNN|UNet|||||
+|50|segnet|Vanilla CNN|SegNet|||||
+|50|icnet|PSPNet|ICNet|||||
+|50|pspnet|Vanilla CNN|PSPNet|||||
+|50|mobilenet_unet|MobileNet|MobileNetUnet|||||
+|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|||||
 
 
 
@@ -161,6 +161,7 @@ python test.py
 ## TODO
 
 - BenchMark。
+- 支持DeepLab，UNet++等。
 - 增加letter-box resize方式。
 - 数据增强策略。
 - 新增tensorflow实现，使用tesor-RT部署。
