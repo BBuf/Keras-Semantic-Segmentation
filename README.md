@@ -88,8 +88,8 @@ python test.py
 -  使用本工程中的`json_to_dataset.py`替换掉`labelme/cli`中的相应文件—`json_to_dataset.py` 。在`cmd`中输入`python json_to_dateset.py  /path/你的json文件夹的路径`。注意是把每张图的`json`文件都放在一个目录下，`labelme`标注出来的默认是一张图片一个文件夹。
 - 运行后，在`json`文件夹中会出现`mask_png、labelme_json`文件夹，`mask_png`中存放的是所有8位掩码文件！也即是本工程中使用的标签图。
 - 具体来说，我们的标签图就是分别指示每张图片上每一个位置的像素属于几，`0`是背景，然后你要的类别从`1`开始往后递增即可。
-- 本工程测试的一个简单数据集(一共7M左右)下载地址为：https://pan.baidu.com/s/1hYu4kjxLXgndjVbCdGPXAQ
-- 后面会更新大数据集和更有说服力的数据集，并提供下载地址。
+- 本工程测试的一个2类的简单分割数据集，下载地址为：https://pan.baidu.com/s/1sVjBfmgALVK7uEjeWgIMug
+- 后面会更新更多数据集测试结果，并提供下载地址。
 
 
 
