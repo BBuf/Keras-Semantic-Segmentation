@@ -24,7 +24,7 @@
 |50|fcn8|Vanilla CNN|FCN8|True|
 |50|unet|Vanilla CNN|UNet|True|
 |50|segnet|Vanilla CNN|SegNet|True|
-|50|icnet|PSPNet|ICNet|True|
+|50|icnet|Vanilla CNN|ICNet|True|
 |50|pspnet|Vanilla CNN|PSPNet|True|
 |50|mobilenet_unet|MobileNet|MobileNetUnet|True|
 |50|mobilenet_fcn8|MobileNet|MobileNetFCN8|True|
@@ -105,7 +105,7 @@ python test.py
 |50|fcn8|Vanilla CNN|FCN8|0.99|0.02|0.98|0.04|0.46|
 |50|unet|Vanilla CNN|UNet|0.99|0.02|0.99|0.03|0.47|
 |50|segnet|Vanilla CNN|SegNet|0.99|0.02|0.99|0.02|0.46|
-|50|icnet|PSPNet|ICNet||||||
+|50|icnet|Vanilla CNN|ICNet||||||
 |50|pspnet|Vanilla CNN|PSPNet||||||
 |50|mobilenet_unet|MobileNet|MobileNetUnet||||||
 |50|mobilenet_fcn8|MobileNet|MobileNetFCN8||||||
@@ -122,7 +122,7 @@ python test.py
 |50|fcn8|Vanilla CNN|FCN8||||||
 |50|unet|Vanilla CNN|UNet||||||
 |50|segnet|Vanilla CNN|SegNet||||||
-|50|icnet|PSPNet|ICNet||||||
+|50|icnet|Vanilla CNN|ICNet||||||
 |50|pspnet|Vanilla CNN|PSPNet||||||
 |50|mobilenet_unet|MobileNet|MobileNetUnet||||||
 |50|mobilenet_fcn8|MobileNet|MobileNetFCN8||||||

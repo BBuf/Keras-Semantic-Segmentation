@@ -109,7 +109,7 @@ if iou:
     for _ in range(len(images)):
         img_path, seg_path = next(zipped)
         img = data.getImage(img_path, input_width, input_height)
-        gt = data.getImage(seg_path, input_width, input_height)
+        gt = data.getImage(seg_path, output_width, output_height)
         pr = model.predict(np.array([img]))[0]
         gt = gt.argmax(axis=-1)
         pr = pr.argmax(axis=-1)
