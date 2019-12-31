@@ -101,10 +101,10 @@ python test.py
 
 |Epoch|model_name|Base Model|Segmentation Model|Train Acc|Train Loss|Val Acc|Val Loss|Test mIOU|
 | ---|---|---|---|---|---|---|---|---|
-|50|enet|ENet|Enet|0.99|0.02|0.98|0.02|0.46|
-|50|fcn8|Vanilla CNN|FCN8|0.99|0.02|0.98|0.04|0.46|
-|50|unet|Vanilla CNN|UNet|0.99|0.02|0.99|0.03|0.47|
-|50|segnet|Vanilla CNN|SegNet|0.99|0.02|0.99|0.02|0.46|
+|50|enet|ENet|Enet|0.99|0.02|0.98|0.02|0.93|
+|50|fcn8|Vanilla CNN|FCN8|0.99|0.02|0.98|0.04|0.93|
+|50|unet|Vanilla CNN|UNet|0.99|0.02|0.99|0.03|0.94|
+|50|segnet|Vanilla CNN|SegNet|0.99|0.02|0.99|0.02|0.94|
 |50|icnet|Vanilla CNN|ICNet||||||
 |50|pspnet|Vanilla CNN|PSPNet||||||
 |50|mobilenet_unet|MobileNet|MobileNetUnet||||||

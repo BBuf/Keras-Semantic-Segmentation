@@ -109,7 +109,7 @@ if iou:
     for _ in range(len(images)):
         img_path, seg_path = next(zipped)
         img = data.getImage(img_path, input_width, input_height)
-        gt = data.getImage(seg_path, output_width, output_height)
+        gt = data.getLable(seg_path, n_class, output_width, output_height)
         pr = model.predict(np.array([img]))[0]
         gt = gt.argmax(axis=-1)
         pr = pr.argmax(axis=-1)
@@ -126,9 +126,9 @@ if iou:
     n_pixels_norm = n_pixels / np.sum(n_pixels)
     frequency_weighted_IU = np.sum(cl_wise_score * n_pixels_norm)
     mean_IOU = np.mean(cl_wise_score)
+    print("n_pixels_norm", n_pixels_norm)
     print("frequency_weighted_IU: ",frequency_weighted_IU)
     print("mean IOU: ", mean_IOU)
     print("class_wise_IOU:", cl_wise_score)
-
 
 
