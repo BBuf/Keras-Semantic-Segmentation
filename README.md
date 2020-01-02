@@ -101,14 +101,14 @@ python test.py
 
 |Epoch|model_name|Base Model|Segmentation Model|Train Acc|Train Loss|Val Acc|Val Loss|Test mIOU|
 | ---|---|---|---|---|---|---|---|---|
-|50|enet|ENet|Enet|0.99|0.02|0.98|0.02|0.93|
+|50|enet|ENet|Enet|0.99|0.02|0.98|0.02|0.91|
 |50|fcn8|Vanilla CNN|FCN8|0.99|0.02|0.98|0.04|0.93|
 |50|unet|Vanilla CNN|UNet|0.99|0.02|0.99|0.03|0.94|
 |50|segnet|Vanilla CNN|SegNet|0.99|0.02|0.99|0.02|0.94|
-|50|icnet|Vanilla CNN|ICNet||||||
-|50|pspnet|Vanilla CNN|PSPNet||||||
-|50|mobilenet_unet|MobileNet|MobileNetUnet||||||
-|50|mobilenet_fcn8|MobileNet|MobileNetFCN8||||||
+|50|icnet|Vanilla CNN|ICNet|0.99|0.02|0.99|0.02|0.94|
+|50|pspnet|Vanilla CNN|PSPNet|0.99|0.02|0.99|0.02|0.94|
+|50|mobilenet_unet|MobileNet|MobileNetUnet|0.99|0.02|0.99|0.02|0.94|
+|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|0.99|0.02|0.99|0.02|0.94|
 
 
 
@@ -143,7 +143,6 @@ python test.py
 
 ## TODO
 
-- BenchMark。
 - 支持DeepLab，UNet++等。
 - 增加letter-box resize方式。
 - 数据增强策略。

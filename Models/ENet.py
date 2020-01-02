@@ -128,7 +128,7 @@ def de_build(encoder, nc):
     enet = Conv2DTranspose(filters=nc, kernel_size=(2, 2), strides=(2, 2), padding='same')(enet)
     return enet
 
-def ENet(n_classes, input_height=512, input_width=512):
+def ENet(n_classes, input_height=256, input_width=256):
     assert input_height % 32 == 0
     assert input_width % 32 == 0
     img_input = Input(shape=(input_height, input_width, 3))
