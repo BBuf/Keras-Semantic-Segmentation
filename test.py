@@ -30,6 +30,7 @@ parser.add_argument("--classes", type=int, default=2)
 parser.add_argument("--mIOU", type=bool, default=False)
 parser.add_argument("--val_images", type = str, default = "data/val_image/")
 parser.add_argument("--val_annotations", type = str, default = "data/val_label/")
+parser.add_argument("--image_init", type = str, default="sub_mean")
 
 args = parser.parse_args()
 
@@ -41,11 +42,12 @@ input_height = args.input_height
 input_width = args.input_width
 n_class = args.classes
 iou = args.mIOU
+image_init = args.image_init
 
 # color
 random.seed(0)
-colors = [(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-          for _ in range(5000)]
+colors = [(random.randint(0, 255), random.randint(
+    0, 255), random.randint(0, 255)) for _ in range(5000)]
 
 # model
 modelFns = {'fcn8':Models.FCN8.FCN8,
@@ -75,14 +77,15 @@ cnt = 0
 
 for imgName in images:
     outName = output_path + str("%d.jpg" % cnt)
-    X = data.getImage(imgName, input_width, input_height)
+    X = data.getImage(imgName, input_width, input_height, image_init)
     pr = model.predict(np.array([X]))[0]
     pr = pr.reshape((output_height, output_width, n_class)).argmax(axis = 2)
+    
     seg_img = np.zeros((output_height, output_width, 3))
     for c in range(n_class):
-        seg_img[:, :, 0] = ((pr[:, :] == c) * (colors[c][0])).astype('uint8')
-        seg_img[:, :, 1] = ((pr[:, :] == c) * (colors[c][1])).astype('uint8')
-        seg_img[:, :, 2] = ((pr[:, :] == c) * (colors[c][2])).astype('uint8')
+        seg_img[:, :, 0] += ((pr[:, :] == c)*(colors[c][0])).astype('uint8')
+        seg_img[:, :, 1] += ((pr[:, :] == c)*(colors[c][1])).astype('uint8')
+        seg_img[:, :, 2] += ((pr[:, :] == c)*(colors[c][2])).astype('uint8')
 
     seg_img = cv2.resize(seg_img, (input_width, input_height))
     cv2.imwrite(outName, seg_img)
@@ -108,8 +111,8 @@ if iou:
     zipped = itertools.cycle(zip(images, segmentations))
     for _ in range(len(images)):
         img_path, seg_path = next(zipped)
-        img = data.getImage(img_path, input_width, input_height)
-        gt = data.getLable(seg_path, n_class, output_width, output_height)
+        img = data.getImage(img_path, input_width, input_height, image_init)
+        gt = data.getImage(seg_path, output_width, output_height, image_init)
         pr = model.predict(np.array([img]))[0]
         gt = gt.argmax(axis=-1)
         pr = pr.argmax(axis=-1)
@@ -126,9 +129,9 @@ if iou:
     n_pixels_norm = n_pixels / np.sum(n_pixels)
     frequency_weighted_IU = np.sum(cl_wise_score * n_pixels_norm)
     mean_IOU = np.mean(cl_wise_score)
-    print("n_pixels_norm", n_pixels_norm)
     print("frequency_weighted_IU: ",frequency_weighted_IU)
     print("mean IOU: ", mean_IOU)
     print("class_wise_IOU:", cl_wise_score)
+
 
 

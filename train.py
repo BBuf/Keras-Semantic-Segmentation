@@ -30,6 +30,7 @@ parser.add_argument("--train_save_path", type = str, default = "weights/unet")
 parser.add_argument("--resume", type=str, default="")
 parser.add_argument("--model_name", type = str, default = "unet")
 parser.add_argument("--optimizer_name", type=str, default="sgd")
+parser.add_argument("--image_init", type=str, default="sub_mean")
 
 args = parser.parse_args()
 
@@ -54,6 +55,7 @@ load_weights = args.resume
 
 model_name = args.model_name
 optimizer_name = args.optimizer_name
+image_init = args.image_init
 
 if validate:
 	val_images = args.val_images
@@ -98,11 +100,11 @@ output_height = model.outputHeight
 output_width = model.outputWidth
 
 train_ge = data.imageSegmentationGenerator(train_images, train_segs,  train_batch_size,
-									 n_classes, input_height, input_width, output_height, output_width)
+									 n_classes, input_height, input_width, output_height, output_width, image_init)
 
 if validate:
 	val_ge = data.imageSegmentationGenerator(val_images, val_segs,  val_batch_size,
-											 n_classes, input_height, input_width, output_height, output_width)
+											 n_classes, input_height, input_width, output_height, output_width, image_init)
 
 if not validate:
 	model.fit_generator(train_ge, epochs=epochs, callbacks=call_backs, steps_per_epoch=int(num_train / train_batch_size), verbose=1, shuffle=True)
