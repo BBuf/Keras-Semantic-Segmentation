@@ -135,7 +135,7 @@ python test.py
 | ---|---|---|---|---|---|---|---|---|
 |50|enet|ENet|Enet||||||
 |50|fcn8|Vanilla CNN|FCN8||||||
-|50|unet|Vanilla CNN|UNet|0.90|0.28|0.74|0.98||
+|50|unet|Vanilla CNN|UNet|0.90|0.28|0.74|0.98|0.46|
 |50|segnet|Vanilla CNN|SegNet||||||
 |50|icnet|Vanilla CNN|ICNet||||||
 |50|pspnet|Vanilla CNN|PSPNet||||||
