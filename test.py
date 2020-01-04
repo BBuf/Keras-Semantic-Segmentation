@@ -77,6 +77,9 @@ cnt = 0
 
 for imgName in images:
     outName = output_path + str("%d.jpg" % cnt)
+    origin_img = cv2.imread(imgName, 1)
+    origin_h = origin_img.shape[0]
+    origin_w = origin_img.shape[1]
     X = data.getImage(imgName, input_width, input_height, image_init)
     pr = model.predict(np.array([X]))[0]
     pr = pr.reshape((output_height, output_width, n_class)).argmax(axis = 2)
@@ -111,8 +114,9 @@ if iou:
     zipped = itertools.cycle(zip(images, segmentations))
     for _ in range(len(images)):
         img_path, seg_path = next(zipped)
+        # get origin h, w
         img = data.getImage(img_path, input_width, input_height, image_init)
-        gt = data.getImage(seg_path, output_width, output_height, image_init)
+        gt = data.getLable(seg_path, n_class, output_width, output_height)
         pr = model.predict(np.array([img]))[0]
         gt = gt.argmax(axis=-1)
         pr = pr.argmax(axis=-1)
@@ -124,7 +128,7 @@ if iou:
             fp[c] += np.sum((pr == c) * (gt != c))
             fn[c] += np.sum((pr != c) * (gt == c))
             n_pixels[c] += np.sum(gt == c)
-
+    print(tp)
     cl_wise_score = tp / (tp + fp + fn + EPS)
     n_pixels_norm = n_pixels / np.sum(n_pixels)
     frequency_weighted_IU = np.sum(cl_wise_score * n_pixels_norm)
