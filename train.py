@@ -69,7 +69,8 @@ modelFns = {'enet':Models.ENet.ENet,
 			'pspnet':Models.PSPNet.PSPNet,
 			'icnet':Models.ICNet.ICNet,
 			'mobilenet_unet':Models.MobileNetUnet.MobileNetUnet,
-			'mobilenet_fcn8':Models.MobileNetFCN8.MobileNetFCN8
+			'mobilenet_fcn8':Models.MobileNetFCN8.MobileNetFCN8,
+                        'seunet':Models.SEUNet.SEUnet
 			}
 modelFN = modelFns[model_name]
 model = modelFN(n_classes, input_height=input_height, input_width=input_width)
