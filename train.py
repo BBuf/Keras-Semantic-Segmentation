@@ -13,6 +13,7 @@ from Models import PSPNet
 from Models import ICNet
 from Models import MobileNetUnet
 from Models import MobileNetFCN8
+from Models import SEUNet
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--train_images", type = str, default="data/train_image/")
