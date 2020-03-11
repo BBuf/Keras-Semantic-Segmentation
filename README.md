@@ -8,11 +8,22 @@
 - tensorflow 1.8.0
 - keras 2.2.4
 - GTX 2070/CPU
+- opencv
 
 # 目录结构
 
 - data 存储输入图像和语义分割标签的文件夹
+```
+- data
+	- dataset_name
+		- train_image
+		- train_label
+		- test_image
+		- test_label
+```
+
 - Models 存储使用keras实现的一些经典分割模型
+- utils 存储工具代码，如数据预处理
 - data.py 加载1个batch的原始图片和分割标签图片
 - train.py 模型训练
 - test.py 模型测试
@@ -40,15 +51,13 @@ python train.py
 
 可用参数如下：
 
-- `--train_images` 字符串类型，代表训练集原图的路径，默认为`data/train_image/`，注意后面有`/`。
-- `--train_annotations` 字符串类型，代表训练集`mask`图所在路径，默认为`data/train_label/`。
-- `--n_classes` 整型，代表分割图像中有几种类别的像素，默认为`2`。
+- `--dataset_name` 字符串，代表选择对应的数据集的名称，默认streetscape
+
+- ``--n_classes` 整型，代表分割图像中有几种类别的像素，默认为`2`。
 - `--input_height`整型，代表要分割的图像需要`resize`的长，默认为`224`。
 - `--input_width` 整型，代表要分割的图像需要`resize`的宽，默认为`224`。
 - `--validate`布尔型，代表训练过程中是否需要验证集，默认为`True`，即使用验证集。
-- `--val_images`字符串类型，代表验证集原图的路径，默认为`data/val_image/`。
-- `--val_annotations`字符串类型，代表验证集`mask`图所在路径，默认为`data/val_label/`。
-- `--epochs`整型，代表要训练多少个`epoch`，默认为`50`。
+- ``--epochs`整型，代表要训练多少个`epoch`，默认为`50`。
 - `--train_batch_size`整型，代表训练时批量大小，默认为`4`。
 - `--model_name ` 字符串类型，代表训练时使用哪个模型，支持`enet`,`unet`,`segnet`,`fcn8`等多种模型，默认为`unet`。
 - `--train_save_path`字符串类型，代表训练时保存模型的路径，默认为`weights/unet`，即会将模型保存在`weights`文件夹下，并且每个模型名字前缀以`unet`开头，后面接迭代次数和准确率构成完整的保存模型的路径。

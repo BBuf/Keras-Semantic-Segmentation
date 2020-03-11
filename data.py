@@ -3,6 +3,7 @@ import numpy as np
 import cv2
 import glob
 import itertools
+import os
 
 def getImage(path, width, height, imgNorm="sub_mean"):
     img = cv2.imread(path, 1)
@@ -18,8 +19,9 @@ def getImage(path, width, height, imgNorm="sub_mean"):
         img = img[:, :, ::-1]
     else:
         img = img / 255.0
-    
+
     return img
+
 
 def getLable(path, n_classes, width, height):
     seg_labels = np.zeros((height, width, n_classes))
@@ -31,15 +33,20 @@ def getLable(path, n_classes, width, height):
     seg_labels = np.reshape(seg_labels, (width * height, n_classes))
     return seg_labels
 
+
 def imageSegmentationGenerator(images_path, segs_path, batch_size, n_classes,
                                input_height, input_width, output_height,
                                output_width, image_init):
-    assert images_path[-1] == '/'
-    assert segs_path[-1] == '/'
-    images = glob.glob(images_path + "*.jpg") + glob.glob(images_path + "*.png") + glob.glob(images_path + "*.jpeg")
+    images =glob.glob(os.path.join(images_path, "*.jpg")) + \
+            glob.glob(os.path.join(images_path, "*.png")) + \
+            glob.glob(os.path.join(images_path, "*.jpeg"))
     images.sort()
-    segmentations = glob.glob(segs_path + "*.jpg") + glob.glob(segs_path + "*.png") + glob.glob(segs_path + "*.jpeg")
+
+    segmentations = glob.glob(os.path.join(segs_path, "*.jpg")) + \
+                    glob.glob(os.path.join(segs_path, "*.png")) + \
+                    glob.glob(os.path.join(segs_path, "*.jpeg"))
     segmentations.sort()
+    
     assert len(images) == len(segmentations)
     zipped = itertools.cycle(zip(images, segmentations))
     while True:
@@ -50,5 +57,3 @@ def imageSegmentationGenerator(images_path, segs_path, batch_size, n_classes,
             X.append(getImage(im, input_width, input_height, image_init))
             Y.append(getLable(seg, n_classes, output_width, output_height))
         yield np.array(X), np.array(Y)
-
-

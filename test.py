@@ -1,37 +1,34 @@
 #coding=utf-8
+import argparse
 import glob
+import itertools
+import random
+
 import cv2
 import numpy as np
-import random
-import data
-import argparse
-import itertools
-import Models
-from Models import ENet
-from Models import FCN8
-from Models import Segnet
-from Models import Unet
-from Models import PSPNet
-from Models import ICNet
-from Models import MobileNetUnet
-from Models import MobileNetFCN8
-from Models import SEUNet
 from keras.models import load_model
+
+import data
+import Models
+from Models import (FCN8, ENet, ICNet, MobileNetFCN8, MobileNetUnet, PSPNet,
+                    Segnet, SEUNet, Unet)
 
 EPS = 1e-12
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--test_images", type = str, default="data/test/")
+parser.add_argument("--test_images", type=str, default="data/test/")
 parser.add_argument("--output_path", type=str, default="data/output/")
-parser.add_argument("--weights_path", type=str, default="weights/unet.18-0.856895.hdf5")
+parser.add_argument("--weights_path",
+                    type=str,
+                    default="weights/unet.18-0.856895.hdf5")
 parser.add_argument("--model_name", type=str, default="unet")
 parser.add_argument("--input_height", type=int, default=224)
 parser.add_argument("--input_width", type=int, default=224)
 parser.add_argument("--classes", type=int, default=2)
 parser.add_argument("--mIOU", type=bool, default=False)
-parser.add_argument("--val_images", type = str, default = "data/val_image/")
-parser.add_argument("--val_annotations", type = str, default = "data/val_label/")
-parser.add_argument("--image_init", type = str, default="sub_mean")
+parser.add_argument("--val_images", type=str, default="data/streetscape/test_image/")
+parser.add_argument("--val_annotations", type=str, default="data/streetscape/test_label/")
+parser.add_argument("--image_init", type=str, default="sub_mean")
 
 args = parser.parse_args()
 
@@ -47,20 +44,22 @@ image_init = args.image_init
 
 # color
 random.seed(0)
-colors = [(random.randint(0, 255), random.randint(
-    0, 255), random.randint(0, 255)) for _ in range(5000)]
+colors = [(random.randint(0, 255), random.randint(0,
+                                                  255), random.randint(0, 255))
+          for _ in range(5000)]
 
 # model
-modelFns = {'fcn8':Models.FCN8.FCN8,
-			'unet':Models.Unet.Unet,
-			'enet':Models.ENet.ENet,
-			'segnet':Models.Segnet.Segnet,
-			'pspnet':Models.PSPNet.PSPNet,
-			'icnet':Models.ICNet.ICNet,
-			'mobilenet_unet':Models.MobileNetUnet.MobileNetUnet,
-			'mobilenet_fcn8':Models.MobileNetFCN8.MobileNetFCN8,
-                        'seunet':Models.SEUNet.SEUnet
-			}
+modelFns = {
+    'fcn8': Models.FCN8.FCN8,
+    'unet': Models.Unet.Unet,
+    'enet': Models.ENet.ENet,
+    'segnet': Models.Segnet.Segnet,
+    'pspnet': Models.PSPNet.PSPNet,
+    'icnet': Models.ICNet.ICNet,
+    'mobilenet_unet': Models.MobileNetUnet.MobileNetUnet,
+    'mobilenet_fcn8': Models.MobileNetFCN8.MobileNetFCN8,
+    'seunet': Models.SEUNet.SEUnet
+}
 
 modelFN = modelFns[model_name]
 
@@ -72,7 +71,8 @@ print(output_height)
 print(output_width)
 
 # look up test images
-images = glob.glob(images_path + "*.jpg") + glob.glob(images_path + "*.png") + glob.glob(images_path + "*.jpeg")
+images = glob.glob(images_path + "*.jpg") + glob.glob(
+    images_path + "*.png") + glob.glob(images_path + "*.jpeg")
 images.sort()
 
 cnt = 0
@@ -84,13 +84,13 @@ for imgName in images:
     origin_w = origin_img.shape[1]
     X = data.getImage(imgName, input_width, input_height, image_init)
     pr = model.predict(np.array([X]))[0]
-    pr = pr.reshape((output_height, output_width, n_class)).argmax(axis = 2)
-    
+    pr = pr.reshape((output_height, output_width, n_class)).argmax(axis=2)
+
     seg_img = np.zeros((output_height, output_width, 3))
     for c in range(n_class):
-        seg_img[:, :, 0] += ((pr[:, :] == c)*(colors[c][0])).astype('uint8')
-        seg_img[:, :, 1] += ((pr[:, :] == c)*(colors[c][1])).astype('uint8')
-        seg_img[:, :, 2] += ((pr[:, :] == c)*(colors[c][2])).astype('uint8')
+        seg_img[:, :, 0] += ((pr[:, :] == c) * (colors[c][0])).astype('uint8')
+        seg_img[:, :, 1] += ((pr[:, :] == c) * (colors[c][1])).astype('uint8')
+        seg_img[:, :, 2] += ((pr[:, :] == c) * (colors[c][2])).astype('uint8')
 
     seg_img = cv2.resize(seg_img, (input_width, input_height))
     cv2.imwrite(outName, seg_img)
@@ -108,9 +108,11 @@ if iou:
     segs_path = args.val_annotations
     assert images_path[-1] == '/'
     assert segs_path[-1] == '/'
-    images = glob.glob(images_path + "*.jpg") + glob.glob(images_path + "*.png") + glob.glob(images_path + "*.jpeg")
+    images = glob.glob(images_path + "*.jpg") + glob.glob(
+        images_path + "*.png") + glob.glob(images_path + "*.jpeg")
     images.sort()
-    segmentations = glob.glob(segs_path + "*.jpg") + glob.glob(segs_path + "*.png") + glob.glob(segs_path + "*.jpeg")
+    segmentations = glob.glob(segs_path + "*.jpg") + glob.glob(
+        segs_path + "*.png") + glob.glob(segs_path + "*.jpeg")
     segmentations.sort()
     assert len(images) == len(segmentations)
     zipped = itertools.cycle(zip(images, segmentations))
@@ -135,9 +137,6 @@ if iou:
     n_pixels_norm = n_pixels / np.sum(n_pixels)
     frequency_weighted_IU = np.sum(cl_wise_score * n_pixels_norm)
     mean_IOU = np.mean(cl_wise_score)
-    print("frequency_weighted_IU: ",frequency_weighted_IU)
+    print("frequency_weighted_IU: ", frequency_weighted_IU)
     print("mean IOU: ", mean_IOU)
     print("class_wise_IOU:", cl_wise_score)
-
-
-
