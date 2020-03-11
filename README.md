@@ -105,6 +105,7 @@ python test.py
 - 具体来说，我们的标签图就是分别指示每张图片上每一个位置的像素属于几，`0`是背景，然后你要的类别从`1`开始往后递增即可。
 - 本工程测试的一个2类的简单分割数据集，下载地址为：https://pan.baidu.com/s/1sVjBfmgALVK7uEjeWgIMug
 - 本工程测试的城市街景分割数据集，下载地址为：https://pan.baidu.com/s/1zequLd0aYXNseGoXn-tdog
+- 本工程测试的人脸部位分割数据集，下载地址为：https://pan.baidu.com/s/1uXZX9c8VFZYVP-ru5MOXXA ，提取码为：09ry 。数据集来源：https://blog.csdn.net/yuanlulu/article/details/89789807
 
 
 
@@ -135,13 +136,26 @@ python test.py
 | ---|---|---|---|---|---|---|---|---|
 |50|enet|ENet|Enet||||||
 |50|fcn8|Vanilla CNN|FCN8||||||
-|50|unet|Vanilla CNN|UNet|0.90|0.28|0.74|0.98|0.46|
+|50|unet|Vanilla CNN|UNet||||||
 |50|segnet|Vanilla CNN|SegNet||||||
 |50|icnet|Vanilla CNN|ICNet||||||
 |50|pspnet|Vanilla CNN|PSPNet||||||
 |50|mobilenet_unet|MobileNet|MobileNetUnet||||||
 |50|mobilenet_fcn8|MobileNet|MobileNetFCN8||||||
 
+
+## 人脸部位分割数据集
+
+|Epoch|model_name|Base Model|Segmentation Model|Train Acc|Train Loss|Val Acc|Val Loss|Test mIOU|
+| ---|---|---|---|---|---|---|---|---|
+|50|enet|ENet|Enet||||||
+|50|fcn8|Vanilla CNN|FCN8||||||
+|50|unet|Vanilla CNN|UNet||||||
+|50|segnet|Vanilla CNN|SegNet||||||
+|50|icnet|Vanilla CNN|ICNet||||||
+|50|pspnet|Vanilla CNN|PSPNet||||||
+|50|mobilenet_unet|MobileNet|MobileNetUnet||||||
+|50|mobilenet_fcn8|MobileNet|MobileNetFCN8||||||
 
 
 
@@ -163,6 +177,8 @@ python test.py
 | :-----------------: | :-----------------------: |
 | ![](image/city.jpg) | ![](image/city-label.jpg) |
 
+
+## 人脸部位分割数据集分割可视化结果
 
 
 ## TODO
