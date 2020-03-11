@@ -15,6 +15,7 @@ from Models import PSPNet
 from Models import ICNet
 from Models import MobileNetUnet
 from Models import MobileNetFCN8
+from Models import SEUNet
 from keras.models import load_model
 
 EPS = 1e-12
