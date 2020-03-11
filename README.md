@@ -60,8 +60,8 @@ python train.py
 
 # 训练示例
 
-- 训练二分类数据集：`python train.py  --model_name unet --image_init divide --n_classes 2`
-- 训练CamVid数据集：`python train.py --model_name unet --input_height 320 --input_width 640 --image_init sub_mean --n_classes 50`
+- 训练本工程提供的二分类数据集：`python train.py  --model_name unet --image_init divide --n_classes 2`
+- 训练12个类别的城市街景分割数据集：`python train.py --model_name unet --input_height 320 --input_width 640 --image_init sub_mean --n_classes 12`
 
 
 
@@ -92,7 +92,7 @@ python test.py
 # 测试示例
 
 - 测试二分类数据集：`python test.py --model_name  unet --weights_path weight/unet.xx.hdf5 --classes 2 --image_init divide`
-- 测试CamVid数据集：`python test.py --model_name unet --weights_path weights/unet.xx.hdf5 --classes 50 --image_init sub_mean --input_height 320 --input_width 640`
+- 测试城市街景分割数据集：`python test.py --model_name unet --weights_path weights/unet.xx.hdf5 --classes 12 --image_init sub_mean --input_height 320 --input_width 640`
 
 
 
@@ -104,7 +104,7 @@ python test.py
 - 运行后，在`json`文件夹中会出现`mask_png、labelme_json`文件夹，`mask_png`中存放的是所有8位掩码文件！也即是本工程中使用的标签图。
 - 具体来说，我们的标签图就是分别指示每张图片上每一个位置的像素属于几，`0`是背景，然后你要的类别从`1`开始往后递增即可。
 - 本工程测试的一个2类的简单分割数据集，下载地址为：https://pan.baidu.com/s/1sVjBfmgALVK7uEjeWgIMug
-- 本工程测试的CamVid城市分割数据集，下载地址为：https://pan.baidu.com/s/1zequLd0aYXNseGoXn-tdog
+- 本工程测试的城市街景分割数据集，下载地址为：https://pan.baidu.com/s/1zequLd0aYXNseGoXn-tdog
 
 
 
@@ -127,7 +127,7 @@ python test.py
 
 
 
-## CamVid城市分割数据集分割结果
+## 城市街景分割数据集分割结果
 
 
 
@@ -155,7 +155,7 @@ python test.py
 
 
 
-## CamVid城市分割数据集分割可视化结果
+## 城市街景分割数据集分割可视化结果
 
 
 
