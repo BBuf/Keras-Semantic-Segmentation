@@ -28,6 +28,7 @@ parser.add_argument("--input_height", type=int, default=320)
 parser.add_argument("--input_width", type=int, default=640)
 
 parser.add_argument('--validate', type=bool, default=True)
+parser.add_argument("--resize_op", type=int, default=0)
 
 parser.add_argument("--train_batch_size", type=int, default=2)
 parser.add_argument("--val_batch_size", type=int, default=2)
@@ -72,6 +73,7 @@ if validate:
 n_classes = args.n_classes
 input_height = args.input_height
 input_width = args.input_width
+resize_op = args.resize
 
 modelFns = {
     'enet': Models.ENet.ENet,
@@ -132,14 +134,14 @@ output_width = model.outputWidth
 # data generator
 train_ge = data.imageSegmentationGenerator(train_images, train_segs,
                                            train_batch_size, n_classes,
-                                           input_height, input_width,
+                                           input_height, input_width, resize_op,
                                            output_height, output_width,
                                            image_init)
 
 if validate:
     val_ge = data.imageSegmentationGenerator(val_images, val_segs,
                                              val_batch_size, n_classes,
-                                             input_height, input_width,
+                                             input_height, input_width, resize_op,
                                              output_height, output_width,
                                              image_init)
 

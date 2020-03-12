@@ -24,6 +24,7 @@ parser.add_argument("--weights_path",
 parser.add_argument("--model_name", type=str, default="unet")
 parser.add_argument("--input_height", type=int, default=224)
 parser.add_argument("--input_width", type=int, default=224)
+parser.add_argument("--resize_op", type=int, default=0)
 parser.add_argument("--classes", type=int, default=2)
 parser.add_argument("--mIOU", type=bool, default=False)
 parser.add_argument("--val_images", type=str, default="data/streetscape/test_image/")
@@ -38,6 +39,7 @@ save_weights_path = args.weights_path
 model_name = args.model_name
 input_height = args.input_height
 input_width = args.input_width
+resize_op = args.resize_op
 n_class = args.classes
 iou = args.mIOU
 image_init = args.image_init
@@ -82,7 +84,7 @@ for imgName in images:
     origin_img = cv2.imread(imgName, 1)
     origin_h = origin_img.shape[0]
     origin_w = origin_img.shape[1]
-    X = data.getImage(imgName, input_width, input_height, image_init)
+    X = data.getImage(imgName, input_width, input_height, image_init, resize_op)
     pr = model.predict(np.array([X]))[0]
     pr = pr.reshape((output_height, output_width, n_class)).argmax(axis=2)
 
@@ -119,8 +121,8 @@ if iou:
     for _ in range(len(images)):
         img_path, seg_path = next(zipped)
         # get origin h, w
-        img = data.getImage(img_path, input_width, input_height, image_init)
-        gt = data.getLable(seg_path, n_class, output_width, output_height)
+        img = data.getImage(img_path, input_width, input_height, image_init, resize_op)
+        gt = data.getLable(seg_path, n_class, output_width, output_height, resize_op)
         pr = model.predict(np.array([img]))[0]
         gt = gt.argmax(axis=-1)
         pr = pr.argmax(axis=-1)
