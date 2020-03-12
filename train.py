@@ -4,6 +4,7 @@ import glob
 import os
 
 import keras
+import tensorflow as tf
 from keras.callbacks import (CSVLogger, EarlyStopping, ModelCheckpoint,
                              ReduceLROnPlateau)
 
@@ -13,19 +14,23 @@ from Models import (FCN8, ENet, ICNet, MobileNetFCN8, MobileNetUnet, PSPNet,
                     Segnet, SEUNet, Unet)
 from utils.utils import *
 
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+session = tf.Session(config=config)
+
 parser = argparse.ArgumentParser()
 parser.add_argument("--model_name", type=str, default="unet")
 parser.add_argument("--dataset_name", type=str, default="streetscape")
-parser.add_argument("--n_classes", type=int, default=2)
-parser.add_argument("--epochs", type=int, default=50)
+parser.add_argument("--n_classes", type=int, default=12)
+parser.add_argument("--epochs", type=int, default=150)
 
-parser.add_argument("--input_height", type=int, default=224)
-parser.add_argument("--input_width", type=int, default=224)
+parser.add_argument("--input_height", type=int, default=320)
+parser.add_argument("--input_width", type=int, default=640)
 
 parser.add_argument('--validate', type=bool, default=True)
 
-parser.add_argument("--train_batch_size", type=int, default=4)
-parser.add_argument("--val_batch_size", type=int, default=4)
+parser.add_argument("--train_batch_size", type=int, default=2)
+parser.add_argument("--val_batch_size", type=int, default=2)
 
 parser.add_argument("--train_save_path", type=str, default="weights/")
 parser.add_argument("--resume", type=str, default="")
@@ -68,8 +73,6 @@ n_classes = args.n_classes
 input_height = args.input_height
 input_width = args.input_width
 
-
-
 modelFns = {
     'enet': Models.ENet.ENet,
     'fcn8': Models.FCN8.FCN8,
@@ -106,7 +109,8 @@ reduce_lr = ReduceLROnPlateau('loss',
                               patience=int(patience / 2),
                               verbose=1)
 csv_logger = CSVLogger(log_file_path, append=False)
-model_names = train_save_path + '.{epoch:02d}-{acc:2f}.hdf5'
+model_names = os.path.join(train_save_path, '%s.{epoch:02d}-{acc:2f}.hdf5' % (
+    args.model_name))
 model_checkpoint = ModelCheckpoint(model_names,
                                    monitor='loss',
                                    save_best_only=True,
@@ -148,9 +152,6 @@ if not validate:
                         verbose=1,
                         shuffle=True)
 else:
-    # print("+" * 30)
-    # print(num_val, num_train, train_batch_size, val_batch_size)
-    # print("+" * 30)
     model.fit_generator(train_ge,
                         validation_data=val_ge,
                         epochs=epochs,
