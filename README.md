@@ -53,11 +53,11 @@ python train.py
 
 - `--dataset_name` 字符串，代表选择对应的数据集的名称，默认streetscape
 
-- ``--n_classes` 整型，代表分割图像中有几种类别的像素，默认为`2`。
+- `--n_classes` 整型，代表分割图像中有几种类别的像素，默认为`2`。
 - `--input_height`整型，代表要分割的图像需要`resize`的长，默认为`224`。
 - `--input_width` 整型，代表要分割的图像需要`resize`的宽，默认为`224`。
 - `--validate`布尔型，代表训练过程中是否需要验证集，默认为`True`，即使用验证集。
-- ``--epochs`整型，代表要训练多少个`epoch`，默认为`50`。
+- `--epochs`整型，代表要训练多少个`epoch`，默认为`50`。
 - `--train_batch_size`整型，代表训练时批量大小，默认为`4`。
 - `--model_name ` 字符串类型，代表训练时使用哪个模型，支持`enet`,`unet`,`segnet`,`fcn8`等多种模型，默认为`unet`。
 - `--train_save_path`字符串类型，代表训练时保存模型的路径，默认为`weights/unet`，即会将模型保存在`weights`文件夹下，并且每个模型名字前缀以`unet`开头，后面接迭代次数和准确率构成完整的保存模型的路径。
