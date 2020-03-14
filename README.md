@@ -144,14 +144,14 @@ python test.py
 
 |Epoch|model_name|Base Model|Segmentation Model|Train Acc|Train Loss|Val Acc|Val Loss|Test mIOU|
 | ---|---|---|---|---|---|---|---|---|
-|50|enet|ENet|Enet||||||
-|50|fcn8|Vanilla CNN|FCN8||||||
-|50|unet|Vanilla CNN|UNet||||||
-|50|segnet|Vanilla CNN|SegNet||||||
-|50|icnet|Vanilla CNN|ICNet||||||
-|50|pspnet|Vanilla CNN|PSPNet||||||
-|50|mobilenet_unet|MobileNet|MobileNetUnet||||||
-|50|mobilenet_fcn8|MobileNet|MobileNetFCN8||||||
+|50|enet|ENet|Enet|0.71|0.90|0.64|1.02|0.20|
+|50|fcn8|Vanilla CNN|FCN8|0.85|0.53|0.67|1.01|0.25|
+|50|unet|Vanilla CNN|UNet|0.78|0.78|0.62|1.14|0.19|
+|50|segnet|Vanilla CNN|SegNet|0.41|1.64|0.31|1.94|0.19|
+|50|icnet|Vanilla CNN|ICNet|0.89|0.38|0.72|0.84|0.33|
+|50|pspnet|Vanilla CNN|PSPNet| 0.86      | 0.48       | 0.65    | 1.14     | 0.30      |
+|50|mobilenet_unet|MobileNet|MobileNetUnet|0.90|0.36|0.73|0.87|0.34|
+|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|0.70|0.92|0.58|1.25|0.17|
 
 
 ## 人脸部位分割数据集

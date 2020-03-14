@@ -20,9 +20,11 @@ session = tf.Session(config=config)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--model_name", type=str, default="unet")
-parser.add_argument("--dataset_name", type=str, default="streetscape")
+parser.add_argument(
+    "--dataset_name", type=str,
+    default="streetscape")  # streetscape(12), helen_small(11), bbufdataset
 parser.add_argument("--n_classes", type=int, default=12)
-parser.add_argument("--epochs", type=int, default=150)
+parser.add_argument("--epochs", type=int, default=50)
 
 parser.add_argument("--input_height", type=int, default=320)
 parser.add_argument("--input_width", type=int, default=640)
@@ -30,8 +32,8 @@ parser.add_argument("--input_width", type=int, default=640)
 parser.add_argument('--validate', type=bool, default=True)
 parser.add_argument("--resize_op", type=int, default=1)
 
-parser.add_argument("--train_batch_size", type=int, default=2)
-parser.add_argument("--val_batch_size", type=int, default=2)
+parser.add_argument("--train_batch_size", type=int, default=4)
+parser.add_argument("--val_batch_size", type=int, default=16)
 
 parser.add_argument("--train_save_path", type=str, default="weights/")
 parser.add_argument("--resume", type=str, default="")
@@ -73,7 +75,7 @@ if validate:
 n_classes = args.n_classes
 input_height = args.input_height
 input_width = args.input_width
-resize_op = args.resize
+resize_op = args.resize_op
 
 modelFns = {
     'enet': Models.ENet.ENet,

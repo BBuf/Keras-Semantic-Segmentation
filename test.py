@@ -20,15 +20,19 @@ parser.add_argument("--test_images", type=str, default="data/test/")
 parser.add_argument("--output_path", type=str, default="data/output/")
 parser.add_argument("--weights_path",
                     type=str,
-                    default="weights/unet.18-0.856895.hdf5")
+                    default="weights/unet/unet.50-0.742981.hdf5")
 parser.add_argument("--model_name", type=str, default="unet")
-parser.add_argument("--input_height", type=int, default=224)
-parser.add_argument("--input_width", type=int, default=224)
+parser.add_argument("--input_height", type=int, default=320)
+parser.add_argument("--input_width", type=int, default=640)
 parser.add_argument("--resize_op", type=int, default=1)
-parser.add_argument("--classes", type=int, default=2)
-parser.add_argument("--mIOU", type=bool, default=False)
-parser.add_argument("--val_images", type=str, default="data/streetscape/test_image/")
-parser.add_argument("--val_annotations", type=str, default="data/streetscape/test_label/")
+parser.add_argument("--classes", type=int, default=12)
+parser.add_argument("--mIOU", type=bool, default=True)
+parser.add_argument("--val_images",
+                    type=str,
+                    default="data/streetscape/test_image/")
+parser.add_argument("--val_annotations",
+                    type=str,
+                    default="data/streetscape/test_label/")
 parser.add_argument("--image_init", type=str, default="sub_mean")
 
 args = parser.parse_args()
@@ -84,7 +88,8 @@ for imgName in images:
     origin_img = cv2.imread(imgName, 1)
     origin_h = origin_img.shape[0]
     origin_w = origin_img.shape[1]
-    X = data.getImage(imgName, input_width, input_height, image_init, resize_op)
+    X = data.getImage(imgName, input_width, input_height, image_init,
+                      resize_op)
     pr = model.predict(np.array([X]))[0]
     pr = pr.reshape((output_height, output_width, n_class)).argmax(axis=2)
 
@@ -121,8 +126,10 @@ if iou:
     for _ in range(len(images)):
         img_path, seg_path = next(zipped)
         # get origin h, w
-        img = data.getImage(img_path, input_width, input_height, image_init, resize_op)
-        gt = data.getLable(seg_path, n_class, output_width, output_height, resize_op)
+        img = data.getImage(img_path, input_width, input_height, image_init,
+                            resize_op)
+        gt = data.getLable(seg_path, n_class, output_width, output_height,
+                           resize_op)
         pr = model.predict(np.array([img]))[0]
         gt = gt.argmax(axis=-1)
         pr = pr.argmax(axis=-1)
