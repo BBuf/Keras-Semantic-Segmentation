@@ -52,10 +52,10 @@ python train.py
 可用参数如下：
 
 - `--dataset_name` 字符串，代表选择对应的数据集的名称，默认streetscape
-
 - `--n_classes` 整型，代表分割图像中有几种类别的像素，默认为`2`。
 - `--input_height`整型，代表要分割的图像需要`resize`的长，默认为`224`。
 - `--input_width` 整型，代表要分割的图像需要`resize`的宽，默认为`224`。
+- `--resize_op` 整型，代表`resize`的方式，如果为`1`则为默认`resize`，如果为2，则为`letterbox_resize`。
 - `--validate`布尔型，代表训练过程中是否需要验证集，默认为`True`，即使用验证集。
 - `--epochs`整型，代表要训练多少个`epoch`，默认为`50`。
 - `--train_batch_size`整型，代表训练时批量大小，默认为`4`。
@@ -90,6 +90,7 @@ python test.py
 - `--weights_path`字符串类型，代表预测时加载的模型权重，默认为`weights/unet.18-0.856895.hdf5`，即对应默认模型`unet`训练出来的模型权重。
 - `--input_height`整型，代表测试集输入到网络中需要被`resize`的长，默认为`224`。
 - `--input_width`整型，代表测试集输入到网络中需要被`resize`的宽，默认为`224`。
+- `--resize_op` 整型，代表`resize`的方式，如果为`1`则为默认`resize`，如果为2，则为`letterbox_resize`。
 - `--classes`整型，代表图片中的像素类别数，默认为`2`。
 - `--mIOU`布尔型，代表是否启用评测`mIOU`，默认为`False`，一旦启用需要提供带有`mask`图的测试数据集。
 - `--val_images`字符串类型，代表启用`mIOU`后测试集原图的路径，默认为`data/val_image/`。
