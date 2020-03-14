@@ -5,8 +5,6 @@ import os
 from keras.models import *
 from keras.layers import *
 from keras.optimizers import *
-# from keras.callbacks import ModelCheckpoint, LearningRateScheduler
-# from keras import backend as keras
 
 
 def Unet(nClasses, input_height=224, input_width=224):
