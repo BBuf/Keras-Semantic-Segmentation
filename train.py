@@ -28,7 +28,7 @@ parser.add_argument("--input_height", type=int, default=320)
 parser.add_argument("--input_width", type=int, default=640)
 
 parser.add_argument('--validate', type=bool, default=True)
-parser.add_argument("--resize_op", type=int, default=0)
+parser.add_argument("--resize_op", type=int, default=1)
 
 parser.add_argument("--train_batch_size", type=int, default=2)
 parser.add_argument("--val_batch_size", type=int, default=2)
