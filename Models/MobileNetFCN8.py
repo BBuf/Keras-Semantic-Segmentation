@@ -31,21 +31,21 @@ def MobileNetFCN8 (nClasses, optimizer=None, input_width=512, input_height=512, 
     img_input = Input(input_size)
     alpha = 1.0
     depth_multiplier = 1
-    x = conv_block(img_input, 32, alpha, strides=(2, 2))
-    x = depthwise_conv_block(x, 32, alpha, depth_multiplier, block_id=1)
+    x = conv_block(img_input, 16, alpha, strides=(2, 2))
+    x = depthwise_conv_block(x, 16, alpha, depth_multiplier, block_id=1)
     f1 = x
-    x = depthwise_conv_block(x, 64, alpha, depth_multiplier, strides=(2, 2), block_id=2)
-    x = depthwise_conv_block(x, 64, alpha, depth_multiplier, block_id=3)
+    x = depthwise_conv_block(x, 32, alpha, depth_multiplier, strides=(2, 2), block_id=2)
+    x = depthwise_conv_block(x, 32, alpha, depth_multiplier, block_id=3)
     f2 = x
-    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, strides=(2, 2), block_id=4)
-    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, block_id=5)
+    x = depthwise_conv_block(x, 64, alpha, depth_multiplier, strides=(2, 2), block_id=4)
+    x = depthwise_conv_block(x, 64, alpha, depth_multiplier, block_id=5)
     f3 = x
-    x = depthwise_conv_block(x, 256, alpha, depth_multiplier, strides=(2, 2), block_id=6)
-    x = depthwise_conv_block(x, 256, alpha, depth_multiplier, block_id=7)
-    x = depthwise_conv_block(x, 256, alpha, depth_multiplier, block_id=8)
-    x = depthwise_conv_block(x, 256, alpha, depth_multiplier, block_id=9)
-    x = depthwise_conv_block(x, 256, alpha, depth_multiplier, block_id=10)
-    x = depthwise_conv_block(x, 256, alpha, depth_multiplier, block_id=11)
+    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, strides=(2, 2), block_id=6)
+    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, block_id=7)
+    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, block_id=8)
+    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, block_id=9)
+    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, block_id=10)
+    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, block_id=11)
     f4 = x
     x = depthwise_conv_block(x, 256, alpha, depth_multiplier, strides=(2, 2), block_id=12)
     x = depthwise_conv_block(x, 256, alpha, depth_multiplier, block_id=13)
