@@ -1,10 +1,7 @@
 #coding=utf-8
 from keras.models import *
 from keras.layers import *
-import keras
 import keras.backend as K
-
-
 
 def relu6(x):
     return K.relu(x, max_value=6)
@@ -32,21 +29,21 @@ def MobileNetUnet (nClasses, input_width=224, input_height=224):
     inputs = Input(input_size)
     alpha = 1.0
     depth_multiplier = 1
-    x = conv_block(inputs, 32, alpha, strides=(2, 2))
-    x = depthwise_conv_block(x, 64, alpha, depth_multiplier, block_id=1)
+    x = conv_block(inputs, 16, alpha, strides=(2, 2))
+    x = depthwise_conv_block(x, 16, alpha, depth_multiplier, block_id=1)
     f1 = x
-    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, strides=(2, 2), block_id=2)
-    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, block_id=3)
+    x = depthwise_conv_block(x, 32, alpha, depth_multiplier, strides=(2, 2), block_id=2)
+    x = depthwise_conv_block(x, 32, alpha, depth_multiplier, block_id=3)
     f2 = x
-    x = depthwise_conv_block(x, 256, alpha, depth_multiplier, strides=(2, 2), block_id=4)
-    x = depthwise_conv_block(x, 256, alpha, depth_multiplier, block_id=5)
+    x = depthwise_conv_block(x, 64, alpha, depth_multiplier, strides=(2, 2), block_id=4)
+    x = depthwise_conv_block(x, 64, alpha, depth_multiplier, block_id=5)
     f3 = x
-    x = depthwise_conv_block(x, 512, alpha, depth_multiplier, strides=(2, 2), block_id=6)
-    x = depthwise_conv_block(x, 512, alpha, depth_multiplier, block_id=7)
-    x = depthwise_conv_block(x, 512, alpha, depth_multiplier, block_id=8)
-    x = depthwise_conv_block(x, 512, alpha, depth_multiplier, block_id=9)
-    x = depthwise_conv_block(x, 512, alpha, depth_multiplier, block_id=10)
-    x = depthwise_conv_block(x, 512, alpha, depth_multiplier, block_id=11)
+    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, strides=(2, 2), block_id=6)
+    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, block_id=7)
+    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, block_id=8)
+    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, block_id=9)
+    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, block_id=10)
+    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, block_id=11)
     f4 = x
     #x = depthwise_conv_block(x, 1024, alpha, depth_multiplier, strides=(2, 2), block_id=12)
     #x = depthwise_conv_block(x, 1024, alpha, depth_multiplier, block_id=13)
@@ -54,23 +51,23 @@ def MobileNetUnet (nClasses, input_width=224, input_height=224):
 
     o = f4
 
-    o = Conv2D(512, (3, 3), activation='relu', padding='same')(o)
+    o = Conv2D(128, (3, 3), activation='relu', padding='same')(o)
     o = BatchNormalization()(o)
     # decode
     o = (UpSampling2D((2, 2)))(o)
     o = (concatenate([o, f3], axis=-1))
-    o = (Conv2D(256, (3, 3), padding='same'))(o)
+    o = (Conv2D(64, (3, 3), padding='same'))(o)
     o = (BatchNormalization())(o)
 
     o = (UpSampling2D((2, 2)))(o)
     o = (concatenate([o, f2], axis=-1))
-    o = (Conv2D(128, (3, 3), padding='same'))(o)
+    o = (Conv2D(32, (3, 3), padding='same'))(o)
     o = (BatchNormalization())(o)
 
     o = (UpSampling2D((2, 2)))(o)
     o = (concatenate([o, f1], axis=-1))
 
-    o = (Conv2D(64, (3, 3), padding='same'))(o)
+    o = (Conv2D(16, (3, 3), padding='same'))(o)
     o = (BatchNormalization())(o)
 
     o = Conv2D(nClasses, (3, 3), padding='same')(o)
