@@ -152,6 +152,7 @@ python test.py
 |50|pspnet(576x384)|Vanilla CNN|PSPNet| 0.88      | 0.41       | 0.73    | 0.88     | 0.33      |
 |50|mobilenet_unet|MobileNet|MobileNetUnet|0.90|0.36|0.73|0.87|0.34|
 |50|mobilenet_fcn8|MobileNet|MobileNetFCN8|0.70|0.92|0.58|1.25|0.17|
+|50|seunet|Vanilla CNN|SEUnet|0.84|0.59|0.77|0.79|0.34|
 
 
 ## 人脸部位分割数据集
