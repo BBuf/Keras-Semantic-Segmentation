@@ -194,9 +194,8 @@ python test.py
 ## TODO
 
 - 支持DeepLab，UNet++等。
-- 增加letter-box resize方式。
 - 数据增强策略。
-- 新增tensorflow实现，使用tesor-RT部署。
+- 支持OpenVINO和TensorRT部署。
 
 
 
