@@ -99,7 +99,7 @@ for imgName in images:
         seg_img[:, :, 1] += ((pr[:, :] == c) * (colors[c][1])).astype('uint8')
         seg_img[:, :, 2] += ((pr[:, :] == c) * (colors[c][2])).astype('uint8')
 
-    seg_img = cv2.resize(seg_img, (input_width, input_height))
+    seg_img = cv2.resize(seg_img, (input_width, input_height), interpolation=cv2.INTER_NEAREST)
     cv2.imwrite(outName, seg_img)
     cnt += 1
 
