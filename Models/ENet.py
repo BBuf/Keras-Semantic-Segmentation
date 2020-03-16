@@ -8,6 +8,8 @@ from keras.layers.pooling import MaxPooling2D
 from keras.engine.topology import Input
 from keras.models import Model
 
+__all__ = ['ENet']
+
 def initial_block(inp, nb_filter=13, nb_row=3, nb_col=3, strides=(2, 2)):
     conv = Conv2D(nb_filter, (nb_row, nb_col), padding='same', strides=strides)(inp)
     max_pool = MaxPooling2D()(inp)

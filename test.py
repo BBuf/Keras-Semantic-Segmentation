@@ -10,8 +10,7 @@ from keras.models import load_model
 
 import data
 import Models
-from Models import (FCN8, ENet, ICNet, MobileNetFCN8, MobileNetUnet, PSPNet,
-                    Segnet, SEUNet, Unet)
+from Models import build_model
 
 EPS = 1e-12
 
@@ -55,21 +54,11 @@ colors = [(random.randint(0, 255), random.randint(0,
           for _ in range(5000)]
 
 # model
-modelFns = {
-    'fcn8': Models.FCN8.FCN8,
-    'unet': Models.Unet.Unet,
-    'enet': Models.ENet.ENet,
-    'segnet': Models.Segnet.Segnet,
-    'pspnet': Models.PSPNet.PSPNet,
-    'icnet': Models.ICNet.ICNet,
-    'mobilenet_unet': Models.MobileNetUnet.MobileNetUnet,
-    'mobilenet_fcn8': Models.MobileNetFCN8.MobileNetFCN8,
-    'seunet': Models.SEUNet.SEUnet
-}
+model = build_model(model_name,
+                    n_classes,
+                    input_height=input_height,
+                    input_width=input_width)
 
-modelFN = modelFns[model_name]
-
-model = modelFN(n_class, input_height=input_height, input_width=input_width)
 model.load_weights(save_weights_path)
 output_height = model.outputHeight
 output_width = model.outputWidth

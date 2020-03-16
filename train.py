@@ -10,8 +10,7 @@ from keras.callbacks import (CSVLogger, EarlyStopping, ModelCheckpoint,
 
 import data
 import Models
-from Models import (FCN8, ENet, ICNet, MobileNetFCN8, MobileNetUnet, PSPNet,
-                    Segnet, SEUNet, Unet)
+from Models import build_model
 from utils.utils import *
 
 config = tf.ConfigProto()
@@ -77,19 +76,24 @@ input_height = args.input_height
 input_width = args.input_width
 resize_op = args.resize_op
 
-modelFns = {
-    'enet': Models.ENet.ENet,
-    'fcn8': Models.FCN8.FCN8,
-    'unet': Models.Unet.Unet,
-    'segnet': Models.Segnet.Segnet,
-    'pspnet': Models.PSPNet.PSPNet,
-    'icnet': Models.ICNet.ICNet,
-    'mobilenet_unet': Models.MobileNetUnet.MobileNetUnet,
-    'mobilenet_fcn8': Models.MobileNetFCN8.MobileNetFCN8,
-    'seunet': Models.SEUNet.SEUnet
-}
-modelFN = modelFns[model_name]
-model = modelFN(n_classes, input_height=input_height, input_width=input_width)
+# modelFns = {
+#     'enet': Models.ENet.ENet,
+#     'fcn8': Models.FCN8.FCN8,
+#     'unet': Models.Unet.Unet,
+#     'segnet': Models.Segnet.Segnet,
+#     'pspnet': Models.PSPNet.PSPNet,
+#     'icnet': Models.ICNet.ICNet,
+#     'mobilenet_unet': Models.MobileNetUnet.MobileNetUnet,
+#     'mobilenet_fcn8': Models.MobileNetFCN8.MobileNetFCN8,
+#     'seunet': Models.SEUNet.SEUnet
+# }
+# modelFN = modelFns[model_name]
+# model = modelFN(n_classes, input_height=input_height, input_width=input_width)
+
+model = build_model(model_name,
+                    n_classes,
+                    input_height=input_height,
+                    input_width=input_width)
 
 # 统计一下训练集/验证集样本数，确定每一个epoch需要训练的iter
 images = glob.glob(os.path.join(train_images, "*.jpg")) + \
