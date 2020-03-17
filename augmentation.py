@@ -4,14 +4,24 @@ import Augmentor
 import glob
 import os
 import random
+import argparse
 
 from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_array, load_img
 
-train_path = 'F:/Keras-Semantic-Segmentation/dataset1/images_prepped_train'
-mask_path = 'F:/Keras-Semantic-Segmentation/dataset1/annotations_prepped_train'
-augtrain_path = 'F:/Keras-Semantic-Segmentation/dataset1/new_img'
-augmask_path = 'F:/Keras-Semantic-Segmentation/dataset1/new_mask'
-img_type = 'jpg'
+parser = argparse.ArgumentParser()
+parser.add_argument("--train_path", type=str, default="F:/Keras-Semantic-Segmentation/dataset1/images_prepped_train")
+parser.add_argument("--mask_path", type=str, default='F:/Keras-Semantic-Segmentation/dataset1/annotations_prepped_train')
+parser.add_argument("--augtrain_path", type=str, default='F:/Keras-Semantic-Segmentation/dataset1/new_img')
+parser.add_argument("--augmask_path", type=str, default='F:/Keras-Semantic-Segmentation/dataset1/new_mask')
+parser.add_argument("--img_type", type=str, default="jpg")
+
+args = parser.parse_args()
+
+train_path = args.train_path
+mask_path = args.mask_path
+augtrain_path = args.augtrain_path
+augmask_path = args.augmask_path
+img_type = args.img_type
 
 def Init(train_path, mask_path):
     train_img = glob.glob(train_path + '/*.' + img_type)
@@ -42,7 +52,6 @@ def Init(train_path, mask_path):
     return cnt
 
 def doAugment(num):
-    cnt = 0
     for i in range(num):
         p = Augmentor.Pipeline(augtrain_path + '/' + str(i))
         p.ground_truth(augmask_path + '/' + str(i))
@@ -57,7 +66,6 @@ def doAugment(num):
         p.sample(count)
         print("Done")
     print("%s pairs of data has been created totally" % sum)
-
 
 cnt = Init(train_path, mask_path)
 # 默认开启了多线程
