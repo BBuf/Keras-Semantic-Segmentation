@@ -13,7 +13,7 @@ parser.add_argument("--train_path", type=str, default="F:/Keras-Semantic-Segment
 parser.add_argument("--mask_path", type=str, default='F:/Keras-Semantic-Segmentation/dataset1/annotations_prepped_train')
 parser.add_argument("--augtrain_path", type=str, default='F:/Keras-Semantic-Segmentation/dataset1/new_img')
 parser.add_argument("--augmask_path", type=str, default='F:/Keras-Semantic-Segmentation/dataset1/new_mask')
-parser.add_argument("--img_type", type=str, default="jpg")
+parser.add_argument("--img_type", type=str, default="png")
 
 args = parser.parse_args()
 
@@ -52,18 +52,19 @@ def Init(train_path, mask_path):
     return cnt
 
 def doAugment(num):
+    sum = 0
     for i in range(num):
         p = Augmentor.Pipeline(augtrain_path + '/' + str(i))
         p.ground_truth(augmask_path + '/' + str(i))
-        p.rotate(probability=0.5, max_left_rotation=5, max_right_rotation=5)  # 旋转
-        p.flip_left_right(probability=0.5)  # 按概率左右翻转
-        p.zoom_random(probability=0.6, percentage_area=0.99)  # 随即将一定比例面积的图形放大至全图
-        p.flip_top_bottom(probability=0.6)  # 按概率随即上下翻转
-        p.random_distortion(probability=0.8, grid_width=10, grid_height=10, magnitude=20)  # 小块变形
-        count = random.randint(40, 60)
-        print("\nNo.%s data is being augmented and %s data will be created" % (i, count))
-        sum = sum + count
-        p.sample(count)
+        p.rotate(probability=0.5, max_left_rotation=5, max_right_rotation=5)  # 随机旋转
+        p.flip_left_right(probability=0.5)  # 随机按概率左右翻转
+        p.zoom_random(probability=0.5, percentage_area=0.8)  # 随机将一定比例面积的图形放大至全图
+        #p.flip_top_bottom(probability=0.6)  # 随机按概率随即上下翻转
+        p.random_distortion(probability=0.8, grid_width=10, grid_height=10, magnitude=20)  # 随机小块变形
+        #p.resize(probability=1.0, width=480, height=360)
+        print("\nNo.%s data is being augmented and %s data will be created" % (i, cnt))
+        sum = sum + 5
+        p.sample(5)
         print("Done")
     print("%s pairs of data has been created totally" % sum)
 
