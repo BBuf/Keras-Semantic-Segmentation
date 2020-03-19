@@ -5,6 +5,7 @@ import glob
 import os
 import random
 import argparse
+import itertools
 
 from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_array, load_img
 
@@ -30,20 +31,26 @@ def Init(train_path, mask_path):
     if len(train_img) != len(masks):
         print('train images can not match with train masks')
         return 0
+    train_img.sort()
+    masks.sort()
+    assert len(train_img) == len(masks)
+    zipped = itertools.cycle(zip(train_img, masks))
     cnt = 0
     for i in range(len(train_img)):
-        train_img_tmp_path = train_path + '/' + str(i)
+        path1, path2 = next(zipped)
+
+        train_img_tmp_path = augtrain_path + '/' + str(i)
         if not os.path.lexists(train_img_tmp_path):
             os.mkdir(train_img_tmp_path)
-        img = load_img(train_path + '/' + str(i) + '.' + img_type)
+        img = load_img(path1)
         x_t = img_to_array(img)
         img_tmp = array_to_img(x_t)
         img_tmp.save(train_img_tmp_path + '/' + str(i) + '.' + img_type)
 
-        mask_img_tmp_path = mask_path + '/' + str(i)
+        mask_img_tmp_path = augmask_path + '/' + str(i)
         if not os.path.lexists(mask_img_tmp_path):
             os.mkdir(mask_img_tmp_path)
-        mask = load_img(mask_path + '/' + str(i) + '.' + img_type)
+        mask = load_img(path2)
         x_l = img_to_array(mask)
         mask_tmp = array_to_img(x_l)
         mask_tmp.save(mask_img_tmp_path + '/' + str(i) + '.' + img_type)
@@ -60,7 +67,7 @@ def doAugment(num):
         p.flip_left_right(probability=0.5)  # 随机按概率左右翻转
         p.zoom_random(probability=0.5, percentage_area=0.8)  # 随机将一定比例面积的图形放大至全图
         #p.flip_top_bottom(probability=0.6)  # 随机按概率随即上下翻转
-        p.random_distortion(probability=0.8, grid_width=10, grid_height=10, magnitude=20)  # 随机小块变形
+        #p.random_distortion(probability=0.8, grid_width=10, grid_height=10, magnitude=20)  # 随机小块变形
         #p.resize(probability=1.0, width=480, height=360)
         print("\nNo.%s data is being augmented and %s data will be created" % (i, cnt))
         sum = sum + 5
