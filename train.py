@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 import argparse
 import glob
 import os
@@ -97,14 +97,14 @@ model = build_model(model_name,
 
 # 统计一下训练集/验证集样本数，确定每一个epoch需要训练的iter
 images = glob.glob(os.path.join(train_images, "*.jpg")) + \
-         glob.glob(os.path.join(train_images, "*.png")) + \
-         glob.glob(os.path.join(train_images, "*.jpeg"))
+    glob.glob(os.path.join(train_images, "*.png")) + \
+    glob.glob(os.path.join(train_images, "*.jpeg"))
 
 num_train = len(images)
 
 images = glob.glob(os.path.join(val_images, "*.jpg")) + \
-         glob.glob(os.path.join(val_images, "*.png")) + \
-         glob.glob(os.path.join(val_images, "*.jpeg"))
+    glob.glob(os.path.join(val_images, "*.png")) + \
+    glob.glob(os.path.join(val_images, "*.jpeg"))
 
 num_val = len(images)
 
