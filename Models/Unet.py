@@ -1,9 +1,6 @@
-#coding=utf-8
-
-import numpy as np
-import os
-from keras.models import *
+# coding=utf-8
 from keras.layers import *
+from keras.models import *
 from keras.optimizers import *
 
 

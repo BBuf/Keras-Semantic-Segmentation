@@ -159,14 +159,14 @@ python test.py
 
 |Epoch|model_name|Base Model|Segmentation Model|Train Acc|Train Loss|Val Acc|Val Loss|Test mIOU|
 | ---|---|---|---|---|---|---|---|---|
-|50|enet|ENet|Enet||||||
-|50|fcn8|Vanilla CNN|FCN8||||||
-|50|unet|Vanilla CNN|UNet||||||
-|50|segnet|Vanilla CNN|SegNet||||||
-|50|icnet|Vanilla CNN|ICNet||||||
-|50|pspnet|Vanilla CNN|PSPNet||||||
-|50|mobilenet_unet|MobileNet|MobileNetUnet||||||
-|50|mobilenet_fcn8|MobileNet|MobileNetFCN8||||||
+|50|enet|ENet|Enet| 0.80      | 0.61       | 0.84    | 0.54     | 0.10      |
+|50|fcn8|Vanilla CNN|FCN8|0.89|0.36|0.86|0.47|0.17|
+|50|unet|Vanilla CNN|UNet|0.91|0.31|0.83|0.62|0.17|
+|50|segnet|Vanilla CNN|SegNet|0.76|0.86|0.79|0.79|0.06|
+|50|icnet|Vanilla CNN|ICNet|0.86|0.42|0.85|0.44|0.11|
+|50|pspnet|Vanilla CNN|PSPNet|0.86|0.40|0.85|0.42|0.18|
+|50|mobilenet_unet|MobileNet|MobileNetUnet|0.83|0.49|0.95|0.45|0.14|
+|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|0.76|0.87|0.79|0.77|0.06|
 
 
 

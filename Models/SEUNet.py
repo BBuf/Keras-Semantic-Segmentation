@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 from keras.layers import *
 from keras.models import *
 
@@ -207,7 +207,7 @@ def SEUnet(nClasses, input_height=224, input_width=224):
                    kernel_initializer='he_normal')(conv9)
     conv9 = BatchNormalization()(conv9)
 
-    # se 
+    # se
     conv9 = SEModule(conv9, 2, 16)
 
     conv10 = Conv2D(nClasses, (3, 3), padding='same')(conv9)

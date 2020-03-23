@@ -24,14 +24,15 @@ parser.add_argument("--model_name", type=str, default="unet")
 parser.add_argument("--input_height", type=int, default=320)
 parser.add_argument("--input_width", type=int, default=640)
 parser.add_argument("--resize_op", type=int, default=1)
-parser.add_argument("--classes", type=int, default=12)
+parser.add_argument("--classes", type=int, default=11)
+# streetscape(12)(320x640), helen_small(11)(512x512), bbufdataset
 parser.add_argument("--mIOU", type=bool, default=True)
 parser.add_argument("--val_images",
                     type=str,
-                    default="data/streetscape/test_image/")
+                    default="data/helen_small/test_image/")
 parser.add_argument("--val_annotations",
                     type=str,
-                    default="data/streetscape/test_label/")
+                    default="data/helen_small/test_label/")
 parser.add_argument("--image_init", type=str, default="sub_mean")
 
 args = parser.parse_args()
@@ -55,7 +56,7 @@ colors = [(random.randint(0, 255), random.randint(0,
 
 # model
 model = build_model(model_name,
-                    n_classes,
+                    n_class,
                     input_height=input_height,
                     input_width=input_width)
 
