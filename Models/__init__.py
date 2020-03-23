@@ -9,6 +9,7 @@ from .PSPNet import *
 from .Segnet import *
 from .SEUNet import *
 from .Unet import *
+from .scSEUnet import *
 
 __model_factory = {
     'enet': ENet,
@@ -19,7 +20,8 @@ __model_factory = {
     'icnet': ICNet,
     'mobilenet_unet': MobileNetUnet,
     'mobilenet_fcn8': MobileNetFCN8,
-    'seunet': SEUnet
+    'seunet': SEUnet,
+    'scseunet': scSEUnet
 }
 
 
