@@ -11,14 +11,13 @@ from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_a
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--train_path", type=str,
-                    default="F:/Keras-Semantic-Segmentation/dataset1/images_prepped_train")
+                    default="./data/images_prepped_train")
 parser.add_argument("--mask_path", type=str,
-                    default='F:/Keras-Semantic-Segmentation/dataset1/annotations_prepped_train')
+                    default='./data/annotations_prepped_train')
 parser.add_argument("--augtrain_path", type=str,
-                    default='F:/Keras-Semantic-Segmentation/dataset1/new_img')
+                    default='./data/new_img')
 parser.add_argument("--augmask_path", type=str,
-                    default='F:/Keras-Semantic-Segmentation/dataset1/new_mask')
-parser.add_argument("--img_type", type=str, default="png")
+                    default='./data/new_mask')
 
 args = parser.parse_args()
 
@@ -26,16 +25,20 @@ train_path = args.train_path
 mask_path = args.mask_path
 augtrain_path = args.augtrain_path
 augmask_path = args.augmask_path
-img_type = args.img_type
-
+sum = 0
 
 def Init(train_path, mask_path):
-    train_img = glob.glob(train_path + '/*.' + img_type)
-    masks = glob.glob(mask_path + '/*.' + img_type)
+    train_img = glob.glob(train_path + '/*.jpg') + glob.glob(train_path + '/*.png') + glob.glob(train_path + '/*.bmp')
+    masks = glob.glob(mask_path + '/*.jpg') + glob.glob(mask_path + '/*.png') + glob.glob(mask_path + '/*.bmp')
 
     if len(train_img) != len(masks):
         print('train images can not match with train masks')
         return 0
+    if not os.path.lexists(augtrain_path):
+        os.mkdir(augtrain_path)
+    if not os.path.lexists(augmask_path):
+        os.mkdir(augmask_path)
+
     train_img.sort()
     masks.sort()
     assert len(train_img) == len(masks)
@@ -50,7 +53,7 @@ def Init(train_path, mask_path):
         img = load_img(path1)
         x_t = img_to_array(img)
         img_tmp = array_to_img(x_t)
-        img_tmp.save(train_img_tmp_path + '/' + str(i) + '.' + img_type)
+        img_tmp.save(train_img_tmp_path + '/' + str(i) + '.jpg')
 
         mask_img_tmp_path = augmask_path + '/' + str(i)
         if not os.path.lexists(mask_img_tmp_path):
@@ -58,7 +61,7 @@ def Init(train_path, mask_path):
         mask = load_img(path2)
         x_l = img_to_array(mask)
         mask_tmp = array_to_img(x_l)
-        mask_tmp.save(mask_img_tmp_path + '/' + str(i) + '.' + img_type)
+        mask_tmp.save(mask_img_tmp_path + '/' + str(i) + '.jpg')
         print("%s folder has been created!" % str(i))
         cnt += 1
     return cnt
@@ -83,7 +86,34 @@ def doAugment(num):
         print("Done")
     print("%s pairs of data has been created totally" % sum)
 
+def Merge(num):
+
+    if not os.path.lexists(augtrain_path + '/final_img'):
+        os.mkdir(augtrain_path + '/final_img')
+    if not os.path.lexists(augmask_path + '/final_mask'):
+        os.mkdir(augmask_path + '/final_mask')
+    final_img_path = augtrain_path + '/final_img'
+    final_mask_path = augmask_path + '/final_mask'
+    cnt = 0
+    for i in range(num):
+        path = augtrain_path + '/' + str(i) + '/output/'
+        print(path)
+        pairs = glob.glob(path + '*.jpg')
+        pairs.sort()
+        half = len(pairs) // 2
+        print(half)
+        for i in range(half):
+            path1 = pairs[i]
+            path2 = pairs[i + half]
+            img = load_img(path1)
+            mask = load_img(path2)
+            img.save(final_img_path + '/' + str(cnt) + '.jpg')
+            mask.save(final_mask_path + '/' + str(cnt) + '.jpg')
+            cnt += 1
+    print('%d pairs of data has been created totally' % cnt)
+
 
 cnt = Init(train_path, mask_path)
 # 默认开启了多线程
 doAugment(cnt)
+Merge(cnt)

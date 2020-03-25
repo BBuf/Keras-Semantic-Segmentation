@@ -39,13 +39,15 @@
 |50|pspnet|Vanilla CNN|PSPNet|True|
 |50|mobilenet_unet|MobileNet|MobileNetUnet|True|
 |50|mobilenet_fcn8|MobileNet|MobileNetFCN8|True|
+|50|seunet|SENet|SEUNet|True|
+|50|scseunet|SCSENet|scSEUNet|True|
 
 
 # 训练
 
 使用下面的命令训练和保存模型，模型保存路径，训练超参数需要灵活设置。
 
-```python
+```sh
 python train.py 
 ```
 
@@ -78,7 +80,7 @@ python train.py
 
 使用下面的命令测试模型，加载模型的路径，图像输入分辨率等参数需要灵活设置。
 
-```python
+```sh
 python test.py
 ```
 
@@ -103,6 +105,28 @@ python test.py
 
 - 测试二分类数据集：`python test.py --model_name  unet --weights_path weight/unet.xx.hdf5 --classes 2 --image_init divide`
 - 测试城市街景分割数据集：`python test.py --model_name unet --weights_path weights/unet.xx.hdf5 --classes 12 --image_init sub_mean --input_height 320 --input_width 640 --resize_op 2(2代表使用letterbox方式进行resize)`
+- 测试人脸部位分割数据集：
+
+
+
+# 数据增强
+
+我们结合Augmentor这个库实现了一套完整的数据增强策略，即`augmentation.py`。你可以自由增加，减少各种Augmentor支持的操作。Augmentor这个数据增强库的安装方式为：`pip install Augmentor`。然后Augmentor是一个独立的脚本需要在你进行训练之前进行本地增强然后将增强出来的数据拷贝到你的原始数据集中去扩充数据。它需要下面`4`个参数。
+
+- `--train_path`  字符串类型，代表训练集的原始图片的路径，默认为`./data/images_prepped_train`。
+- `--mask_path`字符串类型，代表训练集的分割标签图的路径，默认为`./data/annotations_prepped_train`。
+- `--augtrain_path`字符串类型，代表增强后的图像的路径，默认为`./data/new_img`。
+- `--augtrain_mask` 字符串类型，代表增强后的分割标签图的路径，默认为`./data/new_mask`。
+
+其中`augtrain_path`和`augtrain_mask`这两个目录如果没有事先建立的话，程序会为你自动建立。执行数据增强的命令为：
+
+```sh
+python augmentation.py --train_path xxx --mask_path xxx --augtrain_path xxx --augtrain_mask xxx
+```
+
+
+
+然后，我们就会在你指定的增强路径下生成一定数量（数量也可以自己控制，程序中写死了是为每张图像生成5张增强后的图）的增强图了。
 
 
 
@@ -135,6 +159,8 @@ python test.py
 |50|pspnet|Vanilla CNN|PSPNet|0.99|0.02|0.99|0.02|0.94|
 |50|mobilenet_unet|MobileNet|MobileNetUnet|0.99|0.02|0.99|0.02|0.94|
 |50|mobilenet_fcn8|MobileNet|MobileNetFCN8|0.99|0.02|0.99|0.02|0.94|
+|50|seunet|SENet|SEUNet||||||
+|50|scseunet|SCSENet|scSEUNet||||||
 
 
 
@@ -153,6 +179,8 @@ python test.py
 |50|mobilenet_unet|MobileNet|MobileNetUnet|0.90|0.36|0.73|0.87|0.34|
 |50|mobilenet_fcn8|MobileNet|MobileNetFCN8|0.70|0.92|0.58|1.25|0.17|
 |50|seunet|Vanilla CNN|SEUnet|0.84|0.59|0.77|0.79|0.34|
+|50|seunet|SENet|SEUNet||||||
+|50|scseunet|SCSENet|scSEUNet||||||
 
 
 ## 人脸部位分割数据集
@@ -167,6 +195,8 @@ python test.py
 |50|pspnet|Vanilla CNN|PSPNet|0.86|0.40|0.85|0.42|0.18|
 |50|mobilenet_unet|MobileNet|MobileNetUnet|0.83|0.49|0.95|0.45|0.14|
 |50|mobilenet_fcn8|MobileNet|MobileNetFCN8|0.76|0.87|0.79|0.77|0.06|
+|50|seunet|SENet|SEUNet||||||
+|50|scseunet|SCSENet|scSEUNet||||||
 
 
 
@@ -195,7 +225,6 @@ python test.py
 ## TODO
 
 - 支持DeepLab，UNet++等。
-- 数据增强策略。
 - 支持OpenVINO和TensorRT部署。
 
 
