@@ -23,7 +23,7 @@ parser.add_argument("--weights_path",
 parser.add_argument("--model_name", type=str, default="unet")
 parser.add_argument("--input_height", type=int, default=320)
 parser.add_argument("--input_width", type=int, default=640)
-parser.add_argument("--resize_op", type=int, default=1)
+parser.add_argument("--resize_op", type=int, default=2)
 parser.add_argument("--classes", type=int, default=11)
 # streetscape(12)(320x640), helen_small(11)(512x512), bbufdataset
 parser.add_argument("--mIOU", type=bool, default=True)
