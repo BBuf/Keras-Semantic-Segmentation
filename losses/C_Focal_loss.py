@@ -3,14 +3,13 @@ import tensorflow as tf
 from tensorflow.python.ops import array_ops
 from keras import backend as K
 
-def focal_loss(classes_num, gamma=2., e=0.1):
+def focal_loss_multiclasses(classes_num, gamma=2., e=0.1):
     # classes_num包含每一个类别的样本数量
     def focal_loss_fixed(y_pred, y_true):
         '''
         y_pred 是输出Tensor，形状类似[None, 10]，其中10是类别数
         y_true 是标签Tensor
         '''
-
         #1# get focal loss with no balanced weight which presented in paper function (4)
         zeros = array_ops.zeros_like(y_pred, dtype=y_pred.dtype)
         one_minus_p = array_ops.where(tf.greater(y_true,zeros), y_true - y_pred, zeros)
