@@ -1,3 +1,4 @@
+#coding=utf-8
 import tensorflow as tf
 import keras
 from keras.layers import Flatten
@@ -12,7 +13,7 @@ def Tversky(y_true, y_pred, smooth=1e-6):
     alpha = 0.7
     return (true_pos + smooth)/(true_pos + alpha*false_neg + (1-alpha)*false_pos + smooth)
 
-def Tversky_loss(y_true, y_pred):
+def Tversky_Loss(y_true, y_pred):
     return 1 - Tversky(y_true,y_pred)
 
 

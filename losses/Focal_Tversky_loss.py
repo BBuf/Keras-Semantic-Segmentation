@@ -1,3 +1,4 @@
+#coding=utf-8
 import tensorflow as tf
 import keras
 from keras.layers import Flatten
@@ -12,7 +13,7 @@ def Tversky(y_true, y_pred, smooth=1e-6):
     alpha = 0.7
     return (true_pos + smooth)/(true_pos + alpha*false_neg + (1-alpha)*false_pos + smooth)
 
-def Focal_Tversky_loss(y_true, y_pred):
+def Focal_Tversky_Loss(y_true, y_pred):
     pt = Tversky(y_true, y_pred)
     gamma = 0.75
     return tf.pow((1-pt), gamma)
