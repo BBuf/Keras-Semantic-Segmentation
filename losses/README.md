@@ -10,3 +10,4 @@
 - Generalized_Dice_loss.py 改善Dice Loss，将多个类别的Dice Loss进行整合，使用一个参数作为分割结果的量化指标
 - Jaccard_Loss.py 实现了Jaccard Loss
 - BCE_Jaccard_Loss.py 实现了BCE_Jaccard_Loss
+- CE_Jaccard_Loss.py 实现了CE_Jaccard_Loss
