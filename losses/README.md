@@ -7,5 +7,6 @@
 - Tversky_loss.py  用于多分类（包括二分类）的Tversky Loss
 - Focal_Tversky_loss.py 用于多分类（包含二分类）的Focal Loss和Tversky_loss加权
 - Weighted_Categorical_loss.py 带权重的交叉熵损失，可以平衡原本数量
-- Generalized_Dice_loss.py 改善Dice Loss，将多个类别的Dice Loss进行整合，使用一个参数作为分割结果的量化指标。
-- Jaccard_Loss.py 实现了Jaccard Loss。
+- Generalized_Dice_loss.py 改善Dice Loss，将多个类别的Dice Loss进行整合，使用一个参数作为分割结果的量化指标
+- Jaccard_Loss.py 实现了Jaccard Loss
+- BCE_Jaccard_Loss.py 实现了BCE_Jaccard_Loss
