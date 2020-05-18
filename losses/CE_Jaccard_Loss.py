@@ -1,5 +1,6 @@
 import tensorflow as tf
 from keras.losses import categorical_crossentropy
+SMOOTH = 1.
 
 def iou_score(gt, pr, class_weights=1., smooth=SMOOTH, per_image=True, threshold=None):
     '''

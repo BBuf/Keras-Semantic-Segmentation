@@ -1,5 +1,7 @@
 import tensorflow as tf
 
+SMOOTH = 1.
+
 def iou_score(gt, pr, class_weights=1., smooth=SMOOTH, per_image=True, threshold=None):
     '''
     参数：
