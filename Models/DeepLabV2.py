@@ -73,7 +73,7 @@ def DeepLabV2(nClasses, input_height=224, input_width=224):
     b1 = Dropout(0.5)(b1)
     b1 = Conv2D(filters=1024, kernel_size=(1, 1), activation='relu', name='fc7_1')(b1)
     b1 = Dropout(0.5)(b1)
-    b1 = Conv2D(filters=6, kernel_size=(1, 1), activation='relu', name='fc8_1')(b1)
+    b1 = Conv2D(filters=nClasses, kernel_size=(1, 1), activation='relu', name='fc8_1')(b1)
 
     # hole = 12
     b2 = ZeroPadding2D(padding=(12, 12))(p5)
@@ -81,7 +81,7 @@ def DeepLabV2(nClasses, input_height=224, input_width=224):
     b2 = Dropout(0.5)(b2)
     b2 = Conv2D(filters=1024, kernel_size=(1, 1), activation='relu', name='fc7_2')(b2)
     b2 = Dropout(0.5)(b2)
-    b2 = Conv2D(filters=6, kernel_size=(1, 1), activation='relu', name='fc8_2')(b2)
+    b2 = Conv2D(filters=nClasses, kernel_size=(1, 1), activation='relu', name='fc8_2')(b2)
 
     # hole = 18
     b3 = ZeroPadding2D(padding=(18, 18))(p5)
@@ -89,7 +89,7 @@ def DeepLabV2(nClasses, input_height=224, input_width=224):
     b3 = Dropout(0.5)(b3)
     b3 = Conv2D(filters=1024, kernel_size=(1, 1), activation='relu', name='fc7_3')(b3)
     b3 = Dropout(0.5)(b3)
-    b3 = Conv2D(filters=6, kernel_size=(1, 1), activation='relu', name='fc8_3')(b3)
+    b3 = Conv2D(filters=nClasses, kernel_size=(1, 1), activation='relu', name='fc8_3')(b3)
 
     # hole = 24
     b4 = ZeroPadding2D(padding=(24, 24))(p5)
@@ -97,10 +97,10 @@ def DeepLabV2(nClasses, input_height=224, input_width=224):
     b4 = Dropout(0.5)(b4)
     b4 = Conv2D(filters=1024, kernel_size=(1, 1), activation='relu', name='fc7_4')(b4)
     b4 = Dropout(0.5)(b4)
-    b4 = Conv2D(filters=6, kernel_size=(1, 1), activation='relu', name='fc8_4')(b4)
+    b4 = Conv2D(filters=nClasses, kernel_size=(1, 1), activation='relu', name='fc8_4')(b4)
 
     s = Add()([b1, b2, b3, b4])
-    logits = BilinearUpsampling(upsampling=upsampling)(s)
+    logits = BilinearUpsampling(upsampling=8)(s)
 
     outputHeight = Model(inputs, logits).output_shape[1]
     outputWidth = Model(inputs, logits).output_shape[2]
