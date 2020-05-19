@@ -134,6 +134,8 @@ def VGGUnet(nClasses, input_height=224, input_width=224, vgg_weight_path=None):
     x = BatchNormalization()(x)
     x = Activation('relu')(x)
 
+    x = Conv2D(nClasses, (3, 3), padding='same')(x)
+    x = BatchNormalization()(x)
 
     outputHeight = Model(inputs, x).output_shape[1]
     outputWidth = Model(inputs, x).output_shape[2]
