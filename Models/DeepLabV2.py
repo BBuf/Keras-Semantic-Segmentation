@@ -17,7 +17,7 @@ class BilinearUpsampling(Layer):
         output = tf.image.resize_images(x, new_size)
         return output
 
-def Unet(nClasses, input_height=224, input_width=224):
+def DeepLabV2(nClasses, input_height=224, input_width=224):
     inputs = Input(shape=(input_height, input_width, 3))
     
      # Block 1
