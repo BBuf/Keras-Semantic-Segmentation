@@ -2,9 +2,10 @@
 import argparse
 import glob
 import os
-
+os.environ['CUDA_VISIBLE_DEVICES']='0,1' #指定哪几块GPU
 import keras
 import tensorflow as tf
+from keras.utils import multi_gpu_model
 from keras.callbacks import (CSVLogger, EarlyStopping, ModelCheckpoint,
                              ReduceLROnPlateau)
 
@@ -31,6 +32,7 @@ config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
 session = tf.Session(config=config)
 
+
 parser = argparse.ArgumentParser()
 parser.add_argument("--model_name", type=str, default="unet")
 parser.add_argument(
@@ -52,8 +54,20 @@ parser.add_argument("--train_save_path", type=str, default="weights/")
 parser.add_argument("--resume", type=str, default="")
 parser.add_argument("--optimizer_name", type=str, default="sgd")
 parser.add_argument("--image_init", type=str, default="sub_mean")
+parser.add_argument("--multi_gpus", type=bool, default=False)
 
 args = parser.parse_args()
+
+# 使用callback，要稍微改一下Checkpoint()的使用方法
+class ParallelModelCheckpoint(ModelCheckpoint):
+    def __init__(self,model,filepath, monitor='val_loss', verbose=0,
+                 save_best_only=False, save_weights_only=False,
+                 mode='auto', period=1):
+        self.single_model = model
+        super(ParallelModelCheckpoint,self).__init__(filepath, monitor, verbose,save_best_only, save_weights_only,mode, period)
+
+    def set_model(self, model):
+        super(ParallelModelCheckpoint,self).set_model(self.single_model)
 
 # 再定义一些keras回调函数需要的参数
 
@@ -72,6 +86,7 @@ log_file_path = 'weights/%s/log.csv' % args.model_name
 model_name = args.model_name
 optimizer_name = args.optimizer_name
 image_init = args.image_init
+multi_gpus = args.multi_gpus
 
 # 数据存储位置
 data_root = os.path.join("data", args.dataset_name)
@@ -104,10 +119,15 @@ resize_op = args.resize_op
 # modelFN = modelFns[model_name]
 # model = modelFN(n_classes, input_height=input_height, input_width=input_width)
 
+
 model = build_model(model_name,
                     n_classes,
                     input_height=input_height,
                     input_width=input_width)
+
+# 需要保证脚本开头指定的gpu个数和现在要使用的gpu数量相等
+if multi_gpus == True:
+    model = multi_gpu_model(model, gpus=2)
 
 # 统计一下训练集/验证集样本数，确定每一个epoch需要训练的iter
 images = glob.glob(os.path.join(train_images, "*.jpg")) + \
@@ -137,6 +157,13 @@ model_checkpoint = ModelCheckpoint(model_names,
                                    monitor='loss',
                                    save_best_only=True,
                                    save_weights_only=False)
+
+if multi_gpus == True:
+    model_checkpoint = ParallelModelCheckpoint(model_names,
+                                   monitor='loss',
+                                   save_best_only=True,
+                                   save_weights_only=False)
+
 call_backs = [model_checkpoint, csv_logger, early_stop, reduce_lr]
 
 # compile
