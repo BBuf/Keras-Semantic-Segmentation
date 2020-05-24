@@ -5,15 +5,16 @@
 ![](image/yuyi.png)
 
 # 配置
-- tensorflow 1.8.0
+- tensorflow 1.8.0/1.13.0
 - keras 2.2.4
-- GTX 2070/CPU
+- GTX 2080Ti/CPU
+- Cuda 10.0 + Cudnn7
 - opencv
 
 # 目录结构
 
 - data 存储输入图像和语义分割标签的文件夹
-```
+```sh
 - data
 	- dataset_name
 		- train_image
@@ -41,6 +42,10 @@
 |50|mobilenet_fcn8|MobileNet|MobileNetFCN8|True|
 |50|seunet|SENet|SEUNet|True|
 |50|scseunet|SCSENet|scSEUNet|True|
+|50|vggunet|VGGNet|VGGUnet|True|
+|50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock|True|
+|50|pspnet_resnet50|ResNet50|PSPNet_ResNet50|True|
+|50|deeplab_v2|DeepLab|DeepLabV2|True|
 
 
 # 训练
@@ -66,6 +71,7 @@ python train.py
 - `--resume`字符串类型，代表继续训练的时候加载的模型路径，默认值为``，即从头训练。
 - `--optimizer_name`字符串类型，代表训练模型时候的优化方法，支持`sgd`,`adam`,`adadelta`等多种优化方式，默认为`adadelta`。
 - `--image_init`字符串类型，代表输入图片初始化方式，支持`sub_mean`，`sub_and_divide`，`divide`，默认为`sub_mean`。
+- `--multi_gpus` 布尔类型，代表使用是否多卡进行训练，默认为Fasle，如果为True，需要手动调整`train.py`中的显卡标号，这里默认的是第`0,1`两块卡。
 
 
 
@@ -161,6 +167,11 @@ python augmentation.py --train_path xxx --mask_path xxx --augtrain_path xxx --au
 |50|mobilenet_fcn8|MobileNet|MobileNetFCN8|0.99|0.02|0.99|0.02|0.94|
 |50|seunet|SENet|SEUNet||||||
 |50|scseunet|SCSENet|scSEUNet||||||
+|50|vggunet|VGGNet|VGGUnet||||||
+|50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock||||||
+|50|pspnet_resnet50|ResNet50|PSPNet_ResNet50||||||
+|50|deeplab_v2|DeepLab|DeepLabV2||||||
+
 
 
 
@@ -181,6 +192,10 @@ python augmentation.py --train_path xxx --mask_path xxx --augtrain_path xxx --au
 |50|seunet|Vanilla CNN|SEUnet|0.84|0.59|0.77|0.79|0.34|
 |50|seunet|SENet|SEUNet||||||
 |50|scseunet|SCSENet|scSEUNet||||||
+|50|vggunet|VGGNet|VGGUnet||||||
+|50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock||||||
+|50|pspnet_resnet50|ResNet50|PSPNet_ResNet50||||||
+|50|deeplab_v2|DeepLab|DeepLabV2||||||
 
 
 ## 人脸部位分割数据集
@@ -197,7 +212,10 @@ python augmentation.py --train_path xxx --mask_path xxx --augtrain_path xxx --au
 |50|mobilenet_fcn8|MobileNet|MobileNetFCN8|0.76|0.87|0.79|0.77|0.06|
 |50|seunet|SENet|SEUNet||||||
 |50|scseunet|SCSENet|scSEUNet||||||
-
+|50|vggunet|VGGNet|VGGUnet||||||
+|50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock||||||
+|50|pspnet_resnet50|ResNet50|PSPNet_ResNet50||||||
+|50|deeplab_v2|DeepLab|DeepLabV2||||||
 
 
 ## 个人制作2个类别小零件数据集分割可视化结果

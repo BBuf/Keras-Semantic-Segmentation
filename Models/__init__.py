@@ -12,7 +12,8 @@ from .Unet import *
 from .scSEUnet import *
 from .VGGUnet import *
 from .DeepLabV2 import *
-from PSPNet-ResNet50 import *
+from .PSPNet-ResNet50 import *
+from .UNet_Xception_ResNetBlock import *
 
 __model_factory = {
     'enet': ENet,
@@ -27,7 +28,8 @@ __model_factory = {
     'scseunet': scSEUnet,
     'vggunet': VGGUnet,
     'deeplab_v2': DeepLabV2,
-    'pspnet_resnet50': PSPNet_ResNet50
+    'pspnet_resnet50': PSPNet_ResNet50,
+    'unet_xception_resnetblock': Unet_Xception_ResNetBlock
 }
 
 
