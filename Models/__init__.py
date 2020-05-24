@@ -11,6 +11,8 @@ from .SEUNet import *
 from .Unet import *
 from .scSEUnet import *
 from .VGGUnet import *
+from .DeepLabV2 import *
+from PSPNet-ResNet50 import *
 
 __model_factory = {
     'enet': ENet,
@@ -23,7 +25,9 @@ __model_factory = {
     'mobilenet_fcn8': MobileNetFCN8,
     'seunet': SEUnet,
     'scseunet': scSEUnet,
-    'vggunet': VGGUnet
+    'vggunet': VGGUnet,
+    'deeplab_v2': DeepLabV2,
+    'pspnet_resnet50': PSPNet_ResNet50
 }
 
 
