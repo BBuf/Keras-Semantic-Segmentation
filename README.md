@@ -46,6 +46,7 @@
 |50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock|True|
 |50|pspnet_resnet50|ResNet50|PSPNet_ResNet50|True|
 |50|deeplab_v2|DeepLab|DeepLabV2|True|
+|50|hrnet|HRNet|HRNet|True|
 
 
 # 训练
@@ -171,7 +172,7 @@ python augmentation.py --train_path xxx --mask_path xxx --augtrain_path xxx --au
 |50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock||||||
 |50|pspnet_resnet50|ResNet50|PSPNet_ResNet50||||||
 |50|deeplab_v2|DeepLab|DeepLabV2||||||
-
+|50|hrnet|HRNet|HRNet||||||
 
 
 
@@ -196,6 +197,7 @@ python augmentation.py --train_path xxx --mask_path xxx --augtrain_path xxx --au
 |50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock||||||
 |50|pspnet_resnet50|ResNet50|PSPNet_ResNet50||||||
 |50|deeplab_v2|DeepLab|DeepLabV2||||||
+|50|hrnet|HRNet|HRNet||||||
 
 
 ## 人脸部位分割数据集
@@ -216,6 +218,7 @@ python augmentation.py --train_path xxx --mask_path xxx --augtrain_path xxx --au
 |50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock||||||
 |50|pspnet_resnet50|ResNet50|PSPNet_ResNet50||||||
 |50|deeplab_v2|DeepLab|DeepLabV2||||||
+|50|hrnet|HRNet|HRNet||||||
 
 
 ## 个人制作2个类别小零件数据集分割可视化结果
