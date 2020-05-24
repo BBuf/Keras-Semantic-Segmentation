@@ -10,6 +10,7 @@ from .Segnet import *
 from .SEUNet import *
 from .Unet import *
 from .scSEUnet import *
+from .VGGUnet import *
 
 __model_factory = {
     'enet': ENet,
@@ -21,7 +22,8 @@ __model_factory = {
     'mobilenet_unet': MobileNetUnet,
     'mobilenet_fcn8': MobileNetFCN8,
     'seunet': SEUnet,
-    'scseunet': scSEUnet
+    'scseunet': scSEUnet,
+    'vggunet': VGGUnet
 }
 
 
