@@ -2,6 +2,7 @@ from __future__ import absolute_import
 
 from .ENet import *
 from .FCN8 import *
+from .VGGFCN8 import *
 from .ICNet import *
 from .MobileNetFCN8 import *
 from .MobileNetUnet import *
@@ -18,18 +19,19 @@ from .UNet_Xception_ResNetBlock import *
 __model_factory = {
     'enet': ENet,
     'fcn8': FCN8,
-    'unet': Unet,
-    'segnet': Segnet,
-    'pspnet': PSPNet,
-    'icnet': ICNet,
-    'mobilenet_unet': MobileNetUnet,
     'mobilenet_fcn8': MobileNetFCN8,
+    'vggfcn8': VGGFCN8,
+    'unet': Unet,
+    'vggunet': VGGUnet,
+    'unet_xception_resnetblock': Unet_Xception_ResNetBlock,
+    'mobilenet_unet': MobileNetUnet,
     'seunet': SEUnet,
     'scseunet': scSEUnet,
-    'vggunet': VGGUnet,
-    'deeplab_v2': DeepLabV2,
+    'segnet': Segnet,
+    'pspnet': PSPNet,
     'pspnet_resnet50': PSPNet_ResNet50,
-    'unet_xception_resnetblock': Unet_Xception_ResNetBlock
+    'icnet': ICNet,
+    'deeplab_v2': DeepLabV2
 }
 
 
