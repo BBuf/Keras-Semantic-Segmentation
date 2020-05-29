@@ -15,8 +15,8 @@ def Weighted_Categorical_CrossEntropy_Loss(weights):
         # clip to prevent NaN's and Inf's
         y_pred = tf.clip(y_pred, tf.epsilon(), 1 - tf.epsilon())
         # calc
-        loss = y_true * K.log(y_pred) * weights
-        loss = -K.sum(loss, -1)
+        loss = y_true * tf.log(y_pred) * weights
+        loss = -tf.sum(loss, -1)
         return loss
     return loss_
     

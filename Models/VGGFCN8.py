@@ -89,13 +89,13 @@ def VGGFCN8(nClasses, input_height=224, input_width=224, vgg_weight_path=None):
     x = Activation('relu')(x)
 
     # Classifying layers.
-    x = Conv2D(num_classes, (1, 1), strides=(1, 1), activation='linear')(x)
+    x = Conv2D(nClasses, (1, 1), strides=(1, 1), activation='linear')(x)
     x = BatchNormalization()(x)
 
-    block_3_out = Conv2D(num_classes, (1, 1), strides=(1, 1), activation='linear')(block_3_out)
+    block_3_out = Conv2D(nClasses, (1, 1), strides=(1, 1), activation='linear')(block_3_out)
     block_3_out = BatchNormalization()(block_3_out)
 
-    block_4_out = Conv2D(num_classes, (1, 1), strides=(1, 1), activation='linear')(block_4_out)
+    block_4_out = Conv2D(nClasses, (1, 1), strides=(1, 1), activation='linear')(block_4_out)
     block_4_out = BatchNormalization()(block_4_out)
 
     x = Lambda(lambda x: tf.image.resize_images(x, (x.shape[1] * 2, x.shape[2] * 2)))(x)
