@@ -1,184 +1,84 @@
-# coding=utf-8
-from keras.layers import *
+#coding=utf-8
+import tensorflow as tf
+import keras 
 from keras.models import *
-from keras.optimizers import *
+from keras.layers import *
 
+class conv_block(Model):
+    def __init__(self, filters):
+        super(conv_block, self).__init__()
 
-def Unet(nClasses, input_height=224, input_width=224):
+        self.conv = Sequential([
+            Conv2D(filters, kernel_size=(3,3), strides=1, padding='same'),
+            BatchNormalization(),
+            Activation('relu'),
+            Conv2D(filters, kernel_size=(3,3), strides=1, padding='same'),
+            BatchNormalization(),
+            Activation('relu')
+        ])
+
+    def call(self, x):
+        x = self.conv(x)
+        return x
+
+class up_conv(Model):
+    def __init__(self, filters):
+        super(up_conv, self).__init__()
+        self.up = Sequential([
+            UpSampling2D(),
+            Conv2D(filters, kernel_size=(3,3), strides=1, padding='same'),
+            BatchNormalization(),
+            Activation('relu')
+        ])
+
+    def call(self, x):
+        x = self.up(x)
+        return x
+
+def UNet(nClasses, input_height=224, input_width=224):
+    """
+    UNet - Basic Implementation
+    Paper : https://arxiv.org/abs/1505.04597
+    """
     inputs = Input(shape=(input_height, input_width, 3))
-    conv1 = Conv2D(16,
-                   3,
-                   activation='relu',
-                   padding='same',
-                   kernel_initializer='he_normal')(inputs)
-    conv1 = BatchNormalization()(conv1)
+    
+    n1 = 32
+    filters = [n1, n1 * 2, n1 * 4, n1 * 8, n1 * 16]
+    conv1 = conv_block(n1)(inputs)
 
-    conv1 = Conv2D(16,
-                   3,
-                   activation='relu',
-                   padding='same',
-                   kernel_initializer='he_normal')(conv1)
-    conv1 = BatchNormalization()(conv1)
+    conv2 = MaxPooling2D(strides=2)(conv1)
+    conv2 = conv_block(filters[1])(conv2)
 
-    pool1 = MaxPooling2D(pool_size=(2, 2))(conv1)
-    conv2 = Conv2D(32,
-                   3,
-                   activation='relu',
-                   padding='same',
-                   kernel_initializer='he_normal')(pool1)
-    conv2 = BatchNormalization()(conv2)
+    conv3 = MaxPooling2D(strides=2)(conv2)
+    conv3 = conv_block(filters[2])(conv3)
 
-    conv2 = Conv2D(32,
-                   3,
-                   activation='relu',
-                   padding='same',
-                   kernel_initializer='he_normal')(conv2)
-    conv2 = BatchNormalization()(conv2)
+    conv4 = MaxPooling2D(strides=2)(conv3)
+    conv4 = conv_block(filters[3])(conv4)
 
-    pool2 = MaxPooling2D(pool_size=(2, 2))(conv2)
-    conv3 = Conv2D(64,
-                   3,
-                   activation='relu',
-                   padding='same',
-                   kernel_initializer='he_normal')(pool2)
-    conv3 = BatchNormalization()(conv3)
+    conv5 = MaxPooling2D(strides=2)(conv4)
+    conv5 = conv_block(filters[4])(conv5)
 
-    conv3 = Conv2D(64,
-                   3,
-                   activation='relu',
-                   padding='same',
-                   kernel_initializer='he_normal')(conv3)
-    conv3 = BatchNormalization()(conv3)
+    d5 = up_conv(filters[3])(conv5)
+    d5 = Concatenate()([conv4, d5])
 
-    pool3 = MaxPooling2D(pool_size=(2, 2))(conv3)
-    conv4 = Conv2D(128,
-                   3,
-                   activation='relu',
-                   padding='same',
-                   kernel_initializer='he_normal')(pool3)
-    conv4 = BatchNormalization()(conv4)
+    d4 = up_conv(filters[2])(d5)
+    d4 = Concatenate()([conv3, d4])
+    d4 = conv_block(filters[2])(d4)
 
-    conv4 = Conv2D(128,
-                   3,
-                   activation='relu',
-                   padding='same',
-                   kernel_initializer='he_normal')(conv4)
-    conv4 = BatchNormalization()(conv4)
+    d3 = up_conv(filters[1])(d4)
+    d3 = Concatenate()([conv2, d3])
+    d3 = conv_block(filters[1])(d3)
 
-    pool4 = MaxPooling2D(pool_size=(2, 2))(conv4)
+    d2 = up_conv(filters[0])(d3)
+    d2 = Concatenate()([conv1, d2])
+    d2 = conv_block(filters[0])(d2)
 
-    conv5 = Conv2D(256,
-                   3,
-                   activation='relu',
-                   padding='same',
-                   kernel_initializer='he_normal')(pool4)
-    conv5 = BatchNormalization()(conv5)
-    conv5 = Conv2D(256,
-                   3,
-                   activation='relu',
-                   padding='same',
-                   kernel_initializer='he_normal')(conv5)
-    conv5 = BatchNormalization()(conv5)
+    o = Conv2D(nClasses, (3, 3), padding='same')(d2)
 
-    up6 = Conv2D(128,
-                 2,
-                 activation='relu',
-                 padding='same',
-                 kernel_initializer='he_normal')(UpSampling2D(size=(2,
-                                                                    2))(conv5))
-    up6 = BatchNormalization()(up6)
+    outputHeight = Model(inputs, o).output_shape[1]
+    outputWidth = Model(inputs, o).output_shape[2]
 
-    merge6 = concatenate([conv4, up6], axis=3)
-    conv6 = Conv2D(128,
-                   3,
-                   activation='relu',
-                   padding='same',
-                   kernel_initializer='he_normal')(merge6)
-    conv6 = BatchNormalization()(conv6)
-
-    conv6 = Conv2D(128,
-                   3,
-                   activation='relu',
-                   padding='same',
-                   kernel_initializer='he_normal')(conv6)
-    conv6 = BatchNormalization()(conv6)
-
-    up7 = Conv2D(64,
-                 2,
-                 activation='relu',
-                 padding='same',
-                 kernel_initializer='he_normal')(UpSampling2D(size=(2,
-                                                                    2))(conv6))
-    up7 = BatchNormalization()(up7)
-
-    merge7 = concatenate([conv3, up7], axis=3)
-    conv7 = Conv2D(64,
-                   3,
-                   activation='relu',
-                   padding='same',
-                   kernel_initializer='he_normal')(merge7)
-    conv7 = BatchNormalization()(conv7)
-
-    conv7 = Conv2D(64,
-                   3,
-                   activation='relu',
-                   padding='same',
-                   kernel_initializer='he_normal')(conv7)
-    conv7 = BatchNormalization()(conv7)
-
-    up8 = Conv2D(32,
-                 2,
-                 activation='relu',
-                 padding='same',
-                 kernel_initializer='he_normal')(UpSampling2D(size=(2,
-                                                                    2))(conv7))
-    up8 = BatchNormalization()(up8)
-
-    merge8 = concatenate([conv2, up8], axis=3)
-    conv8 = Conv2D(32,
-                   3,
-                   activation='relu',
-                   padding='same',
-                   kernel_initializer='he_normal')(merge8)
-    conv8 = BatchNormalization()(conv8)
-
-    conv8 = Conv2D(32,
-                   3,
-                   activation='relu',
-                   padding='same',
-                   kernel_initializer='he_normal')(conv8)
-    conv8 = BatchNormalization()(conv8)
-
-    up9 = Conv2D(16,
-                 2,
-                 activation='relu',
-                 padding='same',
-                 kernel_initializer='he_normal')(UpSampling2D(size=(2,
-                                                                    2))(conv8))
-    up9 = BatchNormalization()(up9)
-
-    merge9 = concatenate([conv1, up9], axis=3)
-    conv9 = Conv2D(16,
-                   3,
-                   activation='relu',
-                   padding='same',
-                   kernel_initializer='he_normal')(merge9)
-    conv9 = BatchNormalization()(conv9)
-
-    conv9 = Conv2D(16,
-                   3,
-                   activation='relu',
-                   padding='same',
-                   kernel_initializer='he_normal')(conv9)
-    conv9 = BatchNormalization()(conv9)
-
-    conv10 = Conv2D(nClasses, (3, 3), padding='same')(conv9)
-    conv10 = BatchNormalization()(conv10)
-
-    outputHeight = Model(inputs, conv10).output_shape[1]
-    outputWidth = Model(inputs, conv10).output_shape[2]
-
-    out = (Reshape((outputHeight * outputWidth, nClasses)))(conv10)
+    out = (Reshape((outputHeight * outputWidth, nClasses)))(o)
     out = Activation('softmax')(out)
 
     model = Model(input=inputs, output=out)
