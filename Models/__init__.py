@@ -23,7 +23,7 @@ __model_factory = {
     'fcn8': FCN8,
     'mobilenet_fcn8': MobileNetFCN8,
     'vggfcn8': VGGFCN8,
-    'unet': Unet,
+    'unet': UNet,
     'vggunet': VGGUnet,
     'unet_xception_resnetblock': Unet_Xception_ResNetBlock,
     'mobilenet_unet': MobileNetUnet,
