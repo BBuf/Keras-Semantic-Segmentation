@@ -37,15 +37,15 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--model_name", type=str, default="unet")
 parser.add_argument(
     "--dataset_name", type=str,
-    default="helen_small")  # streetscape(12)(320x640), helen_small(11)(512x512), bbufdataset
-parser.add_argument("--n_classes", type=int, default=11)
+    default="bbufdataset")  # streetscape(12)(320x640), helen_small(11)(512x512), bbufdataset(2)
+parser.add_argument("--n_classes", type=int, default=2)
 parser.add_argument("--epochs", type=int, default=50)
 
-parser.add_argument("--input_height", type=int, default=512)
-parser.add_argument("--input_width", type=int, default=512)
+parser.add_argument("--input_height", type=int, default=224)
+parser.add_argument("--input_width", type=int, default=224)
 
 parser.add_argument('--validate', type=bool, default=True)
-parser.add_argument("--resize_op", type=int, default=2)
+parser.add_argument("--resize_op", type=int, default=1)
 
 parser.add_argument("--train_batch_size", type=int, default=16)
 parser.add_argument("--val_batch_size", type=int, default=16)
