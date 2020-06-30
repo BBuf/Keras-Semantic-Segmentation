@@ -1,10 +1,9 @@
 #coding=utf-8
 import tensorflow as tf
 
-
 def Weighted_Categorical_CrossEntropy_Loss(weights):
-     """
-     Keras多元交叉熵函数带权版本
+    """
+    Keras多元交叉熵函数带权版本
     变量:
         weights: numpy array of shape (C,) where C is the number of classes
     """

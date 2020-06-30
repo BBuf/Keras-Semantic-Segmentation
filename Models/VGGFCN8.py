@@ -5,10 +5,8 @@ import tensorflow as tf
 import os
 
 def VGGFCN8(nClasses, input_height=224, input_width=224, vgg_weight_path=None):
-
-	img_input = Input(shape=(input_height, input_width, 3))
-
-	# Block 1
+    img_input = Input(shape=(input_height, input_width, 3))
+    # Block 1
     x = Conv2D(64, (3, 3), padding='same', name='block1_conv1')(img_input)
     x = BatchNormalization()(x)
     x = Activation('relu')(x)
@@ -108,15 +106,15 @@ def VGGFCN8(nClasses, input_height=224, input_width=224, vgg_weight_path=None):
 
     x = Lambda(lambda x: tf.image.resize_images(x, (x.shape[1] * 8, x.shape[2] * 8)))(x)
 	
-	o_shape = Model(img_input, x).output_shape
+    o_shape = Model(img_input, x).output_shape
 	
-	outputHeight = o_shape[1]
-	outputWidth = o_shape[2]
+    outputHeight = o_shape[1]
+    outputWidth = o_shape[2]
 
-	o = (Reshape((outputHeight*outputWidth, nClasses)))(x)
-	o = (Activation('softmax'))(o)
-	model = Model(img_input, o)
-	model.outputWidth = outputWidth
-	model.outputHeight = outputHeight
+    o = (Reshape((outputHeight*outputWidth, nClasses)))(x)
+    o = (Activation('softmax'))(o)
+    model = Model(img_input, o)
+    model.outputWidth = outputWidth
+    model.outputHeight = outputHeight
 
-	return model
+    return model
