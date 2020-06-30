@@ -1,88 +1,62 @@
 #coding=utf-8
-import tensorflow as tf
-import keras 
 from keras.models import *
 from keras.layers import *
 
-class conv_block(Model):
-    def __init__(self, filters):
-        super(conv_block, self).__init__()
-
-        self.conv = Sequential([
-            Conv2D(filters, kernel_size=(3,3), strides=1, padding='same'),
-            BatchNormalization(),
-            Activation('relu'),
-            Conv2D(filters, kernel_size=(3,3), strides=1, padding='same'),
-            BatchNormalization(),
-            Activation('relu')
-        ])
-
-    def call(self, x):
-        x = self.conv(x)
-        return x
-
-class up_conv(Model):
-    def __init__(self, filters):
-        super(up_conv, self).__init__()
-        self.up = Sequential([
-            UpSampling2D(),
-            Conv2D(filters, kernel_size=(3,3), strides=1, padding='same'),
-            BatchNormalization(),
-            Activation('relu')
-        ])
-
-    def call(self, x):
-        x = self.up(x)
-        return x
-
 def UNet(nClasses, input_height=224, input_width=224):
-    """
-    UNet - Basic Implementation
-    Paper : https://arxiv.org/abs/1505.04597
-    """
     inputs = Input(shape=(input_height, input_width, 3))
+    # encode
+    # 224x224
+    conv1 = Conv2D(64, (3, 3), padding='same')(inputs)
+    conv1 = BatchNormalization()(conv1)
+    conv1 = (Activation('relu'))(conv1)
+    pool1 = MaxPooling2D(pool_size=(2, 2))(conv1)
+    # 112x112
+    conv2 = Conv2D(128, (3, 3), padding='same')(pool1)
+    conv2 = BatchNormalization()(conv2)
+    conv2 = (Activation('relu'))(conv2)
+    pool2 = MaxPooling2D(pool_size=(2, 2))(conv2)
+    # 56x56
+    conv3 = Conv2D(256, (3, 3), padding='same')(pool2)
+    conv3 = BatchNormalization()(conv3)
+    conv3 = (Activation('relu'))(conv3)
+    pool3 = MaxPooling2D(pool_size=(2, 2))(conv3)
+    # 28x28
+    conv4 = Conv2D(256, (3, 3),  padding='same')(pool3)
+    conv4 = BatchNormalization()(conv4)
+    conv1 = (Activation('relu'))(conv4)
+    pool4 = MaxPooling2D(pool_size=(2, 2))(conv4)
+    # 14x14
     
-    n1 = 32
-    filters = [n1, n1 * 2, n1 * 4, n1 * 8, n1 * 16]
-    conv1 = conv_block(n1)(inputs)
+    o = Conv2D(512, (3, 3), padding='same')(pool4)
+    o = BatchNormalization()(o)
+    # decode
+    o = (UpSampling2D((2, 2)))(o)
+    o = (concatenate([o, pool3], axis=-1))
+    o = (Conv2D(256, (3, 3), padding='same'))(o)
+    o = (BatchNormalization())(o)
+    o = (Activation('relu'))(o)
 
-    conv2 = MaxPooling2D(strides=2)(conv1)
-    conv2 = conv_block(filters[1])(conv2)
+    o = (UpSampling2D((2, 2)))(o)
+    o = (concatenate([o, pool2], axis=-1))
+    o = (Conv2D(128, (3, 3), padding='same'))(o)
+    o = (BatchNormalization())(o)
+    o = (Activation('relu'))(o)
 
-    conv3 = MaxPooling2D(strides=2)(conv2)
-    conv3 = conv_block(filters[2])(conv3)
+    o = (UpSampling2D((2, 2)))(o)
+    o = (concatenate([o, pool1], axis=-1))
 
-    conv4 = MaxPooling2D(strides=2)(conv3)
-    conv4 = conv_block(filters[3])(conv4)
+    o = (Conv2D(64, (3, 3), padding='same'))(o)
+    o = (BatchNormalization())(o)
+    o = (Activation('relu'))(o)
 
-    conv5 = MaxPooling2D(strides=2)(conv4)
-    conv5 = conv_block(filters[4])(conv5)
-
-    d5 = up_conv(filters[3])(conv5)
-    d5 = Concatenate()([conv4, d5])
-
-    d4 = up_conv(filters[2])(d5)
-    d4 = Concatenate()([conv3, d4])
-    d4 = conv_block(filters[2])(d4)
-
-    d3 = up_conv(filters[1])(d4)
-    d3 = Concatenate()([conv2, d3])
-    d3 = conv_block(filters[1])(d3)
-
-    d2 = up_conv(filters[0])(d3)
-    d2 = Concatenate()([conv1, d2])
-    d2 = conv_block(filters[0])(d2)
-
-    o = Conv2D(nClasses, (3, 3), padding='same')(d2)
-
+    o = Conv2D(nClasses, (3, 3), padding='same')(o)
+    
     outputHeight = Model(inputs, o).output_shape[1]
     outputWidth = Model(inputs, o).output_shape[2]
+    o = (Reshape((outputHeight*outputWidth, nClasses)))(o)
+    o = Activation('softmax')(o)
 
-    out = (Reshape((outputHeight * outputWidth, nClasses)))(o)
-    out = Activation('softmax')(out)
-
-    model = Model(input=inputs, output=out)
+    model = Model(input=inputs, output=o)
     model.outputHeight = outputHeight
     model.outputWidth = outputWidth
-
     return model
