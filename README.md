@@ -59,11 +59,11 @@ python train.py
 
 可用参数如下：
 
-- `--dataset_name` 字符串，代表选择对应的数据集的名称，默认streetscape
+- `--dataset_name` 字符串，代表选择对应的数据集的名称，默认bbufdataset
 - `--n_classes` 整型，代表分割图像中有几种类别的像素，默认为`2`。
 - `--input_height`整型，代表要分割的图像需要`resize`的长，默认为`224`。
 - `--input_width` 整型，代表要分割的图像需要`resize`的宽，默认为`224`。
-- `--resize_op` 整型，代表`resize`的方式，如果为`1`则为默认`resize`，如果为2，则为`letterbox_resize`。
+- `--resize_op` 整型，代表`resize`的方式，如果为`1`则为普通`resize`，如果为2，则为`letterbox_resize`，默认为`1`。
 - `--validate`布尔型，代表训练过程中是否需要验证集，默认为`True`，即使用验证集。
 - `--epochs`整型，代表要训练多少个`epoch`，默认为`50`。
 - `--train_batch_size`整型，代表训练时批量大小，默认为`4`。
@@ -72,13 +72,13 @@ python train.py
 - `--resume`字符串类型，代表继续训练的时候加载的模型路径，默认值为``，即从头训练。
 - `--optimizer_name`字符串类型，代表训练模型时候的优化方法，支持`sgd`,`adam`,`adadelta`等多种优化方式，默认为`adadelta`。
 - `--image_init`字符串类型，代表输入图片初始化方式，支持`sub_mean`，`sub_and_divide`，`divide`，默认为`sub_mean`。
-- `--multi_gpus` 布尔类型，代表使用是否多卡进行训练，默认为Fasle，如果为True，需要手动调整`train.py`中的显卡标号，这里默认的是第`0,1`两块卡。
+- `--multi_gpus` 布尔类型，代表使用是否多卡进行训练，默认为Fasle，如果为True，需要手动调整`train.py`中的显卡标号，这里默认的是第`0,1`两块卡。（目前暂不支持多卡，正在修复中）
 
 
 
 # 训练示例
 
-- 训练本工程提供的二分类数据集：`python train.py  --model_name unet --image_init divide --n_classes 2`
+- 训练本工程提供的二分类数据集：`python train.py  --model_name unet --input_height 224 --input_width 224 --image_init divide --n_classes 2`
 - 训练12个类别的城市街景分割数据集：`python train.py --model_name unet --input_height 320 --input_width 640 --image_init sub_mean --n_classes 12`
 
 
@@ -96,10 +96,10 @@ python test.py
 - `--test_images`字符串类型，代表测试图所在的文件夹路径，默认为`data/test/`。
 - `--output_path`字符串类型，代表从测试图预测出的`mask`图输出路径，默认为`data/output/`。
 - `--model_name` 字符串类型，代表测试时使用哪个模型，支持`enet`,`unet`,`segnet`,`fcn8`等多种模型，默认为`unet`。
-- `--weights_path`字符串类型，代表预测时加载的模型权重，默认为`weights/unet.18-0.856895.hdf5`，即对应默认模型`unet`训练出来的模型权重。
+- `--weights_path`字符串类型，代表预测时加载的模型权重，默认为`weights/unet.18-0.856895.hdf5`，即对应默认模型`unet`训练出来的模型权重路径。
 - `--input_height`整型，代表测试集输入到网络中需要被`resize`的长，默认为`224`。
 - `--input_width`整型，代表测试集输入到网络中需要被`resize`的宽，默认为`224`。
-- `--resize_op` 整型，代表`resize`的方式，如果为`1`则为默认`resize`，如果为2，则为`letterbox_resize`。
+- `--resize_op` 整型，代表`resize`的方式，如果为`1`则为普通`resize`，如果为2，则为`letterbox_resize`，默认为`1`。
 - `--classes`整型，代表图片中的像素类别数，默认为`2`。
 - `--mIOU`布尔型，代表是否启用评测`mIOU`，默认为`False`，一旦启用需要提供带有`mask`图的测试数据集。
 - `--val_images`字符串类型，代表启用`mIOU`后测试集原图的路径，默认为`data/val_image/`。
@@ -112,13 +112,12 @@ python test.py
 
 - 测试二分类数据集：`python test.py --model_name  unet --weights_path weight/unet.xx.hdf5 --classes 2 --image_init divide`
 - 测试城市街景分割数据集：`python test.py --model_name unet --weights_path weights/unet.xx.hdf5 --classes 12 --image_init sub_mean --input_height 320 --input_width 640 --resize_op 2(2代表使用letterbox方式进行resize)`
-- 测试人脸部位分割数据集：
 
 
 
 # 数据增强
 
-我们结合Augmentor这个库实现了一套完整的数据增强策略，即`augmentation.py`。你可以自由增加，减少各种Augmentor支持的操作。Augmentor这个数据增强库的安装方式为：`pip install Augmentor`。然后Augmentor是一个独立的脚本需要在你进行训练之前进行本地增强然后将增强出来的数据拷贝到你的原始数据集中去扩充数据。它需要下面`4`个参数。
+我结合Augmentor这个库实现了一套完整的数据增强策略，即`augmentation.py`。你可以自由增加，减少各种Augmentor支持的操作。Augmentor这个数据增强库的安装方式为：`pip install Augmentor`。然后`augmentation.py`是一个独立的脚本，需要在你训练之前在本地进行增强然后将增强出来的数据拷贝到你的原始数据集中去扩充数据。它需要下面`4`个参数。
 
 - `--train_path`  字符串类型，代表训练集的原始图片的路径，默认为`./data/images_prepped_train`。
 - `--mask_path`字符串类型，代表训练集的分割标签图的路径，默认为`./data/annotations_prepped_train`。
@@ -133,7 +132,7 @@ python augmentation.py --train_path xxx --mask_path xxx --augtrain_path xxx --au
 
 
 
-然后，我们就会在你指定的增强路径下生成一定数量（数量也可以自己控制，程序中写死了是为每张图像生成5张增强后的图）的增强图了。
+然后，我们就会在你指定的增强路径下生成一定数量（数量也可以自己控制，程序中写死了是为每张图像生成5张增强后的图）的增强图了。这个脚本的使用手册可以看：[简易快速数据增强库使用手册](https://mp.weixin.qq.com/s/r3pGr3FD1dGDzw2zgQdK9g)
 
 
 
@@ -150,7 +149,13 @@ python augmentation.py --train_path xxx --mask_path xxx --augtrain_path xxx --au
 
 
 
-# Benchmark(陆续公开)
+# Model Zoo
+
+已经训练好的Keras模型放在这个工程下，模型按照名字进行对应：
+
+https://github.com/BBuf/Keras-Semantic-Segmentation-Model-Zoo
+
+# Benchmark
 
 ## 个人制作2个类别小零件数据集分割结果
 
@@ -200,25 +205,6 @@ python augmentation.py --train_path xxx --mask_path xxx --augtrain_path xxx --au
 |50|hrnet|HRNet|HRNet||||||
 
 
-## 人脸部位分割数据集
-
-|Epoch|model_name|Base Model|Segmentation Model|Train Acc|Train Loss|Val Acc|Val Loss|Test mIOU|
-| ---|---|---|---|---|---|---|---|---|
-|50|enet|ENet|Enet| 0.80      | 0.61       | 0.84    | 0.54     | 0.10      |
-|50|fcn8|Vanilla CNN|FCN8|0.89|0.36|0.86|0.47|0.17|
-|50|unet|Vanilla CNN|UNet|0.91|0.31|0.83|0.62|0.17|
-|50|segnet|Vanilla CNN|SegNet|0.76|0.86|0.79|0.79|0.06|
-|50|icnet|Vanilla CNN|ICNet|0.86|0.42|0.85|0.44|0.11|
-|50|pspnet|Vanilla CNN|PSPNet|0.86|0.40|0.85|0.42|0.18|
-|50|mobilenet_unet|MobileNet|MobileNetUnet|0.83|0.49|0.95|0.45|0.14|
-|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|0.76|0.87|0.79|0.77|0.06|
-|50|seunet|SENet|SEUNet||||||
-|50|scseunet|SCSENet|scSEUNet||||||
-|50|vggunet|VGGNet|VGGUnet||||||
-|50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock||||||
-|50|pspnet_resnet50|ResNet50|PSPNet_ResNet50||||||
-|50|deeplab_v2|DeepLab|DeepLabV2||||||
-|50|hrnet|HRNet|HRNet||||||
 
 
 ## 个人制作2个类别小零件数据集分割可视化结果
@@ -240,13 +226,6 @@ python augmentation.py --train_path xxx --mask_path xxx --augtrain_path xxx --au
 | ![](image/city.jpg) | ![](image/city-label.jpg) |
 
 
-## 人脸部位分割数据集分割可视化结果
-
-
-## TODO
-
-- 支持DeepLab，UNet++等。
-- 支持OpenVINO和TensorRT部署。
 
 
 
@@ -257,7 +236,7 @@ python augmentation.py --train_path xxx --mask_path xxx --augtrain_path xxx --au
 
 
 
-# 我的微信公众号
+# 微信公众号
 
 ![](image/weixin.jpg)
 
