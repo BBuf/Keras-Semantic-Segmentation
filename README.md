@@ -155,6 +155,10 @@ python augmentation.py --train_path xxx --mask_path xxx --augtrain_path xxx --au
 
 https://github.com/BBuf/Keras-Semantic-Segmentation-Model-Zoo
 
+# 模型部署
+
+
+
 # Benchmark
 
 ## 个人制作2个类别小零件数据集分割结果

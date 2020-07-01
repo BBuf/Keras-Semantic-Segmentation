@@ -1,21 +1,19 @@
 #coding=utf-8
 import tensorflow as tf
 
+import tensorflow as tf
+from tensorflow.python.ops import array_ops
+from keras import backend as K
 def Weighted_Categorical_CrossEntropy_Loss(weights):
-    """
-    Keras多元交叉熵函数带权版本
-    变量:
-        weights: numpy array of shape (C,) where C is the number of classes
-    """
-    weights = tf.variable(weights)
+    weights = tf.Variable(weights,dtype=tf.float32)
     def loss_(y_true, y_pred):
         # scale predictions so that the class probas of each sample sum to 1
-        y_pred /= tf.sum(y_pred, axis=-1, keepdims=True)
+        y_pred /= tf.reduce_sum(y_pred, axis=-1, keepdims=True)
         # clip to prevent NaN's and Inf's
-        y_pred = tf.clip(y_pred, tf.epsilon(), 1 - tf.epsilon())
+        y_pred = tf.clip_by_value(y_pred, K.epsilon(), 1 - K.epsilon())
         # calc
-        loss = y_true * tf.log(y_pred) * weights
-        loss = -tf.sum(loss, -1)
+        loss = y_true * K.log(y_pred) * weights
+        loss = -tf.reduce_sum(loss, -1)
         return loss
     return loss_
     
