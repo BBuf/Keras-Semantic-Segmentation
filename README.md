@@ -30,23 +30,23 @@
 - test.py 模型测试
 # 已支持的分割模型
 
-|Epoch|model_name|Base Model|Segmentation Model|Available|
-| ---|---|---|---|---|
-|50|enet|ENet|Enet|True|
-|50|fcn8|Vanilla CNN|FCN8|True|
-|50|unet|Vanilla CNN|UNet|True|
-|50|segnet|Vanilla CNN|SegNet|True|
-|50|icnet|Vanilla CNN|ICNet|True|
-|50|pspnet|Vanilla CNN|PSPNet|True|
-|50|mobilenet_unet|MobileNet|MobileNetUnet|True|
-|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|True|
-|50|seunet|SENet|SEUNet|True|
-|50|scseunet|SCSENet|scSEUNet|True|
-|50|vggunet|VGGNet|VGGUnet|True|
-|50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock|True|
-|50|pspnet_resnet50|ResNet50|PSPNet_ResNet50|True|
-|50|deeplab_v2|DeepLab|DeepLabV2|True|
-|50|hrnet|HRNet|HRNet|True|
+|Epoch|model_name|Base Model|Segmentation Model|Params|FLOPs|Available|
+| ---|---|---|---|---|---|---|
+|50|enet|ENet|Enet|||True|
+|50|fcn8|Vanilla CNN|FCN8|||True|
+|50|unet|Vanilla CNN|UNet|||True|
+|50|segnet|Vanilla CNN|SegNet|||True|
+|50|icnet|Vanilla CNN|ICNet|||True|
+|50|pspnet|Vanilla CNN|PSPNet|||True|
+|50|mobilenet_unet|MobileNet|MobileNetUnet|||True|
+|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|||True|
+|50|seunet|SENet|SEUNet|||True|
+|50|scseunet|SCSENet|scSEUNet|||True|
+|50|vggunet|VGGNet|VGGUnet|||True|
+|50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock|||True|
+|50|pspnet_resnet50|ResNet50|PSPNet_ResNet50|||True|
+|50|deeplab_v2|DeepLab|DeepLabV2|||True|
+|50|hrnet|HRNet|HRNet|||True|
 
 
 # 训练
@@ -156,6 +156,32 @@ python augmentation.py --train_path xxx --mask_path xxx --augtrain_path xxx --au
 https://github.com/BBuf/Keras-Semantic-Segmentation-Model-Zoo
 
 # 模型部署
+
+- tools/convert2onnx.py 将Keras模型转出ONNX模型然后使用NCNN部署在PC/ARM端，执行：
+
+```
+python3 convert2onnx.py
+```
+
+- 使用 https://github.com/daquexian/onnx-simplifier 简化ONNX模型，可以直接pip安装。
+
+```sh
+pip3 install onnx-simplifier
+```
+
+- 然后执行命令：
+
+```
+python3 -m onnxsim input_onnx_model output_onnx_model
+```
+
+- 将ONNX模型转换为NCNN模型：
+
+使用 https://github.com/Tencent/ncnn 中的onnx2ncnn工具（需要编译后生成）或者使用模型自动转换网站一键转换 https://convertmodel.com/ 不过我还是推荐编译NCNN的转换工具，毕竟NCNN对模型的推理和预测肯定也是需要先编译获得链接库的。
+
+
+
+# NCNN推理示例
 
 
 
