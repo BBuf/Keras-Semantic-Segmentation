@@ -7,7 +7,7 @@
 # 配置
 - tensorflow 1.8.0/1.13.0
 - keras 2.2.4
-- GTX 2080Ti/CPU
+- GTX 2080Ti
 - Cuda 10.0 + Cudnn7
 - opencv
 
@@ -78,8 +78,8 @@ python train.py
 
 # 训练示例
 
-- 训练本工程提供的二分类数据集：`python train.py  --model_name unet --input_height 224 --input_width 224 --image_init divide --n_classes 2`
-- 训练12个类别的城市街景分割数据集：`python train.py --model_name unet --input_height 320 --input_width 640 --image_init sub_mean --n_classes 12`
+- 训练本工程提供的二分类数据集：`python train.py --dataset_name bbufdataset --model_name unet --input_height 224 --input_width 224 --image_init divide --n_classes 2`
+- 训练12个类别的城市街景分割数据集：`python train.py --dataset_name streetscape --model_name unet --input_height 320 --input_width 640 --resize_op 2 --image_init sub_mean --n_classes 12`
 
 
 
