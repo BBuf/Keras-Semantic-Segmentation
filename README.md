@@ -48,6 +48,13 @@
 |50|deeplab_v2|DeepLab|DeepLabV2|||True|
 |50|hrnet|HRNet|HRNet|||True|
 
+# 已支持的损失函数
+
+
+
+# 已支持的评价指标
+
+
 
 # 训练
 
