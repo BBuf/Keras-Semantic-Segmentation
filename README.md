@@ -28,6 +28,7 @@
 - data.py 加载1个batch的原始图片和分割标签图片
 - train.py 模型训练
 - test.py 模型测试
+
 # 已支持的分割模型
 
 |Epoch|model_name|Base Model|Segmentation Model|Params|FLOPs|Available|
@@ -50,10 +51,31 @@
 
 # 已支持的损失函数
 
+|Type|Available|
+|---|---|
+|Weighted_Categorical_loss|Yes|
+|B_Focal_loss|Yes|
+|C_Focal_loss|Yes|
+|Dice loss|Yes|
+|BCE_Dice_loss|Yes|
+|CE_Dice_loss|Yes|
+|Generalized_Dice_loss|Yes|
+|Jaccard_loss|Yes|
+|BCE_Jaccard_loss|Yes|
+|CE_Jaccard_loss|Yes|
+|Tversky_loss|Yes|
+|Focal_Tversky_loss|Yes|
+
 
 
 # 已支持的评价指标
 
+|Type|Available|
+|iou_score|Yes|
+|jaccard_score|Yes|
+|f1_score|Yes|
+|f2_score|Yes|
+|dice_score|Yes|
 
 
 # 训练
