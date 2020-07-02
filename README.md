@@ -71,6 +71,7 @@
 # 已支持的评价指标
 
 |Type|Available|
+|---|---|
 |iou_score|Yes|
 |jaccard_score|Yes|
 |f1_score|Yes|
