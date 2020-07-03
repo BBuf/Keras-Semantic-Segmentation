@@ -53,7 +53,7 @@ parser.add_argument("--val_batch_size", type=int, default=16)
 parser.add_argument("--train_save_path", type=str, default="weights/")
 parser.add_argument("--resume", type=str, default="")
 parser.add_argument("--optimizer_name", type=str, default="sgd")
-parser.add_argument("--image_init", type=str, default="sub_mean")
+parser.add_argument("--image_init", type=str, default="divide")
 parser.add_argument("--multi_gpus", type=bool, default=False)
 
 args = parser.parse_args()

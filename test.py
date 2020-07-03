@@ -47,7 +47,7 @@ parser.add_argument("--val_images",
 parser.add_argument("--val_annotations",
                     type=str,
                     default="data/helen_small/test_label/")
-parser.add_argument("--image_init", type=str, default="sub_mean")
+parser.add_argument("--image_init", type=str, default="divide")
 
 args = parser.parse_args()
 
@@ -66,7 +66,7 @@ image_init = args.image_init
 random.seed(0)
 colors = [(random.randint(0, 255), random.randint(0,
                                                   255), random.randint(0, 255))
-          for _ in range(5000)]
+          for _ in range(100)]
 
 # model
 model = build_model(model_name,

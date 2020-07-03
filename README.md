@@ -9,7 +9,8 @@
 - keras 2.2.4
 - GTX 2080Ti
 - Cuda 10.0 + Cudnn7
-- opencv
+- opencv-python
+- labelme（标注数据需要用）
 
 # 目录结构
 
@@ -24,10 +25,15 @@
 ```
 
 - Models 存储使用keras实现的一些经典分割模型
-- utils 存储工具代码，如数据预处理
+- utils 存储工具代码，如数据预处理，自定义resize方式等
+- losses 常见的分割损失函数如Dice Loss，Tversky Loss等
+- metrics 常见的分割评价指标，比如dice分数，f1分数等
+- tools 模型转换工具，将输出的Keras模型转为onnx再转到NCNN/TensorRT/OpenVINO等推理框架进行部署
 - data.py 加载1个batch的原始图片和分割标签图片
 - train.py 模型训练
 - test.py 模型测试
+- augmentation.py 离线数据增强
+- json_to_dataset.py 批量处理多张图片并一步建好所需目录及相关mask文件
 
 # 已支持的分割模型
 
@@ -84,7 +90,7 @@
 使用下面的命令训练和保存模型，模型保存路径，训练超参数需要灵活设置。
 
 ```sh
-python train.py 
+python train.py ...
 ```
 
 可用参数如下：
@@ -101,7 +107,7 @@ python train.py
 - `--train_save_path`字符串类型，代表训练时保存模型的路径，默认为`weights/unet`，即会将模型保存在`weights`文件夹下，并且每个模型名字前缀以`unet`开头，后面接迭代次数和准确率构成完整的保存模型的路径。
 - `--resume`字符串类型，代表继续训练的时候加载的模型路径，默认值为``，即从头训练。
 - `--optimizer_name`字符串类型，代表训练模型时候的优化方法，支持`sgd`,`adam`,`adadelta`等多种优化方式，默认为`adadelta`。
-- `--image_init`字符串类型，代表输入图片初始化方式，支持`sub_mean`，`sub_and_divide`，`divide`，默认为`sub_mean`。
+- `--image_init`字符串类型，代表输入图片初始化方式，支持`sub_mean`，`sub_and_divide`，`divide`，默认为`divide`。
 - `--multi_gpus` 布尔类型，代表使用是否多卡进行训练，默认为Fasle，如果为True，需要手动调整`train.py`中的显卡标号，这里默认的是第`0,1`两块卡。（目前暂不支持多卡，正在修复中）
 
 
@@ -118,7 +124,7 @@ python train.py
 使用下面的命令测试模型，加载模型的路径，图像输入分辨率等参数需要灵活设置。
 
 ```sh
-python test.py
+python test.py ...
 ```
 
 可用参数如下：
@@ -134,20 +140,20 @@ python test.py
 - `--mIOU`布尔型，代表是否启用评测`mIOU`，默认为`False`，一旦启用需要提供带有`mask`图的测试数据集。
 - `--val_images`字符串类型，代表启用`mIOU`后测试集原图的路径，默认为`data/val_image/`。
 - `--val_annotations`字符串类型，代表启用`mIOU`后测试集`mask`图的路径，默认为`data/val_label/`。
-- `--image_init`字符串类型，代表输入图片初始化方式，支持`sub_mean`，`sub_and_divide`，`divide`，默认为`sub_mean`。
+- `--image_init`字符串类型，代表输入图片初始化方式，支持`sub_mean`，`sub_and_divide`，`divide`，默认为`divide`。
 
 
 
 # 测试示例
 
 - 测试二分类数据集：`python test.py --model_name  unet --weights_path weight/unet.xx.hdf5 --classes 2 --image_init divide`
-- 测试城市街景分割数据集：`python test.py --model_name unet --weights_path weights/unet.xx.hdf5 --classes 12 --image_init sub_mean --input_height 320 --input_width 640 --resize_op 2(2代表使用letterbox方式进行resize)`
+- 测试城市街景分割数据集：`python test.py --model_name unet --weights_path weights/unet.xx.hdf5 --classes 12 --image_init sub_mean --input_height 320 --input_width 640 --resize_op 2`
 
 
 
 # 数据增强
 
-我结合Augmentor这个库实现了一套完整的数据增强策略，即`augmentation.py`。你可以自由增加，减少各种Augmentor支持的操作。Augmentor这个数据增强库的安装方式为：`pip install Augmentor`。然后`augmentation.py`是一个独立的脚本，需要在你训练之前在本地进行增强然后将增强出来的数据拷贝到你的原始数据集中去扩充数据。它需要下面`4`个参数。
+我结合Augmentor这个库实现了一套完整的数据增强策略，即项目中的`augmentation.py`。你可以自由增加，减少各种Augmentor支持的操作。Augmentor这个数据增强库的安装方式为：`pip install Augmentor`。然后`augmentation.py`是一个独立的脚本，需要在你训练之前在本地进行增强然后将增强出来的数据拷贝到你的原始数据集中去扩充数据。它需要下面`4`个参数。
 
 - `--train_path`  字符串类型，代表训练集的原始图片的路径，默认为`./data/images_prepped_train`。
 - `--mask_path`字符串类型，代表训练集的分割标签图的路径，默认为`./data/annotations_prepped_train`。
@@ -161,9 +167,7 @@ python augmentation.py --train_path xxx --mask_path xxx --augtrain_path xxx --au
 ```
 
 
-
 然后，我们就会在你指定的增强路径下生成一定数量（数量也可以自己控制，程序中写死了是为每张图像生成5张增强后的图）的增强图了。这个脚本的使用手册可以看：[简易快速数据增强库使用手册](https://mp.weixin.qq.com/s/r3pGr3FD1dGDzw2zgQdK9g)
-
 
 
 # 数据集
@@ -173,9 +177,10 @@ python augmentation.py --train_path xxx --mask_path xxx --augtrain_path xxx --au
 -  使用本工程中的`json_to_dataset.py`替换掉`labelme/cli`中的相应文件—`json_to_dataset.py` 。在`cmd`中输入`python json_to_dateset.py  /path/你的json文件夹的路径`。注意是把每张图的`json`文件都放在一个目录下，`labelme`标注出来的默认是一张图片一个文件夹。
 - 运行后，在`json`文件夹中会出现`mask_png、labelme_json`文件夹，`mask_png`中存放的是所有8位掩码文件！也即是本工程中使用的标签图。
 - 具体来说，我们的标签图就是分别指示每张图片上每一个位置的像素属于几，`0`是背景，然后你要的类别从`1`开始往后递增即可。
-- 本工程测试的一个2类的简单分割数据集，下载地址为：https://pan.baidu.com/s/1sVjBfmgALVK7uEjeWgIMug
-- 本工程测试的城市街景分割数据集，下载地址为：https://pan.baidu.com/s/1zequLd0aYXNseGoXn-tdog
-- 本工程测试的人脸部位分割数据集，下载地址为：https://pan.baidu.com/s/1uXZX9c8VFZYVP-ru5MOXXA ，提取码为：09ry 。数据集来源：https://blog.csdn.net/yuanlulu/article/details/89789807
+- 
+- 本工程训练和测试的一个2类的简单分割数据集，下载地址为：https://pan.baidu.com/s/1sVjBfmgALVK7uEjeWgIMug
+- 本工程训练和测试的城市街景分割数据集，下载地址为：https://pan.baidu.com/s/1zequLd0aYXNseGoXn-tdog
+- 本工程训练和测试的人脸部位分割数据集，下载地址为：https://pan.baidu.com/s/1uXZX9c8VFZYVP-ru5MOXXA ，提取码为：09ry 。数据集来源：https://blog.csdn.net/yuanlulu/article/details/89789807
 
 
 
@@ -210,10 +215,7 @@ python3 -m onnxsim input_onnx_model output_onnx_model
 使用 https://github.com/Tencent/ncnn 中的onnx2ncnn工具（需要编译后生成）或者使用模型自动转换网站一键转换 https://convertmodel.com/ 不过我还是推荐编译NCNN的转换工具，毕竟NCNN对模型的推理和预测肯定也是需要先编译获得链接库的。
 
 
-
 # NCNN推理示例
-
-
 
 # Benchmark
 
@@ -292,7 +294,6 @@ python3 -m onnxsim input_onnx_model output_onnx_model
 # 参考
 
 - https://github.com/divamgupta/image-segmentation-keras
-- https://blog.csdn.net/u014513323/article/details/81166997
 
 
 
