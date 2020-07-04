@@ -49,7 +49,7 @@
 |50|mobilenet_fcn8|MobileNet|MobileNetFCN8|3,432,764||True|
 |50|seunet|SENet|SEUNet|1,964,530||True|
 |50|scseunet|SCSENet|scSEUNet|1,959,266||True|
-|50|vggunet|VGGNet|VGGUnet|||True|
+|50|vggunet|VGGNet|VGGUnet|25,884,170||True|
 |50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock|38,431,730||True|
 |50|pspnet_resnet50|ResNet50|PSPNet_ResNet50|||True|
 |50|deeplab_v2|DeepLab|DeepLabV2|||True|
