@@ -39,18 +39,18 @@
 
 |Epoch|model_name|Base Model|Segmentation Model|Params|FLOPs|Available|
 | ---|---|---|---|---|---|---|
-|50|enet|ENet|Enet|||True|
-|50|fcn8|Vanilla CNN|FCN8|||True|
-|50|unet|Vanilla CNN|UNet|||True|
-|50|segnet|Vanilla CNN|SegNet|||True|
-|50|icnet|Vanilla CNN|ICNet|||True|
-|50|pspnet|Vanilla CNN|PSPNet|||True|
-|50|mobilenet_unet|MobileNet|MobileNetUnet|||True|
+|50|enet|ENet|Enet|371,558||True|
+|50|fcn8|Vanilla CNN|FCN8|3,609,196||True|
+|50|unet|Vanilla CNN|UNet|4,471,746||True|
+|50|segnet|Vanilla CNN|SegNet|737,938||True|
+|50|icnet|Vanilla CNN|ICNet|6,740,610||True|
+|50|pspnet|Vanilla CNN|PSPNet|964,226||True|
+|50|mobilenet_unet|MobileNet|MobileNetUnet|407,778||True|
 |50|mobilenet_fcn8|MobileNet|MobileNetFCN8|||True|
-|50|seunet|SENet|SEUNet|||True|
-|50|scseunet|SCSENet|scSEUNet|||True|
+|50|seunet|SENet|SEUNet|1,964,530||True|
+|50|scseunet|SCSENet|scSEUNet|1,959,266||True|
 |50|vggunet|VGGNet|VGGUnet|||True|
-|50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock|||True|
+|50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock|38,431,730||True|
 |50|pspnet_resnet50|ResNet50|PSPNet_ResNet50|||True|
 |50|deeplab_v2|DeepLab|DeepLabV2|||True|
 |50|hrnet|HRNet|HRNet|||True|
