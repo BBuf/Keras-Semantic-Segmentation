@@ -53,7 +53,7 @@
 |50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock|38,431,730||True|
 |50|pspnet_resnet50|ResNet50|PSPNet_ResNet50|||True|
 |50|deeplab_v2|DeepLab|DeepLabV2|||True|
-|50|hrnet|HRNet|HRNet|||True|
+|50|hrnet|HRNet|HRNet|28,608,672||True|
 
 # 已支持的损失函数
 
