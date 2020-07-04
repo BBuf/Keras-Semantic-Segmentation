@@ -46,7 +46,7 @@
 |50|icnet|Vanilla CNN|ICNet|6,740,610||True|
 |50|pspnet|Vanilla CNN|PSPNet|964,226||True|
 |50|mobilenet_unet|MobileNet|MobileNetUnet|407,778||True|
-|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|||True|
+|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|3,432,764||True|
 |50|seunet|SENet|SEUNet|1,964,530||True|
 |50|scseunet|SCSENet|scSEUNet|1,959,266||True|
 |50|vggunet|VGGNet|VGGUnet|||True|
