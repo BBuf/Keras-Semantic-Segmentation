@@ -42,7 +42,7 @@
 |50|enet|ENet|Enet|371,558||True|
 |50|fcn8|Vanilla CNN|FCN8|3,609,196||True|
 |50|unet|Vanilla CNN|UNet|4,471,746||True|
-|50|segnet|Vanilla CNN|SegNet|737,938||True|
+|50|segnet|Vanilla CNN|SegNet|2,941,218||True|
 |50|icnet|Vanilla CNN|ICNet|6,740,610||True|
 |50|pspnet|Vanilla CNN|PSPNet|964,226||True|
 |50|mobilenet_unet|MobileNet|MobileNetUnet|407,778||True|
