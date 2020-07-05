@@ -7,7 +7,7 @@ from keras.layers import *
 class conv_block(Model):
     def __init__(self, filters):
         super(conv_block, self).__init__()
-
+        self.output_dim = filters
         self.conv = Sequential([
             Conv2D(filters, kernel_size=(3,3), strides=1, padding='same'),
             BatchNormalization(),
@@ -20,10 +20,15 @@ class conv_block(Model):
     def call(self, x):
         x = self.conv(x)
         return x
+    def compute_output_shape(self, input_shape):
+        space = input_shape[1:-1]
+        return (input_shape[0], space[0], space[1], self.output_dim)
 
 class up_conv(Model):
     def __init__(self, filters):
         super(up_conv, self).__init__()
+        self.output_dim = filters
+
         self.up = Sequential([
             UpSampling2D(),
             Conv2D(filters, kernel_size=(3,3), strides=1, padding='same'),
@@ -35,10 +40,14 @@ class up_conv(Model):
         x = self.up(x)
         return x
 
+    def compute_output_shape(self, input_shape):
+        space = input_shape[1:-1]
+        return (input_shape[0], space[0]*2, space[1]*2, self.output_dim)
+    
 class Recurrent_block(Model):
     def __init__(self, out_ch, t=2):
         super(Recurrent_block, self).__init__()
-
+        self.output_dim =out_ch
         self.t = t
         self.out_ch = out_ch
         self.conv = Sequential([
@@ -53,11 +62,14 @@ class Recurrent_block(Model):
                 x = self.conv(x)
             out = self.conv(x + x)
         return out
+    def compute_output_shape(self, input_shape):
+        space = input_shape[1:-1]
+        return (input_shape[0], space[0]*2, space[1]*2, self.output_dim)
 
 class RRCNN_block(Model):
     def __init__(self, out_ch, t=2):
         super(RRCNN_block, self).__init__()
-
+        self.output_dim =out_ch
         self.RCNN = Sequential([
             Recurrent_block(out_ch, t=t),
             Recurrent_block(out_ch, t=t)
@@ -69,6 +81,9 @@ class RRCNN_block(Model):
         x2 = self.RCNN(x1)
         out = x1 + x2
         return out
+    def compute_output_shape(self, input_shape):
+        space = input_shape[1:-1]
+        return (input_shape[0], space[0]*2, space[1]*2, self.output_dim)
 
 def R2UNet(nClasses, input_height=224, input_width=224):
     """

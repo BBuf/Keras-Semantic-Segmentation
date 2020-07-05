@@ -10,6 +10,10 @@ from .PSPNet import *
 from .Segnet import *
 from .SEUNet import *
 from .Unet import *
+from .R2UNet import *
+from .R2AttUNet import *
+from .NestedUNet import *
+from .AttUNet import *
 from .scSEUnet import *
 from .VGGUnet import *
 from .DeepLabV2 import *
@@ -24,6 +28,10 @@ __model_factory = {
     'mobilenet_fcn8': MobileNetFCN8,
     'vggfcn8': VGGFCN8,
     'unet': UNet,
+    'attunet': AttUNet,
+    'r2unet': R2UNet,
+    'r2attunet': R2AttUNet,
+    'nestedunet': NestedUNet,
     'vggunet': VGGUnet,
     'unet_xception_resnetblock': Unet_Xception_ResNetBlock,
     'mobilenet_unet': MobileNetUnet,
