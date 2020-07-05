@@ -9,3 +9,7 @@
 __pycache__/
 *.csv
 *.pyc
+
+*.zip
+sync.sh
+syncignore.txt
