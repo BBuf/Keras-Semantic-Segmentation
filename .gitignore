@@ -13,4 +13,3 @@ __pycache__/
 *.zip
 sync.sh
 syncignore.txt
-runs/
