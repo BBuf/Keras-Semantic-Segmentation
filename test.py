@@ -43,10 +43,10 @@ parser.add_argument("--classes", type=int, default=2)
 parser.add_argument("--mIOU", type=bool, default=True)
 parser.add_argument("--val_images",
                     type=str,
-                    default="data/helen_small/test_image/")
+                    default="data/bbufdataset/test_image/")
 parser.add_argument("--val_annotations",
                     type=str,
-                    default="data/helen_small/test_label/")
+                    default="data/bbufdataset/test_label/")
 parser.add_argument("--image_init", type=str, default="divide")
 
 args = parser.parse_args()

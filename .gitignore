@@ -6,3 +6,6 @@
 /data/
 /weights/
 /__pycache__/
+__pycache__/
+*.csv
+*.pyc
