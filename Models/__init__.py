@@ -31,7 +31,6 @@ __model_factory = {
     'attunet': AttUNet,
     'r2unet': R2UNet,
     'r2attunet': R2AttUNet,
-    'nestedunet': NestedUNet,
     'vggunet': VGGUnet,
     'unet_xception_resnetblock': Unet_Xception_ResNetBlock,
     'mobilenet_unet': MobileNetUnet,
@@ -42,7 +41,8 @@ __model_factory = {
     'pspnet_resnet50': PSPNet_ResNet50,
     'icnet': ICNet,
     'deeplab_v2': DeepLabV2,
-    'hrnet': HRNet
+    'hrnet': HRNet,
+    'unet++': NestedUNet
 }
 
 
