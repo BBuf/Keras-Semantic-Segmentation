@@ -42,11 +42,15 @@
 |50|enet|ENet|Enet|371,558||True|
 |50|fcn8|Vanilla CNN|FCN8|3,609,196||True|
 |50|unet|Vanilla CNN|UNet|4,471,746||True|
+|50|attunet|Vanilla CNN|AttUNet|||True|
+|50|r2unet|Vanilla CNN|R2UNet|||True|
+|50|r2attunet|Vanilla CNN|R2AttUNet|||True|
+|50|unet++|Vanilla CNN|NestedUNet|||True|
 |50|segnet|Vanilla CNN|SegNet|2,941,218||True|
 |50|icnet|Vanilla CNN|ICNet|6,740,610||True|
 |50|pspnet|Vanilla CNN|PSPNet|964,226||True|
 |50|mobilenet_unet|MobileNet|MobileNetUnet|407,778||True|
-|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|3,432,764||True|
+|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|3,432,764||False|
 |50|seunet|SENet|SEUNet|1,964,530||True|
 |50|scseunet|SCSENet|scSEUNet|1,959,266||True|
 |50|vggunet|VGGNet|VGGUnet|25,884,170||True|
