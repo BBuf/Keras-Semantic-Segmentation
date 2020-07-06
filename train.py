@@ -2,6 +2,7 @@
 import argparse
 import glob
 import os
+os.environ['CUDA_VISIBLE_DEVICES']='0,1' #指定哪几块GPU
 import keras
 import tensorflow as tf
 from keras.utils import multi_gpu_model
