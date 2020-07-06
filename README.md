@@ -55,7 +55,6 @@
 |50|scseunet|SCSENet|scSEUNet|1,959,266||True|
 |50|vggunet|VGGNet|VGGUnet|25,884,170||True|
 |50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock|38,431,730||True|
-|50|pspnet_resnet50|ResNet50|PSPNet_ResNet50|||True|
 |50|deeplab_v2|DeepLab|DeepLabV2|||True|
 |50|hrnet|HRNet|HRNet|28,608,672||True|
 
@@ -241,7 +240,6 @@ python3 -m onnxsim input_onnx_model output_onnx_model
 |50|scseunet|SCSENet|scSEUNet||||||
 |50|vggunet|VGGNet|VGGUnet||||||
 |50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock||||||
-|50|pspnet_resnet50|ResNet50|PSPNet_ResNet50||||||
 |50|deeplab_v2|DeepLab|DeepLabV2||||||
 |50|hrnet|HRNet|HRNet||||||
 
@@ -266,7 +264,6 @@ python3 -m onnxsim input_onnx_model output_onnx_model
 |50|scseunet|SCSENet|scSEUNet||||||
 |50|vggunet|VGGNet|VGGUnet||||||
 |50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock||||||
-|50|pspnet_resnet50|ResNet50|PSPNet_ResNet50||||||
 |50|deeplab_v2|DeepLab|DeepLabV2||||||
 |50|hrnet|HRNet|HRNet||||||
 
