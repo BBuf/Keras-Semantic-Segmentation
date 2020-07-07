@@ -27,7 +27,7 @@ def data_num(train_path, mask_path):
     return train_img, masks
 
 def mask_aug():
-
+    h, w = train_img.shape[0], train_img.shape[1]
     aug = Compose([VerticalFlip(p=0.5),
                        RandomRotate90(p=0.5),
                        HorizontalFlip(p=0.5),
