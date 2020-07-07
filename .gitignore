@@ -15,3 +15,4 @@ sync.sh
 syncignore.txt
 *.pc
 /log/
+*.csv
