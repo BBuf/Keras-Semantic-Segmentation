@@ -169,7 +169,7 @@ call_backs = [model_checkpoint, csv_logger, early_stop, reduce_lr]
 # compile
 model.compile(loss='categorical_crossentropy',
               optimizer=optimizer_name,
-              metrics=['accuracy'])
+              metrics=['accuracy', 'iou_score', 'dice_score', 'f1_score', 'f2_score'])
 
 if len(load_weights) > 0:
     model.load_weights(load_weights)

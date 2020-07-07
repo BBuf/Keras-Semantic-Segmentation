@@ -31,16 +31,16 @@ def iou_score(gt, pr, class_weights=1., smooth=SMOOTH, per_image=True, threshold
         pr = tf.greater(pr, threshold)
         pr = tf.cast(pr, dtype=tf.float32)
 
-    intersection = tf.sum(gt * pr, axis=axes)
-    union = tf.sum(gt + pr, axis=axes) - intersection
+    intersection = tf.reduce_sum(gt * pr, axis=axes)
+    union = tf.reduce_sum(gt + pr, axis=axes) - intersection
     iou = (intersection + smooth) / (union + smooth)
 
     # mean per image
     if per_image:
-        iou = tf.mean(iou, axis=0)
+        iou = tf.reduce_mean(iou, axis=0)
 
     # weighted mean per class
-    iou = tf.mean(iou * class_weights)
+    iou = tf.reduce_mean(iou * class_weights)
 
     return iou
 
@@ -91,19 +91,19 @@ def f_score(gt, pr, class_weights=1, beta=1, smooth=SMOOTH, per_image=True, thre
         pr = tf.greater(pr, threshold)
         pr = tf.cast(pr, dtype=tf.float32)
 
-    tp = tf.sum(gt * pr, axis=axes)
-    fp = tf.sum(pr, axis=axes) - tp
-    fn = tf.sum(gt, axis=axes) - tp
+    tp = tf.reduce_sum(gt * pr, axis=axes)
+    fp = tf.reduce_sum(pr, axis=axes) - tp
+    fn = tf.reduce_sum(gt, axis=axes) - tp
 
     score = ((1 + beta ** 2) * tp + smooth) \
             / ((1 + beta ** 2) * tp + beta ** 2 * fn + fp + smooth)
 
     # mean per image
     if per_image:
-        score = tf.mean(score, axis=0)
+        score = tf.reduce_mean(score, axis=0)
 
     # weighted mean per class
-    score = tf.mean(score * class_weights)
+    score = tf.reduce_mean(score * class_weights)
 
     return score
 
