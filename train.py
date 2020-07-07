@@ -105,29 +105,14 @@ input_height = args.input_height
 input_width = args.input_width
 resize_op = args.resize_op
 
-# modelFns = {
-#     'enet': Models.ENet.ENet,
-#     'fcn8': Models.FCN8.FCN8,
-#     'unet': Models.Unet.Unet,
-#     'segnet': Models.Segnet.Segnet,
-#     'pspnet': Models.PSPNet.PSPNet,
-#     'icnet': Models.ICNet.ICNet,
-#     'mobilenet_unet': Models.MobileNetUnet.MobileNetUnet,
-#     'mobilenet_fcn8': Models.MobileNetFCN8.MobileNetFCN8,
-#     'seunet': Models.SEUNet.SEUnet
-# }
-# modelFN = modelFns[model_name]
-# model = modelFN(n_classes, input_height=input_height, input_width=input_width)
-
-
 model = build_model(model_name,
                     n_classes,
                     input_height=input_height,
                     input_width=input_width)
 
 # 需要保证脚本开头指定的gpu个数和现在要使用的gpu数量相等
-if multi_gpus == True:
-    model = multi_gpu_model(model, gpus=2)
+# if multi_gpus == True:
+#     model = multi_gpu_model(model, gpus=2)
 
 # 统计一下训练集/验证集样本数，确定每一个epoch需要训练的iter
 images = glob.glob(os.path.join(train_images, "*.jpg")) + \
@@ -142,7 +127,11 @@ images = glob.glob(os.path.join(val_images, "*.jpg")) + \
 
 num_val = len(images)
 
-print(num_train, num_val)
+from keras.callbacks import History
+from keras.callbacks import ModelCheckpoint
+history = History()
+# 设置log的存储位置，将网络权值以图片格式保持在tensorboard中显示，设置每一个周期计算一次网络的
+tb_cb = keras.callbacks.TensorBoard(log_dir='weights/%s/log' % args.model_name, write_images=1, histogram_freq=0)
 
 # 模型回调函数
 early_stop = EarlyStopping('loss', min_delta=0.1, patience=patience, verbose=1)
@@ -158,13 +147,13 @@ model_checkpoint = ModelCheckpoint(model_names,
                                    save_best_only=True,
                                    save_weights_only=False)
 
-if multi_gpus == True:
-    model_checkpoint = ParallelModelCheckpoint(model_names,
-                                   monitor='loss',
-                                   save_best_only=True,
-                                   save_weights_only=False)
+# if multi_gpus == True:
+#     model_checkpoint = ParallelModelCheckpoint(model, filepath=model_names,
+#                                    monitor='loss',
+#                                    save_best_only=True,
+#                                    save_weights_only=False)
 
-call_backs = [model_checkpoint, csv_logger, early_stop, reduce_lr]
+call_backs = [model_checkpoint, csv_logger, early_stop, reduce_lr, tb_cb]
 
 # compile
 model.compile(loss='categorical_crossentropy',
@@ -174,6 +163,8 @@ model.compile(loss='categorical_crossentropy',
 if len(load_weights) > 0:
     model.load_weights(load_weights)
 print("Model output shape : ", model.output_shape)
+
+model.summary() 
 
 output_height = model.outputHeight
 output_width = model.outputWidth
@@ -192,16 +183,18 @@ if validate:
                                              output_height, output_width,
                                              image_init)
 
+
+
 # 开始训练
 if not validate:
-    model.fit_generator(train_ge,
+    history = model.fit_generator(train_ge,
                         epochs=epochs,
                         callbacks=call_backs,
                         steps_per_epoch=int(num_train / train_batch_size),
                         verbose=1,
                         shuffle=True)
 else:
-    model.fit_generator(train_ge,
+    history = model.fit_generator(train_ge,
                         validation_data=val_ge,
                         epochs=epochs,
                         callbacks=call_backs,
@@ -209,3 +202,4 @@ else:
                         steps_per_epoch=int(num_train / train_batch_size),
                         shuffle=True,
                         validation_steps=int(num_val / val_batch_size))
+

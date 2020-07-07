@@ -13,3 +13,5 @@ __pycache__/
 *.zip
 sync.sh
 syncignore.txt
+*.pc
+/log/

@@ -37,26 +37,26 @@
 
 # 已支持的分割模型
 
-|Epoch|model_name|Base Model|Segmentation Model|Params|FLOPs|Available|
-| ---|---|---|---|---|---|---|
-|50|enet|ENet|Enet|371,558||True|
-|50|fcn8|Vanilla CNN|FCN8|3,609,196||True|
-|50|unet|Vanilla CNN|UNet|4,471,746||True|
-|50|attunet|Vanilla CNN|AttUNet|||True|
-|50|r2unet|Vanilla CNN|R2UNet|||True|
-|50|r2attunet|Vanilla CNN|R2AttUNet|||True|
-|50|unet++|Vanilla CNN|NestedUNet|||True|
-|50|segnet|Vanilla CNN|SegNet|2,941,218||True|
-|50|icnet|Vanilla CNN|ICNet|6,740,610||True|
-|50|pspnet|Vanilla CNN|PSPNet|964,226||True|
-|50|mobilenet_unet|MobileNet|MobileNetUnet|407,778||True|
-|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|3,432,764||False|
-|50|seunet|SENet|SEUNet|1,964,530||True|
-|50|scseunet|SCSENet|scSEUNet|1,959,266||True|
-|50|vggunet|VGGNet|VGGUnet|25,884,170||True|
-|50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock|38,431,730||True|
-|50|deeplab_v2|DeepLab|DeepLabV2|||True|
-|50|hrnet|HRNet|HRNet|28,608,672||True|
+|Epoch|model_name|Base Model|Segmentation Model|Params|FLOPs|Model Size|Available|
+| ---|---|---|---|---|---|---|---|
+|50|enet|ENet|Enet|371,558|||True|
+|50|fcn8|Vanilla CNN|FCN8|3,609,196|||True|
+|50|unet|Vanilla CNN|UNet|4,471,746|||True|
+|50|attunet|Vanilla CNN|AttUNet||||True|
+|50|r2unet|Vanilla CNN|R2UNet||||True|
+|50|r2attunet|Vanilla CNN|R2AttUNet||||True|
+|50|unet++|Vanilla CNN|NestedUNet||||True|
+|50|segnet|Vanilla CNN|SegNet|2,941,218|||True|
+|50|icnet|Vanilla CNN|ICNet|6,740,610|||True|
+|50|pspnet|Vanilla CNN|PSPNet|964,226|||True|
+|50|mobilenet_unet|MobileNet|MobileNetUnet|407,778|||True|
+|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|3,432,764|||False|
+|50|seunet|SENet|SEUNet|1,964,530|||True|
+|50|scseunet|SCSENet|scSEUNet|1,959,266|||True|
+|50|vggunet|VGGNet|VGGUnet|25,884,170|||True|
+|50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock|38,431,730|||True|
+|50|deeplab_v2|DeepLab|DeepLabV2||||True|
+|50|hrnet|HRNet|HRNet|28,608,672|||True|
 
 # 已支持的损失函数
 
@@ -111,14 +111,14 @@ python train.py ...
 - `--resume`字符串类型，代表继续训练的时候加载的模型路径，默认值为``，即从头训练。
 - `--optimizer_name`字符串类型，代表训练模型时候的优化方法，支持`sgd`,`adam`,`adadelta`等多种优化方式，默认为`adadelta`。
 - `--image_init`字符串类型，代表输入图片初始化方式，支持`sub_mean`，`sub_and_divide`，`divide`，默认为`divide`。
-- `--multi_gpus` 布尔类型，代表使用是否多卡进行训练，默认为Fasle，如果为True，需要手动调整`train.py`中的显卡标号，这里默认的是第`0,1`两块卡。（目前暂不支持多卡，正在修复中）
+- `--multi_gpus` 布尔类型，代表使用是否多卡进行训练，默认为Fasle，如果为True，需要手动调整`train.py`中的显卡标号，这里默认的是第`0,1`两块卡。（目前暂不支持多卡，正在开发中）
 
 
 
 # 训练示例
 
 - 训练本工程提供的二分类数据集：`python train.py --dataset_name bbufdataset --model_name unet --input_height 224 --input_width 224 --image_init divide --n_classes 2`
-- 训练12个类别的城市街景分割数据集：`python train.py --dataset_name streetscape --model_name unet --input_height 320 --input_width 640 --resize_op 2 --image_init sub_mean --n_classes 12`
+- 训练CamVid数据集：`python train.py --dataset_name streetscape --model_name unet --input_height 320 --input_width 640 --resize_op 2 --image_init sub_mean --n_classes 12`
 
 
 
@@ -150,7 +150,7 @@ python test.py ...
 # 测试示例
 
 - 测试二分类数据集：`python test.py --model_name  unet --weights_path weights/unet.xx.hdf5 --classes 2 --image_init divide`
-- 测试城市街景分割数据集：`python test.py --model_name unet --weights_path weights/unet.xx.hdf5 --classes 12 --image_init sub_mean --input_height 320 --input_width 640 --resize_op 2`
+- 测试CamVid数据集：`python test.py --model_name unet --weights_path weights/unet.xx.hdf5 --classes 12 --image_init sub_mean --input_height 320 --input_width 640 --resize_op 2`
 
 
 
@@ -225,48 +225,50 @@ python3 -m onnxsim input_onnx_model output_onnx_model
 ## 个人制作2个类别小零件数据集分割结果
 
 
-
-|Epoch|model_name|Base Model|Segmentation Model|Train Acc|Train Loss|Val Acc|Val Loss|Test mIOU|
-| ---|---|---|---|---|---|---|---|---|
-|50|enet|ENet|Enet|0.99|0.02|0.98|0.02|0.91|
-|50|fcn8|Vanilla CNN|FCN8|0.99|0.02|0.98|0.04|0.93|
-|50|unet|Vanilla CNN|UNet|0.99|0.02|0.99|0.03|0.94|
-|50|segnet|Vanilla CNN|SegNet|0.99|0.02|0.99|0.02|0.94|
-|50|icnet|Vanilla CNN|ICNet|0.99|0.02|0.99|0.02|0.94|
-|50|pspnet|Vanilla CNN|PSPNet|0.99|0.02|0.99|0.02|0.94|
-|50|mobilenet_unet|MobileNet|MobileNetUnet|0.99|0.02|0.99|0.02|0.94|
-|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|0.99|0.02|0.99|0.02|0.94|
-|50|seunet|SENet|SEUNet||||||
-|50|scseunet|SCSENet|scSEUNet||||||
-|50|vggunet|VGGNet|VGGUnet||||||
-|50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock||||||
-|50|deeplab_v2|DeepLab|DeepLabV2||||||
-|50|hrnet|HRNet|HRNet||||||
-
-
-
-## 城市街景分割数据集分割结果
-
+|Epoch|model_name|Base Model|Segmentation Model|iou_score|dice_score|f1_score|f2_score|
+| ---|---|---|---|---|---|---|---|
+|50|enet|ENet|Enet|||||
+|50|fcn8|Vanilla CNN|FCN8|||||
+|50|unet|Vanilla CNN|UNet|||||
+|50|attunet|Vanilla CNN|AttUNet|||||
+|50|r2unet|Vanilla CNN|R2UNet|||||
+|50|r2attunet|Vanilla CNN|R2AttUNet|||||
+|50|unet++|Vanilla CNN|NestedUNet|||||
+|50|segnet|Vanilla CNN|SegNet|||||
+|50|icnet|Vanilla CNN|ICNet|||||
+|50|pspnet|Vanilla CNN|PSPNet|||||
+|50|mobilenet_unet|MobileNet|MobileNetUnet|||||
+|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|||||
+|50|seunet|SENet|SEUNet|||||
+|50|scseunet|SCSENet|scSEUNet|||||
+|50|vggunet|VGGNet|VGGUnet|||||
+|50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock|||||
+|50|deeplab_v2|DeepLab|DeepLabV2|||||
+|50|hrnet|HRNet|HRNet|||||
 
 
-|Epoch|model_name|Base Model|Segmentation Model|Train Acc|Train Loss|Val Acc|Val Loss|Test mIOU|
-| ---|---|---|---|---|---|---|---|---|
-|50|enet|ENet|Enet|0.71|0.90|0.64|1.02|0.20|
-|50|fcn8|Vanilla CNN|FCN8|0.85|0.53|0.67|1.01|0.25|
-|50|unet|Vanilla CNN|UNet|0.78|0.78|0.62|1.14|0.19|
-|50|segnet|Vanilla CNN|SegNet|0.41|1.64|0.31|1.94|0.19|
-|50|icnet|Vanilla CNN|ICNet|0.89|0.38|0.72|0.84|0.33|
-|50|pspnet(576x384)|Vanilla CNN|PSPNet| 0.88      | 0.41       | 0.73    | 0.88     | 0.33      |
-|50|mobilenet_unet|MobileNet|MobileNetUnet|0.90|0.36|0.73|0.87|0.34|
-|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|0.70|0.92|0.58|1.25|0.17|
-|50|seunet|Vanilla CNN|SEUnet|0.84|0.59|0.77|0.79|0.34|
-|50|seunet|SENet|SEUNet||||||
-|50|scseunet|SCSENet|scSEUNet||||||
-|50|vggunet|VGGNet|VGGUnet||||||
-|50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock||||||
-|50|deeplab_v2|DeepLab|DeepLabV2||||||
-|50|hrnet|HRNet|HRNet||||||
+## CamVid分割数据集分割结果
 
+|Epoch|model_name|Base Model|Segmentation Model|iou_score|dice_score|f1_score|f2_score|
+| ---|---|---|---|---|---|---|---|
+|50|enet|ENet|Enet|||||
+|50|fcn8|Vanilla CNN|FCN8|||||
+|50|unet|Vanilla CNN|UNet|||||
+|50|attunet|Vanilla CNN|AttUNet|||||
+|50|r2unet|Vanilla CNN|R2UNet|||||
+|50|r2attunet|Vanilla CNN|R2AttUNet|||||
+|50|unet++|Vanilla CNN|NestedUNet|||||
+|50|segnet|Vanilla CNN|SegNet|||||
+|50|icnet|Vanilla CNN|ICNet|||||
+|50|pspnet|Vanilla CNN|PSPNet|||||
+|50|mobilenet_unet|MobileNet|MobileNetUnet|||||
+|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|||||
+|50|seunet|SENet|SEUNet|||||
+|50|scseunet|SCSENet|scSEUNet|||||
+|50|vggunet|VGGNet|VGGUnet|||||
+|50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock|||||
+|50|deeplab_v2|DeepLab|DeepLabV2|||||
+|50|hrnet|HRNet|HRNet|||||
 
 
 

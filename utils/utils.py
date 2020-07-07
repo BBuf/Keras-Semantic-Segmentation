@@ -1,6 +1,7 @@
 import os
 import cv2
-
+from keras.callbacks import (CSVLogger, EarlyStopping, ModelCheckpoint,
+                             ReduceLROnPlateau)
 
 def mk_if_not_exits(dir):
     if not os.path.exists(dir):
@@ -21,3 +22,13 @@ def cv2_letterbox_image(image, dst_size):
     new_img = cv2.copyMakeBorder(image, top, bottom, left, right,
                                  cv2.BORDER_CONSTANT)
     return new_img
+
+# class ParallelModelCheckpoint(ModelCheckpoint):
+#     def __init__(self,model,filepath, monitor='loss', verbose=0,
+#                  save_best_only=False, save_weights_only=False,
+#                  mode='auto', period=1):
+#         self.single_model = model
+#         super(ParallelModelCheckpoint,self).__init__(filepath, monitor, verbose,save_best_only, save_weights_only,mode, period)
+
+#     def set_model(self, model):
+#         super(ParallelModelCheckpoint,self).set_model(self.single_model)
