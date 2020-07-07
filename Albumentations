@@ -27,11 +27,11 @@ def data_num(train_path, mask_path):
     return train_img, masks
 
 def mask_aug():
-    h, w = train_img.shape[0], train_img.shape[1]
+    
     aug = Compose([VerticalFlip(p=0.5),
                        RandomRotate90(p=0.5),
                        HorizontalFlip(p=0.5),
-                       RandomSizedCrop(min_max_height=(128, 512), height=h, width=w, p=0.5)])
+                       RandomSizedCrop(min_max_height=(128, 512), height=384, width=384, p=0.5)])
 
     return aug
 
