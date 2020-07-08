@@ -229,8 +229,8 @@ python3 -m onnxsim input_onnx_model output_onnx_model
 ## 个人制作2个类别小零件数据集分割结果
 
 
-|Epoch|model_name|Base Model|Segmentation Model|iou_score|dice_score|f1_score|f2_score|
-| ---|---|---|---|---|---|---|---|
+|Epoch|model_name|Base Model|Segmentation Model|Acc|iou_score|dice_score|f1_score|f2_score|
+| ---|---|---|---|---|---|---|---|---|
 |50|enet|ENet|Enet|||||
 |50|fcn8|Vanilla CNN|FCN8|||||
 |50|unet|Vanilla CNN|UNet|||||
@@ -253,8 +253,8 @@ python3 -m onnxsim input_onnx_model output_onnx_model
 
 ## CamVid分割数据集分割结果
 
-|Epoch|model_name|Base Model|Segmentation Model|iou_score|dice_score|f1_score|f2_score|
-| ---|---|---|---|---|---|---|---|
+|Epoch|model_name|Base Model|Segmentation Model|Acc|iou_score|dice_score|f1_score|f2_score|
+| ---|---|---|---|---|---|---|---|---|
 |50|enet|ENet|Enet|||||
 |50|fcn8|Vanilla CNN|FCN8|||||
 |50|unet|Vanilla CNN|UNet|||||
