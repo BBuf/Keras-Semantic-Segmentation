@@ -1,5 +1,7 @@
 import os
 import cv2
+import tensorflow as tf
+import keras.backend as K
 from keras.callbacks import (CSVLogger, EarlyStopping, ModelCheckpoint,
                              ReduceLROnPlateau)
 
@@ -22,6 +24,17 @@ def cv2_letterbox_image(image, dst_size):
     new_img = cv2.copyMakeBorder(image, top, bottom, left, right,
                                  cv2.BORDER_CONSTANT)
     return new_img
+
+def get_flops(model):
+    run_meta = tf.RunMetadata()
+    opts = tf.profiler.ProfileOptionBuilder.float_operation()
+ 
+    # We use the Keras session graph in the call to the profiler.
+    flops = tf.profiler.profile(graph=K.get_session().graph,
+                                run_meta=run_meta, cmd='op', options=opts)
+ 
+    return flops.total_float_ops  # Prints the "flops" of the model.
+
 
 # class ParallelModelCheckpoint(ModelCheckpoint):
 #     def __init__(self,model,filepath, monitor='loss', verbose=0,

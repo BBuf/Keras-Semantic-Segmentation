@@ -110,6 +110,8 @@ model = build_model(model_name,
                     input_height=input_height,
                     input_width=input_width)
 
+print(get_flops(model))
+
 # 需要保证脚本开头指定的gpu个数和现在要使用的gpu数量相等
 # if multi_gpus == True:
 #     model = multi_gpu_model(model, gpus=2)

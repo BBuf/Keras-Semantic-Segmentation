@@ -5,7 +5,7 @@
 ![](image/yuyi.png)
 
 # 配置
-- tensorflow 1.13.0
+- tensorflow 1.13.0+tensorboard
 - keras 2.2.4
 - GTX 2080Ti
 - Cuda 10.0 + Cudnn7
@@ -39,13 +39,13 @@
 
 |Epoch|model_name|Base Model|Segmentation Model|Params|FLOPs|Model Size|Available|
 | ---|---|---|---|---|---|---|---|
-|50|enet|ENet|Enet|371,558|||True|
-|50|fcn8|Vanilla CNN|FCN8|3,609,196|||True|
-|50|unet|Vanilla CNN|UNet|4,471,746|||True|
-|50|attunet|Vanilla CNN|AttUNet||||True|
-|50|r2unet|Vanilla CNN|R2UNet||||True|
-|50|r2attunet|Vanilla CNN|R2AttUNet||||True|
-|50|unet++|Vanilla CNN|NestedUNet||||True|
+|50|enet|ENet|Enet|371,558|759,829|1.4Mb|True|
+|50|fcn8|Vanilla CNN|FCN8|3,609,196|7220708|29.0Mb|True|
+|50|unet|Vanilla CNN|UNet|7,167,618|14,344,197|57.6Mb|True|
+|50|attunet|Vanilla CNN|AttUNet|8,913,058|17,841,087|71.7Mb|True|
+|50|r2unet|Vanilla CNN|R2UNet|17,652,930|51,065,008|141.7Mb|True|
+|50|r2attunet|Vanilla CNN|R2AttUNet|16,958,530|46,532,640|136.2Mb|True|
+|50|unet++|Vanilla CNN|NestedUNet|9,171,170|18,353,631|73.7Mb|True|
 |50|segnet|Vanilla CNN|SegNet|2,941,218|||True|
 |50|icnet|Vanilla CNN|ICNet|6,740,610|||True|
 |50|pspnet|Vanilla CNN|PSPNet|964,226|||True|
@@ -87,6 +87,10 @@
 |f2_score|Yes|
 |dice_score|Yes|
 
+# 已支持训练可视化
+
+为了更好的监督训练过程,我们已经提供了训练可视化,对损失函数,iou_score,dice_socoe,f1_score,f2_score等进行了可视化.在训练过程中会在模型保
+存的文件夹下生成log文件夹,例如`weights/unet/log`,然后使用`tensorboard --logdir=weights/unet/log`,打开得到的网址即可获得可视化结果.
 
 # 训练
 
