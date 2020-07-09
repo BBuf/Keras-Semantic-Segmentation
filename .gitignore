@@ -16,3 +16,4 @@ syncignore.txt
 *.pc
 /log/
 *.csv
+/zc_test

@@ -37,26 +37,27 @@
 
 # 已支持的分割模型
 
-|Epoch|model_name|Base Model|Segmentation Model|Params|FLOPs|Model Size|Available|
-| ---|---|---|---|---|---|---|---|
-|50|enet|ENet|Enet|371,558|759,829|1.4Mb|True|
-|50|fcn8|Vanilla CNN|FCN8|3,609,196|7220708|29.0Mb|True|
-|50|unet|Vanilla CNN|UNet|7,167,618|14,344,197|57.6Mb|True|
-|50|attunet|Vanilla CNN|AttUNet|8,913,058|17,841,087|71.7Mb|True|
-|50|r2unet|Vanilla CNN|R2UNet|17,652,930|51,065,008|141.7Mb|True|
-|50|r2attunet|Vanilla CNN|R2AttUNet|16,958,530|46,532,640|136.2Mb|True|
-|50|unet++|Vanilla CNN|NestedUNet|9,171,170|18,353,631|73.7Mb|True|
-|50|segnet|Vanilla CNN|SegNet|2,941,218|||True|
-|50|icnet|Vanilla CNN|ICNet|6,740,610|||True|
-|50|pspnet|Vanilla CNN|PSPNet|964,226|||True|
-|50|mobilenet_unet|MobileNet|MobileNetUnet|407,778|||True|
-|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|3,432,764|||False|
-|50|seunet|SENet|SEUNet|1,964,530|||True|
-|50|scseunet|SCSENet|scSEUNet|1,959,266|||True|
-|50|vggunet|VGGNet|VGGUnet|25,884,170|||True|
-|50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock|38,431,730|||True|
-|50|deeplab_v2|DeepLab|DeepLabV2||||True|
-|50|hrnet|HRNet|HRNet|28,608,672|||True|
+|model_name|Base Model|Segmentation Model|Params|FLOPs|Model Size|Available|
+|---|---|---|---|---|---|---|
+|enet|ENet|Enet|371,558|759,829|1.4Mb|True|
+|fcn8|Vanilla CNN|FCN8|3,609,196|7220708|29.0Mb|True|
+|unet|Vanilla CNN|UNet|7,167,618|14,344,197|57.6Mb|True|
+|attunet|Vanilla CNN|AttUNet|8,913,058|17,841,087|71.7Mb|True|
+|r2unet|Vanilla CNN|R2UNet|17,652,930|51,065,008|141.7Mb|True|
+|r2attunet|Vanilla CNN|R2AttUNet|16,958,530|46,532,640|136.2Mb|True|
+|unet++|Vanilla CNN|NestedUNet|9,171,170|18,353,631|73.7Mb|True|
+|segnet|Vanilla CNN|SegNet|2,941,218|5,888,377|11.9Mb|True|
+|icnet|Vanilla CNN|ICNet|6,740,610|13,524,726|27.6Mb|True|
+|pspnet*|Vanilla CNN|PSPNet|964,226|8,894,120|3.9Mb|True|
+|mobilenet_unet|MobileNet|MobileNetUnet|407,778|825,856|1.9Mb|True|
+|mobilenet_fcn8|MobileNet|MobileNetFCN8|3,432,764|6,880,358|14Mb|False|
+|seunet|SENet|SEUNet|1,964,530|3,932,843|8.2Mb|True|
+|scseunet|SCSENet|scSEUNet|1,959,266|3,923,359|8.1Mb|True|
+|vggunet|VGGNet|VGGUnet|25,884,170|51,789,952|103.8Mb|True|
+|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock|38,431,730|88,041,130|154.5Mb|True|
+|deeplab_v2|DeepLab|DeepLabV2|37,799,752|75,574,697|151.3Mb|True|
+|hrnet|HRNet|HRNet|28,608,672|||False|
+_注：测试数据是基于输入图片大小为224x224的二分类模型。对于标*号的模型，图片大小为模型定义里支持的最小大小。_
 
 # 已支持的损失函数
 
