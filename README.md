@@ -104,7 +104,7 @@ python train.py ...
 
 可用参数如下：
 
-- `--dataset_name` 字符串，代表选择对应的数据集的名称，默认bbufdataset
+- `--dataset_name` 字符串，代表选择对应的数据集的名称，默认`bbufdataset`,支持`camvid`。
 - `--n_classes` 整型，代表分割图像中有几种类别的像素，默认为`2`。
 - `--input_height`整型，代表要分割的图像需要`resize`的长，默认为`224`。
 - `--input_width` 整型，代表要分割的图像需要`resize`的宽，默认为`224`。
@@ -124,7 +124,7 @@ python train.py ...
 # 训练示例
 
 - 训练本工程提供的二分类数据集：`python train.py --dataset_name bbufdataset --model_name unet --input_height 224 --input_width 224 --image_init divide --n_classes 2`
-- 训练CamVid数据集：`python train.py --dataset_name streetscape --model_name unet --input_height 320 --input_width 640 --resize_op 2 --image_init sub_mean --n_classes 12`
+- 训练CamVid数据集：`python train.py --dataset_name camvid --model_name unet --input_height 720 --input_width 960 --image_init sub_mean --n_classes 32 --train_batch_size 2 --val_batch_size 2`
 
 
 
@@ -156,7 +156,7 @@ python test.py ...
 # 测试示例
 
 - 测试二分类数据集：`python test.py --model_name  unet --weights_path weights/unet.xx.hdf5 --classes 2 --image_init divide`
-- 测试CamVid数据集：`python test.py --model_name unet --weights_path weights/unet.xx.hdf5 --classes 12 --image_init sub_mean --input_height 320 --input_width 640 --resize_op 2`
+- 测试CamVid数据集：`python test.py --model_name unet --weights_path weights/unet.xx.hdf5 --classes 32 --image_init sub_mean --input_height 720 --input_width 960`
 
 
 
@@ -188,7 +188,7 @@ python augmentation.py --train_path xxx --mask_path xxx --augtrain_path xxx --au
 - 具体来说，我们的标签图就是分别指示每张图片上每一个位置的像素属于几，`0`是背景，然后你要的类别从`1`开始往后递增即可。
 - 
 - 本工程训练和测试的一个2类的简单分割数据集，下载地址为：https://pan.baidu.com/s/1sVjBfmgALVK7uEjeWgIMug
-- 本工程训练和测试的城市街景分割数据集，下载地址为：https://pan.baidu.com/s/1zequLd0aYXNseGoXn-tdog
+- 本工程训练和测试的CamVid数据集，下载地址为：https://pan.baidu.com/s/1zequLd0aYXNseGoXn-tdog
 - 本工程训练和测试的人脸部位分割数据集，下载地址为：https://pan.baidu.com/s/1uXZX9c8VFZYVP-ru5MOXXA ，提取码为：09ry 。数据集来源：https://blog.csdn.net/yuanlulu/article/details/89789807
 
 
@@ -288,7 +288,7 @@ python3 -m onnxsim input_onnx_model output_onnx_model
 
 
 
-## 城市街景分割数据集分割可视化结果
+## CamVid数据集分割可视化结果
 
 
 

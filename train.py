@@ -8,7 +8,7 @@ import tensorflow as tf
 from keras.utils import multi_gpu_model
 from keras.callbacks import (CSVLogger, EarlyStopping, ModelCheckpoint,
                              ReduceLROnPlateau)
-
+import keras as K
 import data
 import Models
 from Models import build_model
@@ -37,7 +37,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--model_name", type=str, default="unet")
 parser.add_argument(
     "--dataset_name", type=str,
-    default="bbufdataset")  # streetscape(12)(320x640), helen_small(11)(512x512), bbufdataset(2)
+    default="bbufdataset")  # camvid(32)(720x960), helen_small(11)(512x512), bbufdataset(2)(224x224)
 parser.add_argument("--n_classes", type=int, default=2)
 parser.add_argument("--epochs", type=int, default=50)
 
@@ -59,15 +59,15 @@ parser.add_argument("--multi_gpus", type=bool, default=False)
 args = parser.parse_args()
 
 # 使用callback，要稍微改一下Checkpoint()的使用方法
-class ParallelModelCheckpoint(ModelCheckpoint):
-    def __init__(self,model,filepath, monitor='val_loss', verbose=0,
-                 save_best_only=False, save_weights_only=False,
-                 mode='auto', period=1):
-        self.single_model = model
-        super(ParallelModelCheckpoint,self).__init__(filepath, monitor, verbose,save_best_only, save_weights_only,mode, period)
+# class ParallelModelCheckpoint(ModelCheckpoint):
+#     def __init__(self,model,filepath, monitor='val_loss', verbose=0,
+#                  save_best_only=False, save_weights_only=False,
+#                  mode='auto', period=1):
+#         self.single_model = model
+#         super(ParallelModelCheckpoint,self).__init__(filepath, monitor, verbose,save_best_only, save_weights_only,mode, period)
 
-    def set_model(self, model):
-        super(ParallelModelCheckpoint,self).set_model(self.single_model)
+#     def set_model(self, model):
+#         super(ParallelModelCheckpoint,self).set_model(self.single_model)
 
 # 再定义一些keras回调函数需要的参数
 
@@ -104,6 +104,7 @@ n_classes = args.n_classes
 input_height = args.input_height
 input_width = args.input_width
 resize_op = args.resize_op
+
 
 model = build_model(model_name,
                     n_classes,
@@ -194,7 +195,9 @@ if not validate:
                         callbacks=call_backs,
                         steps_per_epoch=int(num_train / train_batch_size),
                         verbose=1,
-                        shuffle=True)
+                        shuffle=True,
+                        max_q_size=10,
+                        workers=1)
 else:
     history = model.fit_generator(train_ge,
                         validation_data=val_ge,
@@ -203,5 +206,7 @@ else:
                         verbose=1,
                         steps_per_epoch=int(num_train / train_batch_size),
                         shuffle=True,
-                        validation_steps=int(num_val / val_batch_size))
+                        validation_steps=int(num_val / val_batch_size),
+                        max_q_size=10,
+                        workers=1)
 
