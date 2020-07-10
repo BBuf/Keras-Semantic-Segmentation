@@ -47,8 +47,8 @@ parser.add_argument("--input_width", type=int, default=224)
 parser.add_argument('--validate', type=bool, default=True)
 parser.add_argument("--resize_op", type=int, default=1)
 
-parser.add_argument("--train_batch_size", type=int, default=16)
-parser.add_argument("--val_batch_size", type=int, default=16)
+parser.add_argument("--train_batch_size", type=int, default=4)
+parser.add_argument("--val_batch_size", type=int, default=4)
 
 parser.add_argument("--train_save_path", type=str, default="weights/")
 parser.add_argument("--resume", type=str, default="")

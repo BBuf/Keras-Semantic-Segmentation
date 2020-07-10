@@ -175,7 +175,7 @@ def HRNet(nClasses, input_height=224, input_width=224):
     up2 = BatchNormalization(epsilon=1e-5, momentum=0.1)(up2)
     up2 = Activation('relu')(up2)
 
-    final = conv(up2, 3, 1, padding_='valid')
+    final = conv(up2, nClasses, 1, padding_='valid')
 
     outputHeight = Model(inputs, final).output_shape[1]
     outputWidth = Model(inputs, final).output_shape[2]

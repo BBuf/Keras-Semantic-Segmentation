@@ -56,7 +56,7 @@
 |vggunet|VGGNet|VGGUnet|25,884,170|51,789,952|103.8Mb|True|
 |unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock|38,431,730|88,041,130|154.5Mb|True|
 |deeplab_v2|DeepLab|DeepLabV2|37,799,752|75,574,697|151.3Mb|True|
-|hrnet|HRNet|HRNet|28,608,672|||False|
+|hrnet|HRNet|HRNet|28,608,672|57,356,440|3.4Mb|True|
 
 _注：测试数据是基于输入图片大小为224x224的二分类模型。对于标*号的模型，图片大小为模型定义里支持的最小大小。_
 
@@ -112,6 +112,7 @@ python train.py ...
 - `--validate`布尔型，代表训练过程中是否需要验证集，默认为`True`，即使用验证集。
 - `--epochs`整型，代表要训练多少个`epoch`，默认为`50`。
 - `--train_batch_size`整型，代表训练时批量大小，默认为`4`。
+- `--val_batch_size`整型，代表训练时批量大小，默认为`4`。
 - `--model_name ` 字符串类型，代表训练时使用哪个模型，支持`enet`,`unet`,`segnet`,`fcn8`等多种模型，默认为`unet`。
 - `--train_save_path`字符串类型，代表训练时保存模型的路径，默认为`weights/unet`，即会将模型保存在`weights`文件夹下，并且每个模型名字前缀以`unet`开头，后面接迭代次数和准确率构成完整的保存模型的路径。
 - `--resume`字符串类型，代表继续训练的时候加载的模型路径，默认值为``，即从头训练。
@@ -275,6 +276,7 @@ python3 -m onnxsim input_onnx_model output_onnx_model
 |50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock|||||
 |50|deeplab_v2|DeepLab|DeepLabV2|||||
 |50|hrnet|HRNet|HRNet|||||
+
 
 
 
