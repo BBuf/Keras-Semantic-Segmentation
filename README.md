@@ -56,7 +56,7 @@
 |vggunet|VGGNet|VGGUnet|25,884,170|51,789,952|103.8Mb|True|
 |unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock|38,431,730|88,041,130|154.5Mb|True|
 |deeplab_v2|DeepLab|DeepLabV2|37,799,752|75,574,697|151.3Mb|True|
-|hrnet|HRNet|HRNet|28,608,672|57,356,440|3.4Mb|True|
+|hrnet|HRNet|HRNet|28,608,672|57,356,440|117.1Mb|True|
 
 _注：测试数据是基于输入图片大小为224x224的二分类模型。对于标*号的模型，图片大小为模型定义里支持的最小大小。_
 
