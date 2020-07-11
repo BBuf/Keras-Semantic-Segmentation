@@ -104,7 +104,7 @@ _注：weighted_ce 以及 c_focal 需要指定对应class的权重或者指定cl
 使用下面的命令训练和保存模型，模型保存路径，训练超参数需要灵活设置。
 
 ```sh
-export CUDA_VISIBLE_DEVICES 0,1 # 使用的GPU序号
+export CUDA_VISIBLE_DEVICES=0,1 # 使用的GPU序号
 python train.py ...
 ```
 
