@@ -280,7 +280,25 @@ python3 -m onnxsim input_onnx_model output_onnx_model
 |50|deeplab_v2|DeepLab|DeepLabV2|||||
 |50|hrnet|HRNet|HRNet|||||
 
+## 眼球血管分割数据集
 
+- 全部基于UNet进行测试，这个数据集是为了测试工程中支持的各种损失函数的效果
+
+|Epoch|Loss|Acc|iou_score|dice_score|f1_score|f2_score|
+| ---|---|---|---|---|---|---|
+|50|Categorical_loss||||||
+|50|Weighted_Categorical_loss||||||
+|50|B_Focal_loss||||||
+|50|C_Focal_loss||||||
+|50|Dice loss||||||
+|50|BCE_Dice_loss||||||
+|50|CE_Dice_loss||||||
+|50|Generalized_Dice_loss||||||
+|50|Jaccard_loss||||||
+|50|BCE_Jaccard_loss||||||
+|50|CE_Jaccard_loss||||||
+|50|Tversky_loss||||||
+|50|Focal_Tversky_loss||||||
 
 
 ## 个人制作2个类别小零件数据集分割可视化结果
