@@ -62,7 +62,7 @@
 
 _注：测试数据是基于输入图片大小为224x224的二分类模型。对于标*号的模型，图片大小为模型定义里支持的最小大小。_
 
-# 已支持的损失函数
+# <a name="sec_loss"></a> 已支持的损失函数
 
 |Name (as argument)|Type|Available|
 |---|---|---|
@@ -109,8 +109,9 @@ python train.py ...
 ```
 
 可用参数如下：
-
-- `--dataset_name` 字符串，代表选择对应的数据集的名称，默认`bbufdataset`,支持`camvid`。
+- `--exp_name` 字符串，代表此次实验的名称，默认`exp1`。
+- `--dataset_name` 字符串，代表选择对应的数据集的名称，默认`bbufdataset`，支持`camvid`。
+- `--loss` 字符串，代表选择的损失函数的名称，默`ce`，全部名称见[支持的损失函数](#sec_loss)。
 - `--n_classes` 整型，代表分割图像中有几种类别的像素，默认为`2`。
 - `--input_height`整型，代表要分割的图像需要`resize`的长，默认为`224`。
 - `--input_width` 整型，代表要分割的图像需要`resize`的宽，默认为`224`。
