@@ -142,8 +142,6 @@ def ENet(n_classes, input_height=256, input_width=256):
     enet = (Reshape((outputHeight*outputWidth, n_classes)))(enet)
     enet = Activation('softmax')(enet)
     model = Model(img_input, enet)
-    print(outputHeight)
-    print(outputWidth)
     model.outputWidth = outputWidth
     model.outputHeight = outputHeight
 
