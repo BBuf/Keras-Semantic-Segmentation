@@ -12,18 +12,6 @@ import data
 import Models
 from Models import build_model
 from metrics import metrics
-from losses.B_Focal_loss import focal_loss_binary
-from losses.C_Focal_loss import focal_loss_multiclasses
-from losses.Dice_loss import Dice_Loss
-from losses.BCE_Dice_loss import BCE_Dice_Loss
-from losses.CE_Dice_loss import CE_Dice_loss
-from losses.Tversky_loss import Tversky_Loss
-from losses.Focal_Tversky_loss import Focal_Tversky_Loss
-from losses.Weighted_Categorical_loss import Weighted_Categorical_CrossEntropy_Loss
-from losses.Generalized_Dice_loss import Generalized_Dice_Loss
-from losses.Jaccard_loss import Jaccard_Loss
-from losses.BCE_Jaccard_Loss import BCE_Jaccard_Loss
-from losses.CE_Jaccard_Loss import Jaccard_Loss
 
 
 EPS = 1e-12
