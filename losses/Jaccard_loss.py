@@ -40,7 +40,7 @@ def iou_score(gt, pr, class_weights=1., smooth=SMOOTH, per_image=True, threshold
 
 jaccard_score = iou_score
 
-def Jaccard_Loss(gt, pr, class_weights=1., smooth=SMOOTH, per_image=True):
+def _Jaccard_Loss(gt, pr, class_weights=1., smooth=SMOOTH, per_image=True):
     """Jaccard loss function for imbalanced datasets:
     .. math:: L(A, B) = 1 - \frac{A \cap B}{A \cup B}
     Args:
@@ -54,3 +54,6 @@ def Jaccard_Loss(gt, pr, class_weights=1., smooth=SMOOTH, per_image=True):
         Jaccard loss in range [0, 1]
     """
     return 1. - Jaccard_Loss(gt, pr, class_weights=class_weights, smooth=smooth, per_image=per_image)
+
+def JaccardLoss():
+    return _Jaccard_Loss

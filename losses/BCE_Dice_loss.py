@@ -17,9 +17,12 @@ def Dice_Loss(y_true, y_pred):
     loss = 1. - Dice_coeff(y_true, y_pred)
     return loss
 
-def BCE_Dice_Loss(y_true, y_pred):
+def _BCE_Dice_Loss(y_true, y_pred):
     loss = binary_crossentropy(y_true, y_pred) + Dice_Loss(y_true, y_pred)
     return loss
+
+def BCE_DiceLoss():
+    return _BCE_Dice_Loss
 
 
 

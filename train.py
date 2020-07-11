@@ -13,18 +13,7 @@ import Models
 from Models import build_model
 from utils.utils import *
 from metrics import metrics
-from losses.B_Focal_loss import focal_loss_binary
-from losses.C_Focal_loss import focal_loss_multiclasses
-from losses.Dice_loss import Dice_Loss
-from losses.BCE_Dice_loss import BCE_Dice_Loss
-from losses.CE_Dice_loss import CE_Dice_loss
-from losses.Tversky_loss import Tversky_Loss
-from losses.Focal_Tversky_loss import Focal_Tversky_Loss
-from losses.Weighted_Categorical_loss import Weighted_Categorical_CrossEntropy_Loss
-from losses.Generalized_Dice_loss import Generalized_Dice_Loss
-from losses.Jaccard_loss import Jaccard_Loss
-from losses.BCE_Jaccard_Loss import BCE_Jaccard_Loss
-from losses.CE_Jaccard_Loss import Jaccard_Loss
+from losses import LOSS_FACTORY
 
 
 config = tf.ConfigProto()
@@ -34,6 +23,7 @@ session = tf.Session(config=config)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--model_name", type=str, default="unet")
+parser.add_argument("--exp_name", type=str, default='exp1')
 parser.add_argument(
     "--dataset_name", type=str,
     default="bbufdataset")  # camvid(32)(720x960), helen_small(11)(512x512), bbufdataset(2)(224x224)
@@ -54,6 +44,8 @@ parser.add_argument("--resume", type=str, default="")
 parser.add_argument("--optimizer_name", type=str, default="sgd")
 parser.add_argument("--image_init", type=str, default="divide")
 parser.add_argument("--multi_gpus", type=bool, default=False)
+parser.add_argument("--loss", type=str, default='ce')
+
 
 args = parser.parse_args()
 
@@ -71,7 +63,7 @@ args = parser.parse_args()
 # 再定义一些keras回调函数需要的参数
 
 # 权重保存
-train_save_path = os.path.join(args.train_save_path, args.model_name)
+train_save_path = os.path.join(args.train_save_path, args.exp_name, args.model_name)
 epochs = args.epochs
 load_weights = args.resume
 mk_if_not_exits(train_save_path)
@@ -79,7 +71,7 @@ mk_if_not_exits(train_save_path)
 # patience：没有提升的轮次，即训练过程中最多容忍多少次没有提升
 patience = 50
 # log_file_path：日志保存的路径
-log_file_path = 'weights/%s/log.csv' % args.model_name
+log_file_path = 'weights/' + args.exp_name + '/%s/log.csv' % args.model_name
 
 # 模型参数
 model_name = args.model_name
@@ -145,7 +137,7 @@ csv_logger = CSVLogger(log_file_path, append=False)
 model_names = os.path.join(train_save_path, '%s.{epoch:02d}-{acc:2f}.hdf5' % (
     args.model_name))
 model_checkpoint = ModelCheckpoint(model_names,
-                                   monitor='loss',
+                                   monitor='val_iou_score',
                                    save_best_only=True,
                                    save_weights_only=False)
 
@@ -157,8 +149,10 @@ model_checkpoint = ModelCheckpoint(model_names,
 
 call_backs = [model_checkpoint, csv_logger, early_stop, reduce_lr, tb_cb]
 
+loss_func  = LOSS_FACTORY[args.loss]
+
 # compile
-model.compile(loss='categorical_crossentropy',
+model.compile(loss=loss_func,
               optimizer=optimizer_name,
               metrics=['accuracy', 'iou_score', 'dice_score', 'f1_score', 'f2_score'])
 

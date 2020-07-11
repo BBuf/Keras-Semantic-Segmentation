@@ -18,3 +18,6 @@ def generalized_dice_coeff(y_true, y_pred):
 
 def Generalized_Dice_Loss(y_true, y_pred):
     return 1 - generalized_dice_coeff(y_true, y_pred)
+
+def GeneralizedDiceLoss():
+    return Generalized_Dice_Loss

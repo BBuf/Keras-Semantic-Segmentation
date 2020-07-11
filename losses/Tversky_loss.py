@@ -13,8 +13,10 @@ def Tversky(y_true, y_pred, smooth=1e-6):
     alpha = 0.7
     return (true_pos + smooth)/(true_pos + alpha*false_neg + (1-alpha)*false_pos + smooth)
 
-def Tversky_Loss(y_true, y_pred):
+def _Tversky_Loss(y_true, y_pred):
     return 1 - Tversky(y_true,y_pred)
 
+def TverskyLoss():
+    return _Tversky_Loss
 
 # model.compile(optimizer=adam, loss=Tversky_loss,metrics=[dsc, tversky])

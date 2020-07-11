@@ -64,20 +64,23 @@ _注：测试数据是基于输入图片大小为224x224的二分类模型。对
 
 # 已支持的损失函数
 
-|Type|Available|
-|---|---|
-|Weighted_Categorical_loss|Yes|
-|B_Focal_loss|Yes|
-|C_Focal_loss|Yes|
-|Dice loss|Yes|
-|BCE_Dice_loss|Yes|
-|CE_Dice_loss|Yes|
-|Generalized_Dice_loss|Yes|
-|Jaccard_loss|Yes|
-|BCE_Jaccard_loss|Yes|
-|CE_Jaccard_loss|Yes|
-|Tversky_loss|Yes|
-|Focal_Tversky_loss|Yes|
+|Name (as argument)|Type|Available|
+|---|---|---|
+|ce|Cross Entropy|Yes|
+|weighted_ce|Weighted Categorical loss|Yes|
+|b_focal|Binary Focal loss|Yes|
+|c_focal|Categorical Focal loss|Yes|
+|dice|Dice loss|Yes|
+|bce_dice|BCE + Dice loss|Yes|
+|ce_dice|CE + Dice loss|Yes|
+|g_dice|Generalized Dice loss|Yes|
+|jaccard|Jaccard loss|Yes|
+|bce_jaccard|BCE + Jaccard loss|Yes|
+|ce_jaccard|CE + Jaccard loss|Yes|
+|tversky|Tversky loss|Yes|
+|f_tversky|Focal Tversky loss|Yes|
+
+_注：weighted_ce 以及 c_focal 需要指定对应class的权重或者指定class数量。默认值为平分权重的二分类。_
 
 
 
@@ -101,7 +104,7 @@ _注：测试数据是基于输入图片大小为224x224的二分类模型。对
 使用下面的命令训练和保存模型，模型保存路径，训练超参数需要灵活设置。
 
 ```sh
-export CUDA_VISIBLE_DEVICES 0,1
+export CUDA_VISIBLE_DEVICES 0,1 # 使用的GPU序号
 python train.py ...
 ```
 
@@ -284,21 +287,21 @@ python3 -m onnxsim input_onnx_model output_onnx_model
 
 - 全部基于UNet进行测试，这个数据集是为了测试工程中支持的各种损失函数的效果
 
-|Epoch|Loss|Acc|iou_score|dice_score|f1_score|f2_score|
+|Epoch|Loss Name|Acc|iou_score|dice_score|f1_score|f2_score|
 | ---|---|---|---|---|---|---|
-|50|Categorical_loss||||||
-|50|Weighted_Categorical_loss||||||
-|50|B_Focal_loss||||||
-|50|C_Focal_loss||||||
-|50|Dice loss||||||
-|50|BCE_Dice_loss||||||
-|50|CE_Dice_loss||||||
-|50|Generalized_Dice_loss||||||
-|50|Jaccard_loss||||||
-|50|BCE_Jaccard_loss||||||
-|50|CE_Jaccard_loss||||||
-|50|Tversky_loss||||||
-|50|Focal_Tversky_loss||||||
+|50|ce||||||
+|50|weighted_ce||||||
+|50|b_focal||||||
+|50|c_focal||||||
+|50|dice||||||
+|50|bce_dice||||||
+|50|ce_dice||||||
+|50|g_dice||||||
+|50|jaccard||||||
+|50|bce_jaccard||||||
+|50|ce_jaccard||||||
+|50|tversky||||||
+|50|f_tversky||||||
 
 
 ## 个人制作2个类别小零件数据集分割可视化结果

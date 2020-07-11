@@ -12,9 +12,14 @@ def Dice_coeff(y_true, y_pred):
                     tf.reduce_sum(y_pred_f) + smooth)
     return score
 
-def Dice_Loss(y_true, y_pred):
+def _dice_Loss(y_true, y_pred):
     loss = 1. - Dice_coeff(y_true, y_pred)
     return loss
+
+def DiceLoss():
+    return _dice_Loss
+
+
 
 
 
