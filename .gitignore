@@ -1,7 +1,6 @@
 *.vscode
 *.json
 *.jpg
-*.png
 *.hdf5
 /data/
 /weights/
@@ -9,7 +8,7 @@
 __pycache__/
 *.csv
 *.pyc
-
+/data/*
 *.zip
 sync.sh
 syncignore.txt
