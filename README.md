@@ -267,11 +267,11 @@ https://github.com/BBuf/Keras-Semantic-Segmentation-Model-Zoo
 
 ## 眼球血管分割数据集
 
-- 全部基于UNet进行测试，这个数据集是为了测试工程中支持的各种损失函数的效果
+- 全部基于UNet进行测试，这个数据集是为了测试工程中支持的各种损失函数的效果。以下指标在测试集上报告。
 
 |Epoch|Loss Name|Acc|iou_score|dice_score|f1_score|f2_score|
 | ---|---|---|---|---|---|---|
-|50|ce||||||
+|50|ce|0.9238|0.7817|0.8770|0.8770|0.8770|
 |50|weighted_ce||||||
 |50|b_focal||||||
 |50|c_focal||||||
