@@ -4,7 +4,7 @@
 
 使用Keras实现深度学习中的一些语义分割模型。
 
-![](image/yuyi.png)
+![](image/segdemo.png)
 
 # 配置
 - tensorflow 1.13.0+tensorboard
