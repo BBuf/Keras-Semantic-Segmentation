@@ -324,7 +324,7 @@ https://github.com/BBuf/Keras-Semantic-Segmentation-Model-Zoo
 
 |     公众号     | QQ交流群 |
 | :-----------------: | :-----------------------: |
-| ![](image/weixin.jpg) | ![](image/qun.jpg) |
+| ![](image/weixin.jpg) | ![](image/1594568321.jpg) |
 
 - QQ群加群密码 qqq
 
