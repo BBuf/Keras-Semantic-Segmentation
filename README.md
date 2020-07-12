@@ -30,7 +30,7 @@
 - utils 存储工具代码，如数据预处理，自定义resize方式等
 - losses 常见的分割损失函数如Dice Loss，Tversky Loss等
 - metrics 常见的分割评价指标，比如dice分数，f1分数等
-- tools 模型转换工具，将输出的Keras模型转为onnx再转到NCNN/TensorRT/OpenVINO等推理框架进行部署
+- tools 模型转换工具，将输出的Keras模型转为onnx/pb模型，再转到NCNN/TensorRT/OpenVINO等推理框架进行部署
 - data.py 加载1个batch的原始图片和分割标签图片
 - train.py 模型训练
 - test.py 模型测试
