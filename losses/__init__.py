@@ -11,11 +11,12 @@ from losses.Jaccard_loss import JaccardLoss
 from losses.BCE_Jaccard_Loss import BCE_JaccardLoss
 from losses.CE_Jaccard_Loss import CE_JaccardLoss
 
+
 LOSS_FACTORY = {
     'ce': 'categorical_crossentropy',
-    'weighted_ce': Weighted_Categorical_CrossEntropy_Loss([0.5, 0.5]),
+    'weighted_ce': Weighted_Categorical_CrossEntropy_Loss(dataset='DRIVE'),
     'b_focal': focal_loss_binary(),
-    'c_focal': focal_loss_multiclasses(classes_num=2),
+    'c_focal': focal_loss_multiclasses(dataset='DRIVE'),
     'dice': DiceLoss(),
     'bce_dice': BCE_DiceLoss(),
     'ce_dice': CE_DiceLoss(),

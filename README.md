@@ -272,9 +272,9 @@ https://github.com/BBuf/Keras-Semantic-Segmentation-Model-Zoo
 |Epoch|Loss Name|Acc|iou_score|dice_score|f1_score|f2_score|
 | ---|---|---|---|---|---|---|
 |50|ce|0.9238|0.7817|0.8770|0.8770|0.8770|
-|50|weighted_ce||||||
-|50|b_focal||||||
-|50|c_focal||||||
+|50|weighted_ce|0.9194|0.8329|0.9088|0.9088|0.9088|
+|50|b_focal|0.9106|0.6103|0.7579|0.7579|0.7579|
+|50|c_focal|0.9194|0.8301|0.9071|0.9071|0.9071|
 |50|dice||||||
 |50|bce_dice||||||
 |50|ce_dice||||||

@@ -3,8 +3,13 @@ import tensorflow as tf
 from tensorflow.python.ops import array_ops
 from keras import backend as K
 
-def focal_loss_multiclasses(classes_num, gamma=2., e=0.1):
+NUM_SAMPLES = {
+    'DRIVE': [6029585, 569615],
+}
+
+def focal_loss_multiclasses(dataset, gamma=2., e=0.1):
     # classes_num包含每一个类别的样本数量
+    classes_num = NUM_SAMPLES[dataset]
     def focal_loss_fixed(y_pred, y_true):
         '''
         y_pred 是输出Tensor，形状类似[None, 10]，其中10是类别数
