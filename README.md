@@ -307,7 +307,9 @@ https://github.com/BBuf/Keras-Semantic-Segmentation-Model-Zoo
 
 ## 眼球病变数据集分割可视化结果
 
-
+|     Input Image     | Output Segmentation Image |
+| :-----------------: | :-----------------------: |
+| ![](image/yanqiu.png) | ![](image/yanqiu-label.png) |
 
 
 # 参考
