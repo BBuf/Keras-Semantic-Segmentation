@@ -30,7 +30,7 @@
 - utils 存储工具代码，如数据预处理，自定义resize方式等
 - losses 常见的分割损失函数如Dice Loss，Tversky Loss等
 - metrics 常见的分割评价指标，比如dice分数，f1分数等
-- tools 模型转换工具，将输出的Keras模型转为onnx再转到NCNN/TensorRT/OpenVINO等推理框架进行部署
+- tools 模型转换工具，将输出的Keras模型转为onnx/pb模型，再转到NCNN/TensorRT/OpenVINO等推理框架进行部署
 - data.py 加载1个batch的原始图片和分割标签图片
 - train.py 模型训练
 - test.py 模型测试
@@ -267,11 +267,11 @@ https://github.com/BBuf/Keras-Semantic-Segmentation-Model-Zoo
 
 ## 眼球血管分割数据集
 
-- 全部基于UNet进行测试，这个数据集是为了测试工程中支持的各种损失函数的效果
+- 全部基于UNet进行测试，这个数据集是为了测试工程中支持的各种损失函数的效果。以下指标在测试集上报告。
 
 |Epoch|Loss Name|Acc|iou_score|dice_score|f1_score|f2_score|
 | ---|---|---|---|---|---|---|
-|50|ce||||||
+|50|ce|0.9238|0.7817|0.8770|0.8770|0.8770|
 |50|weighted_ce||||||
 |50|b_focal||||||
 |50|c_focal||||||
@@ -307,7 +307,9 @@ https://github.com/BBuf/Keras-Semantic-Segmentation-Model-Zoo
 
 ## 眼球病变数据集分割可视化结果
 
-
+|     Input Image     | Output Segmentation Image |
+| :-----------------: | :-----------------------: |
+| ![](image/yanqiu.png) | ![](image/yanqiu-label.png) |
 
 
 # 参考
