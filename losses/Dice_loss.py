@@ -1,23 +1,19 @@
-#coding=utf-8
-import tensorflow as tf
-import keras
-from keras.layers import Flatten
+from keras import backend as K
 
-def Dice_coeff(y_true, y_pred):
-    smooth = 1.
-    y_true_f = Flatten()(y_true)
-    y_pred_f = Flatten()(y_pred)
-    intersection = tf.reduce_sum(y_true_f * y_pred_f)
-    score = (2. * intersection + smooth) / (tf.reduce_sum(y_true_f) + 
-                    tf.reduce_sum(y_pred_f) + smooth)
-    return score
+def dice_coef(y_true, y_pred, smooth=1):
+    """
+    Dice = (2*|X & Y|)/ (|X|+ |Y|)
+         =  2*sum(|A*B|)/(sum(A^2)+sum(B^2))
+    ref: https://arxiv.org/pdf/1606.04797v1.pdf
+    """
+    intersection = K.sum(K.abs(y_true * y_pred), axis=-1)
+    return (2. * intersection + smooth) / (K.sum(K.square(y_true),-1) + K.sum(K.square(y_pred),-1) + smooth)
 
-def _dice_Loss(y_true, y_pred):
-    loss = 1. - Dice_coeff(y_true, y_pred)
-    return loss
+def _dice_coef_loss(y_true, y_pred):
+    return 1-dice_coef(y_true, y_pred)
 
 def DiceLoss():
-    return _dice_Loss
+    return _dice_coef_loss
 
 
 
