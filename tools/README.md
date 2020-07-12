@@ -39,3 +39,9 @@ pip install onnx-simplifier
 ```
 python -m onnxsim input_onnx_model output_onnx_model
 ```
+
+- 注意，ONNX模型可以使用onnxruntime进行推理，但是onnx无法转换到ncnn，ncnn的转换需要使用pb模型，其它的端侧推理框架如TensorRT和OpenVINO待测试。
+
+# 将Keras模型转成PB模型
+
+

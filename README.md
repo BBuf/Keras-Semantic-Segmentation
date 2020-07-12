@@ -170,7 +170,7 @@ python test.py ...
 
 # 数据增强
 
-我结合Augmentor这个库实现了一套完整的数据增强策略，即项目中的`augmentation.py`。你可以自由增加，减少各种Augmentor支持的操作。Augmentor这个数据增强库的安装方式为：`pip install Augmentor`。然后`augmentation.py`是一个独立的脚本，需要在你训练之前在本地进行增强然后将增强出来的数据拷贝到你的原始数据集中去扩充数据。它需要下面`4`个参数。
+我们结合Augmentor这个库实现了一套完整的数据增强策略，即项目中的`augmentation.py`。你可以自由增加，减少各种Augmentor支持的操作。Augmentor这个数据增强库的安装方式为：`pip install Augmentor`。然后`augmentation.py`是一个独立的脚本，需要在你训练之前在本地进行增强然后将增强出来的数据拷贝到你的原始数据集中去扩充数据。它需要下面`4`个参数。
 
 - `--train_path`  字符串类型，代表训练集的原始图片的路径，默认为`./data/images_prepped_train`。
 - `--mask_path`字符串类型，代表训练集的分割标签图的路径，默认为`./data/annotations_prepped_train`。
@@ -209,32 +209,13 @@ https://github.com/BBuf/Keras-Semantic-Segmentation-Model-Zoo
 
 # 模型部署
 
-- tools/convert2onnx.py 将Keras模型转出ONNX模型然后使用NCNN部署在PC/ARM端，执行：
+## NCNN
 
-```
-python3 convert2onnx.py
-```
+## TensorRT
 
-- 使用 https://github.com/daquexian/onnx-simplifier 简化ONNX模型，可以直接pip安装。
+## OpenVINO
 
-```sh
-pip3 install onnx-simplifier
-```
-
-- 然后执行命令：
-
-```
-python3 -m onnxsim input_onnx_model output_onnx_model
-```
-
-- 将ONNX模型转换为NCNN模型：
-
-使用 https://github.com/Tencent/ncnn 中的onnx2ncnn工具（需要编译后生成）或者使用模型自动转换网站一键转换 https://convertmodel.com/ 不过我还是推荐编译NCNN的转换工具，毕竟NCNN对模型的推理和预测肯定也是需要先编译获得链接库的。
-
-
-# NCNN推理示例
-
-# Benchmark
+# 标准
 
 ## 个人制作2个类别小零件数据集分割结果
 
@@ -324,6 +305,8 @@ python3 -m onnxsim input_onnx_model output_onnx_model
 | ![](image/city.jpg) | ![](image/city-label.jpg) |
 
 
+## 眼球病变数据集分割可视化结果
+
 
 
 
@@ -333,8 +316,9 @@ python3 -m onnxsim input_onnx_model output_onnx_model
 
 
 
-# 微信公众号
+# 微信公众号&交流群
 
 ![](image/weixin.jpg)
+
 
 

@@ -34,3 +34,5 @@ model = build_model(model_name,
 model.load_weights(input_model_path)  
 onnx_model = keras2onnx.convert_keras(model, model.name)
 onnx.save_model(onnx_model, output_model_path)
+
+print('Convert ONNX Success!')

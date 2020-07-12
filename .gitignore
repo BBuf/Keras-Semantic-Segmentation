@@ -17,3 +17,4 @@ syncignore.txt
 *.csv
 /zc_test
 *.onnx
+*.pb
