@@ -129,20 +129,24 @@ reduce_lr = ReduceLROnPlateau('loss',
 csv_logger = CSVLogger(log_file_path, append=False)
 model_names = os.path.join(train_save_path, '%s.{epoch:02d}-{acc:2f}.hdf5' % (
     args.model_name))
+# model_checkpoint = ModelCheckpoint(model_names,
+#                                    monitor='val_iou_score',
+#                                    save_best_only=True,
+#                                    save_weights_only=True,
+#                                    mode='max')
+
 model_checkpoint = ParallelModelCheckpoint(model, filepath=model_names,
                                    monitor='val_iou_score',
-                                   save_best_only=True,
-                                   save_weights_only=True,
-                                   mode='max')                                   monitor='val_iou_score',
                                    save_best_only=True,
                                    save_weights_only=True,
                                    mode='max')
 
 # if multi_gpus == True:
 #     model_checkpoint = ParallelModelCheckpoint(model, filepath=model_names,
-#                                    monitor='loss',
+#                                    monitor='val_iou_score',
 #                                    save_best_only=True,
-#                                    save_weights_only=False)
+#                                    save_weights_only=True,
+#                                    mode='max')
 
 call_backs = [model_checkpoint, csv_logger, early_stop, reduce_lr, tb_cb]
 

@@ -36,12 +36,13 @@ def get_flops(model):
     return flops.total_float_ops  # Prints the "flops" of the model.
 
 
-# class ParallelModelCheckpoint(ModelCheckpoint):
-#     def __init__(self,model,filepath, monitor='loss', verbose=0,
-#                  save_best_only=False, save_weights_only=False,
-#                  mode='auto', period=1):
-#         self.single_model = model
-#         super(ParallelModelCheckpoint,self).__init__(filepath, monitor, verbose,save_best_only, save_weights_only,mode, period)
+# 使用callback，要稍微改一下Checkpoint()的使用方法
+class ParallelModelCheckpoint(ModelCheckpoint):
+    def __init__(self,model,filepath, monitor='val_iou_score',
+                 save_best_only=True, save_weights_only=True,
+                 mode='max'):
+        self.single_model = model
+        super(ParallelModelCheckpoint,self).__init__(filepath, monitor, save_best_only, save_weights_only, mode)
 
-#     def set_model(self, model):
-#         super(ParallelModelCheckpoint,self).set_model(self.single_model)
+    def set_model(self, model):
+        super(ParallelModelCheckpoint,self).set_model(self.single_model)

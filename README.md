@@ -104,7 +104,7 @@ _注：weighted_ce 以及 c_focal 需要指定对应class的权重或者指定cl
 使用下面的命令训练和保存模型，模型保存路径，训练超参数需要灵活设置。
 
 ```sh
-export CUDA_VISIBLE_DEVICES=0,1 # 使用的GPU序号
+export CUDA_VISIBLE_DEVICES=0 # 使用的GPU序号
 python train.py ...
 ```
 
@@ -125,7 +125,8 @@ python train.py ...
 - `--resume`字符串类型，代表继续训练的时候加载的模型路径，默认值为``，即从头训练。
 - `--optimizer_name`字符串类型，代表训练模型时候的优化方法，支持`sgd`,`adam`,`adadelta`等多种优化方式，默认为`adadelta`。
 - `--image_init`字符串类型，代表输入图片初始化方式，支持`sub_mean`，`sub_and_divide`，`divide`，默认为`divide`。
-- `--multi_gpus` 布尔类型，代表使用是否多卡进行训练，默认为Fasle，如果为True，需要手动调整`train.py`中的显卡标号，这里默认的是第`0,1`两块卡。（目前暂不支持多卡，正在开发中）
+- `--multi_gpus` 布尔类型，代表使用是否多卡进行训练，默认为Fasle，如果为True，需将`gpu_count`参数设置为使用的显卡数量
+- `--gpu_count` 整型，当`multi_gpus`为`True`时代表使用的GPU数量。需要配合设置相应的环境变量`CUDA_VISIBLE_DEVICES`。
 
 
 
