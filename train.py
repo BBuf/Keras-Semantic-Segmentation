@@ -130,10 +130,7 @@ csv_logger = CSVLogger(log_file_path, append=False)
 model_names = os.path.join(train_save_path, '%s.{epoch:02d}-{acc:2f}.hdf5' % (
     args.model_name))
 model_checkpoint = ParallelModelCheckpoint(model, filepath=model_names,
-                                   monitor='val_iou_score',
-                                   save_best_only=True,
-                                   save_weights_only=True,
-                                   mode='max')                                   monitor='val_iou_score',
+                                   monitor='val_acc',
                                    save_best_only=True,
                                    save_weights_only=True,
                                    mode='max')
