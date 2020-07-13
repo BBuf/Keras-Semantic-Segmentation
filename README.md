@@ -221,70 +221,70 @@ https://github.com/BBuf/Keras-Semantic-Segmentation-Model-Zoo
 ## 个人制作2个类别小零件数据集分割结果
 
 
-|Epoch|model_name|Base Model|Segmentation Model|Acc|iou_score|dice_score|f1_score|f2_score|
-| ---|---|---|---|---|---|---|---|---|
-|50|enet|ENet|Enet|||||
-|50|fcn8|Vanilla CNN|FCN8|||||
-|50|unet|Vanilla CNN|UNet|||||
-|50|attunet|Vanilla CNN|AttUNet|||||
-|50|r2unet|Vanilla CNN|R2UNet|||||
-|50|r2attunet|Vanilla CNN|R2AttUNet|||||
-|50|unet++|Vanilla CNN|NestedUNet|||||
-|50|segnet|Vanilla CNN|SegNet|||||
-|50|icnet|Vanilla CNN|ICNet|||||
-|50|pspnet|Vanilla CNN|PSPNet|||||
-|50|mobilenet_unet|MobileNet|MobileNetUnet|||||
-|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|||||
-|50|seunet|SENet|SEUNet|||||
-|50|scseunet|SCSENet|scSEUNet|||||
-|50|vggunet|VGGNet|VGGUnet|||||
-|50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock|||||
-|50|deeplab_v2|DeepLab|DeepLabV2|||||
-|50|hrnet|HRNet|HRNet|||||
+|Resolution|Epoch|model_name|Base Model|Segmentation Model|Acc|iou_score|dice_score|f1_score|f2_score|
+| --- | ---|---|---|---|---|---|---|---|---|
+|224x224|50|enet|ENet|Enet|||||
+||50|fcn8|Vanilla CNN|FCN8|||||
+||50|unet|Vanilla CNN|UNet|||||
+||50|attunet|Vanilla CNN|AttUNet|||||
+||50|r2unet|Vanilla CNN|R2UNet|||||
+||50|r2attunet|Vanilla CNN|R2AttUNet|||||
+||50|unet++|Vanilla CNN|NestedUNet|||||
+||50|segnet|Vanilla CNN|SegNet|||||
+||50|icnet|Vanilla CNN|ICNet|||||
+||50|pspnet|Vanilla CNN|PSPNet|||||
+||50|mobilenet_unet|MobileNet|MobileNetUnet|||||
+||50|mobilenet_fcn8|MobileNet|MobileNetFCN8|||||
+||50|seunet|SENet|SEUNet|||||
+||50|scseunet|SCSENet|scSEUNet|||||
+||50|vggunet|VGGNet|VGGUnet|||||
+||50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock|||||
+||50|deeplab_v2|DeepLab|DeepLabV2|||||
+||50|hrnet|HRNet|HRNet|||||
 
 
 ## CamVid分割数据集分割结果
 
-|Epoch|model_name|Base Model|Segmentation Model|Acc|iou_score|dice_score|f1_score|f2_score|
-| ---|---|---|---|---|---|---|---|---|
-|50|enet|ENet|Enet|||||
-|50|fcn8|Vanilla CNN|FCN8|||||
-|50|unet|Vanilla CNN|UNet|||||
-|50|attunet|Vanilla CNN|AttUNet|||||
-|50|r2unet|Vanilla CNN|R2UNet|||||
-|50|r2attunet|Vanilla CNN|R2AttUNet|||||
-|50|unet++|Vanilla CNN|NestedUNet|||||
-|50|segnet|Vanilla CNN|SegNet|||||
-|50|icnet|Vanilla CNN|ICNet|||||
-|50|pspnet|Vanilla CNN|PSPNet|||||
-|50|mobilenet_unet|MobileNet|MobileNetUnet|||||
-|50|mobilenet_fcn8|MobileNet|MobileNetFCN8|||||
-|50|seunet|SENet|SEUNet|||||
-|50|scseunet|SCSENet|scSEUNet|||||
-|50|vggunet|VGGNet|VGGUnet|||||
-|50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock|||||
-|50|deeplab_v2|DeepLab|DeepLabV2|||||
-|50|hrnet|HRNet|HRNet|||||
+|Resolution|Epoch|model_name|Base Model|Segmentation Model|Acc|iou_score|dice_score|f1_score|f2_score|
+| --- | ---|---|---|---|---|---|---|---|---|
+||50|enet|ENet|Enet|||||
+||50|fcn8|Vanilla CNN|FCN8|||||
+||50|unet|Vanilla CNN|UNet|||||
+||50|attunet|Vanilla CNN|AttUNet|||||
+||50|r2unet|Vanilla CNN|R2UNet|||||
+||50|r2attunet|Vanilla CNN|R2AttUNet|||||
+||50|unet++|Vanilla CNN|NestedUNet|||||
+||50|segnet|Vanilla CNN|SegNet|||||
+||50|icnet|Vanilla CNN|ICNet|||||
+||50|pspnet|Vanilla CNN|PSPNet|||||
+||50|mobilenet_unet|MobileNet|MobileNetUnet|||||
+||50|mobilenet_fcn8|MobileNet|MobileNetFCN8|||||
+||50|seunet|SENet|SEUNet|||||
+||50|scseunet|SCSENet|scSEUNet|||||
+||50|vggunet|VGGNet|VGGUnet|||||
+||50|unet_xception_resnetblock|XceptionNet|Unet_Xception_ResNetBlock|||||
+||50|deeplab_v2|DeepLab|DeepLabV2|||||
+||50|hrnet|HRNet|HRNet|||||
 
 ## 眼球血管分割数据集
 
 - 全部基于UNet进行测试，这个数据集是为了测试工程中支持的各种损失函数的效果。以下指标在测试集上报告。
 
-|Epoch|Loss Name|Acc|iou_score|dice_score|f1_score|f2_score|
-| ---|---|---|---|---|---|---|
-|50|ce|0.9238|0.7817|0.8770|0.8770|0.8770|
-|50|weighted_ce|0.9194|0.8329|0.9088|0.9088|0.9088|
-|50|b_focal|0.9106|0.6103|0.7579|0.7579|0.7579|
-|50|c_focal|0.9194|0.8301|0.9071|0.9071|0.9071|
-|50|dice|0.9198|0.7429|0.8523|0.8523|0.8523|
-|50|bce_dice|0.9307|0.7628|0.8653|0.8653|0.8653|
-|50|ce_dice||||||
-|50|g_dice||||||
-|50|jaccard||||||
-|50|bce_jaccard||||||
-|50|ce_jaccard||||||
-|50|tversky||||||
-|50|f_tversky||||||
+|Resolution|Epoch|Loss Name|Acc|iou_score|dice_score|f1_score|f2_score|
+| --- | ---|---|---|---|---|---|---|
+||50|ce|0.9238|0.7817|0.8770|0.8770|0.8770|
+||50|weighted_ce|0.9194|0.8329|0.9088|0.9088|0.9088|
+||50|b_focal|0.9106|0.6103|0.7579|0.7579|0.7579|
+||50|c_focal|0.9194|0.8301|0.9071|0.9071|0.9071|
+||50|dice|0.9198|0.7429|0.8523|0.8523|0.8523|
+||50|bce_dice|0.9307|0.7628|0.8653|0.8653|0.8653|
+||50|ce_dice||||||
+||50|g_dice||||||
+||50|jaccard||||||
+||50|bce_jaccard||||||
+||50|ce_jaccard||||||
+||50|tversky||||||
+||50|f_tversky||||||
 
 
 ## 个人制作2个类别小零件数据集分割可视化结果
