@@ -125,7 +125,7 @@ from keras.callbacks import History
 from keras.callbacks import ModelCheckpoint
 history = History()
 # 设置log的存储位置，将网络权值以图片格式保持在tensorboard中显示，设置每一个周期计算一次网络的
-tb_cb = keras.callbacks.TensorBoard(log_dir='weights/%s/log' % args.model_name, write_images=1, histogram_freq=0)
+tb_cb = keras.callbacks.TensorBoard(log_dir='weights/'+ args.exp_name +'/%s/log' % args.model_name, write_images=1, histogram_freq=0)
 
 # 模型回调函数
 early_stop = EarlyStopping('loss', min_delta=0.1, patience=patience, verbose=1)
