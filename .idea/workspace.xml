@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="00cc92b1-d0bb-4588-a7bb-d0ab3e75a543" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Models/GhostNet.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1ed4levXZFo1EUF9rREv15M3DEI" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../计算机相关论文" />
+  </component>
+  <component name="RunManager">
+    <configuration name="GhostNet" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Keras-Semantic-Segmentation" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Models" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Models/GhostNet.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.GhostNet" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="00cc92b1-d0bb-4588-a7bb-d0ab3e75a543" name="Default Changelist" comment="" />
+      <created>1594638287438</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1594638287438</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="580" y="187" key="FileChooserDialogImpl" timestamp="1594650411819">
+      <screen x="62" y="0" width="1474" height="864" />
+    </state>
+    <state x="580" y="187" key="FileChooserDialogImpl/62.0.1474.864@62.0.1474.864" timestamp="1594650411819" />
+    <state width="1453" height="61" key="GridCell.Tab.0.bottom" timestamp="1594731120835">
+      <screen x="62" y="0" width="1474" height="864" />
+    </state>
+    <state width="1453" height="61" key="GridCell.Tab.0.bottom/62.0.1474.864@62.0.1474.864" timestamp="1594731120835" />
+    <state width="1453" height="61" key="GridCell.Tab.0.center" timestamp="1594731120835">
+      <screen x="62" y="0" width="1474" height="864" />
+    </state>
+    <state width="1453" height="61" key="GridCell.Tab.0.center/62.0.1474.864@62.0.1474.864" timestamp="1594731120835" />
+    <state width="1453" height="61" key="GridCell.Tab.0.left" timestamp="1594731120835">
+      <screen x="62" y="0" width="1474" height="864" />
+    </state>
+    <state width="1453" height="61" key="GridCell.Tab.0.left/62.0.1474.864@62.0.1474.864" timestamp="1594731120835" />
+    <state width="1453" height="61" key="GridCell.Tab.0.right" timestamp="1594731120835">
+      <screen x="62" y="0" width="1474" height="864" />
+    </state>
+    <state width="1453" height="61" key="GridCell.Tab.0.right/62.0.1474.864@62.0.1474.864" timestamp="1594731120835" />
+  </component>
+</project>
