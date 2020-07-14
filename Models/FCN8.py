@@ -1,106 +1,101 @@
 #coding=utf-8
-from keras.models import *
-from keras.layers import *
-import os
 
-# crop o1 wrt o2
-def crop(o1, o2, i):
-    o_shape2 = Model(i, o2).output_shape
+from keras.applications import vgg16
+from keras.models import Model, Sequential
+from keras.layers import Conv2D, Conv2DTranspose, Input, Cropping2D, add, Dropout, Reshape, Activation
 
 
-    output_height2 = o_shape2[1]
-    output_width2 = o_shape2[2]
+def FCN8_helper(nClasses, input_height=224, input_width=224):
 
-    o_shape1 = Model(i, o1).output_shape
+    assert input_height % 32 == 0
+    assert input_width % 32 == 0
 
-    output_height1 = o_shape1[1]
-    output_width1 = o_shape1[2]
+    img_input = Input(shape=(input_height, input_width, 3))
 
-    cx = abs(output_width1 - output_width2)
-    cy = abs(output_height2 - output_height1)
+    model = vgg16.VGG16(
+        include_top=False,
+        weights='vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5', input_tensor=img_input,
+        pooling=None,
+        classes=1000)
+    assert isinstance(model, Model)
 
-    if output_width1 > output_width2:
-        o1 = Cropping2D(cropping=((0, 0),  (0, cx)))(o1)
-    else:
-        o2 = Cropping2D(cropping=((0, 0),  (0, cx)))(o2)
+    o = Conv2D(
+        filters=4096,
+        kernel_size=(
+            7,
+            7),
+        padding="same",
+        activation="relu",
+        name="fc6")(
+            model.output)
+    o = Dropout(rate=0.5)(o)
+    o = Conv2D(
+        filters=4096,
+        kernel_size=(
+            1,
+            1),
+        padding="same",
+        activation="relu",
+        name="fc7")(o)
+    o = Dropout(rate=0.5)(o)
 
-    if output_height1 > output_height2:
-        o1 = Cropping2D(cropping=((0, cy),  (0, 0)))(o1)
-    else:
-        o2 = Cropping2D(cropping=((0, cy),  (0, 0)))(o2)
+    o = Conv2D(filters=nClasses, kernel_size=(1, 1), padding="same", activation="relu", kernel_initializer="he_normal",
+               name="score_fr")(o)
 
-    return o1, o2
+    o = Conv2DTranspose(filters=nClasses, kernel_size=(2, 2), strides=(2, 2), padding="valid", activation=None,
+                        name="score2")(o)
+
+    fcn8 = Model(inputs=img_input, outputs=o)
+    # mymodel.summary()
+    return fcn8
+
+
 
 def FCN8(nClasses, input_height=224, input_width=224):
 
-	img_input = Input(shape=(input_height, input_width, 3))
 
-	x = Conv2D(16, (3, 3), activation='relu', padding='same')(img_input)
-	x = BatchNormalization()(x)
-	x = MaxPooling2D((2, 2), strides=(2, 2))(x)
-	f1 = x
-	# 112 x 112
-	x = Conv2D(32, (3, 3), activation='relu', padding='same')(x)
-	x = BatchNormalization()(x)
-	x = MaxPooling2D((2, 2), strides=(2, 2))(x)
-	f2 = x
-
-	# 56 x 56
-	x = Conv2D(64, (3, 3), activation='relu', padding='same')(x)
-	x = BatchNormalization()(x)
-	x = MaxPooling2D((2, 2), strides=(2, 2))(x)
-	f3 = x
-
-	# 28 x 28
-	x = Conv2D(128, (3, 3), activation='relu', padding='same')(x)
-	x = BatchNormalization()(x)
-	x = MaxPooling2D((2, 2), strides=(2, 2))(x)
-	f4 = x
-
-	# 14 x 14
-	x = Conv2D(256, (3, 3), activation='relu', padding='same')(x)
-	x = BatchNormalization()(x)
-	x = MaxPooling2D((2, 2), strides=(2, 2))(x)
-	f5 = x
-	# 7 x 7        
-
-	o = f5
-
-	o = (Conv2D(256, (7, 7), activation='relu', padding='same'))(o)
-	o = BatchNormalization()(o)
+    fcn8 = FCN8_helper(nClasses, input_height=224, input_width=224)
 
 
-	o = (Conv2D(nClasses, (1, 1)))(o)
-	# W = (N - 1) * S - 2P + F = 6 * 2 - 0 + 4 = 16
-	o = Conv2DTranspose(nClasses, kernel_size=(4, 4), strides=(2, 2), padding="valid")(o)
 
+	# Conv to be applied on Pool4
+    skip_con1 = Conv2D(nClasses, kernel_size=(1, 1), padding="same", activation=None, kernel_initializer="he_normal",
+                       name="score_pool4")(fcn8.get_layer("block4_pool").output)
+    Summed = add(inputs=[skip_con1, fcn8.output])
 
-	o2 = f4
-	o2 = (Conv2D(nClasses, (1, 1)))(o2)
+    x = Conv2DTranspose(nClasses, kernel_size=(2, 2), strides=(2, 2), padding="valid", activation=None,
+                        name="score4")(Summed)
+
+    ###
+    skip_con2 = Conv2D(nClasses, kernel_size=(1, 1), padding="same", activation=None, kernel_initializer="he_normal",
+                       name="score_pool3")(fcn8.get_layer("block3_pool").output)
+    Summed2 = add(inputs=[skip_con2, x])
+
+    #####
+    Up = Conv2DTranspose(nClasses, kernel_size=(8, 8), strides=(8, 8),
+                         padding="valid", activation=None, name="upsample")(Summed2)
+
+    
+
+    o_shape = Model(inputs=fcn8.input, outputs=Up).output_shape
+
 	
-	
-	o, o2 = crop(o, o2, img_input)
-	o = Add()([o, o2])
-        # W = (N - 1) * S - 2P + F = 13 * 2 - 0 + 2 = 28
-	o = Conv2DTranspose(nClasses, kernel_size=(4, 4),  strides=(2, 2), padding="valid")(o)
-	o2 = f3 
-	o2 = (Conv2D(nClasses,  (1, 1)))(o2)
-        
-	o2, o = crop(o2, o, img_input)
-	o = Add()([o2, o])
 
-	# W = (N - 1) * S - 2P + F = 27 * 8 + 8 = 224
-	o = Conv2DTranspose(nClasses , kernel_size=(16,16),  strides=(8,8), padding="valid")(o)
-	
-	o_shape = Model(img_input, o).output_shape
-	
-	outputHeight = o_shape[1]
-	outputWidth = o_shape[2]
+    outputHeight = o_shape[1]
 
-	o = (Reshape((outputHeight*outputWidth, nClasses)))(o)
-	o = (Activation('softmax'))(o)
-	model = Model(img_input, o)
-	model.outputWidth = outputWidth
-	model.outputHeight = outputHeight
+    outputWidth = o_shape[2]
 
-	return model
+    Up = Reshape((-1, nClasses))(Up)
+    Up = Activation("softmax")(Up)
+
+    model = Model(inputs=fcn8.input, outputs=Up)
+
+    model.outputWidth = outputWidth
+    model.outputHeight = outputHeight
+
+
+    return model
+
+
+
+	
