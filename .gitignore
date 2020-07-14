@@ -18,3 +18,5 @@ syncignore.txt
 /zc_test
 *.onnx
 *.pb
+idea
+*.xml
