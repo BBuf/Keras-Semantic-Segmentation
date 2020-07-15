@@ -116,6 +116,7 @@ def GhostNet(x, num_classes=1000, width_mult=1.):
     output_channel = _make_divisible(exp_size * width_mult, 4)
     x = ConvBnLayer(x, output_channel, kernel_size=1, stride=1, padding='same')
     x = Activation('relu')(x)
+    x = GlobalAveragePooling2D()(x)
 
     output_channel = 1280
     x = Dense(output_channel)(x)
