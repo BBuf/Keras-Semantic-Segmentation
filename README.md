@@ -7,7 +7,7 @@
 ![](image/segdemo.png)
 
 # 配置
-- tensorflow 1.13.0+tensorboard
+- tensorflow 1.13.1+tensorboard
 - keras 2.2.4
 - GTX 2080Ti
 - Cuda 10.0 + Cudnn7
