@@ -30,11 +30,10 @@
 - utils 存储工具代码，如数据预处理，自定义resize方式等
 - losses 常见的分割损失函数如Dice Loss，Tversky Loss等
 - metrics 常见的分割评价指标，比如dice分数，f1分数等
-- tools 模型转换工具，将输出的Keras模型转为onnx/pb模型，再转到NCNN/TensorRT/OpenVINO等推理框架进行部署
+- tools 模型转换工具，将输出的Keras模型转为caffe模型，再转到NCNN/TensorRT/OpenVINO等推理框架进行部署
 - data.py 加载1个batch的原始图片和分割标签图片
 - train.py 模型训练
 - test.py 模型测试
-- augmentation.py 离线数据增强
 - json_to_dataset.py 批量处理多张图片并一步建好所需目录及相关mask文件
 
 # 已支持的分割模型
@@ -300,6 +299,7 @@ https://github.com/BBuf/Keras-Semantic-Segmentation-Model-Zoo
 # 参考
 
 - https://github.com/divamgupta/image-segmentation-keras
+- https://github.com/uhfband/keras2caffe
 
 
 
