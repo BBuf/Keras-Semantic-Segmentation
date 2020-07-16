@@ -171,22 +171,7 @@ python test.py ...
 
 # 数据增强
 
-我们结合Augmentor这个库实现了一套完整的数据增强策略，即项目中的`augmentation.py`。你可以自由增加，减少各种Augmentor支持的操作。Augmentor这个数据增强库的安装方式为：`pip install Augmentor`。然后`augmentation.py`是一个独立的脚本，需要在你训练之前在本地进行增强然后将增强出来的数据拷贝到你的原始数据集中去扩充数据。它需要下面`4`个参数。
-
-- `--train_path`  字符串类型，代表训练集的原始图片的路径，默认为`./data/images_prepped_train`。
-- `--mask_path`字符串类型，代表训练集的分割标签图的路径，默认为`./data/annotations_prepped_train`。
-- `--augtrain_path`字符串类型，代表增强后的图像的路径，默认为`./data/new_img`。
-- `--augtrain_mask` 字符串类型，代表增强后的分割标签图的路径，默认为`./data/new_mask`。
-
-其中`augtrain_path`和`augtrain_mask`这两个目录如果没有事先建立的话，程序会为你自动建立。执行数据增强的命令为：
-
-```sh
-python augmentation.py --train_path xxx --mask_path xxx --augtrain_path xxx --augtrain_mask xxx
-```
-
-
-然后，我们就会在你指定的增强路径下生成一定数量（数量也可以自己控制，程序中写死了是为每张图像生成5张增强后的图）的增强图了。这个脚本的使用手册可以看：[简易快速数据增强库使用手册](https://mp.weixin.qq.com/s/r3pGr3FD1dGDzw2zgQdK9g)
-
+实现中...
 
 # 数据集
 
