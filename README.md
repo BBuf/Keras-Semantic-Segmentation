@@ -9,7 +9,7 @@
 # 配置
 - tensorflow 1.13.1+tensorboard
 - keras 2.2.4
-- GTX 2080Ti
+- GTX 2080Ti x 2
 - Cuda 10.0 + Cudnn7
 - opencv-python
 - labelme（标注数据需要用）
@@ -103,7 +103,7 @@ _注：weighted_ce 以及 c_focal 需要指定对应class的权重或者指定cl
 使用下面的命令训练和保存模型，模型保存路径，训练超参数需要灵活设置。
 
 ```sh
-export CUDA_VISIBLE_DEVICES=0 # 使用的GPU序号
+export CUDA_VISIBLE_DEVICES=0,1 # 使用的GPU序号
 python train.py ...
 ```
 
@@ -193,11 +193,44 @@ https://github.com/BBuf/Keras-Semantic-Segmentation-Model-Zoo
 
 # 模型部署
 
-## NCNN
+首先将Keras模型转为Caffe模型，然后再转为NCNN/OpenVINO/TensorRT模型进行部署，已支持转换OP。
 
-## TensorRT
+## 已支持OP
 
-## OpenVINO
+- InputLayer
+- Conv2D/Convolution2D
+- Conv2DTranspose
+- DepthwiseConv2D
+- SeparableConv2D
+- BatchNormalization
+- Dense
+- ReLU
+- ReLU6
+- LeakyReLU
+- SoftMax
+- SigMoid
+- Cropping2D
+- Concatenate
+- Merge
+- Add
+- Flatten
+- Reshape
+- MaxPooling2D
+- AveragePooling2D
+- Dropout
+- GlobalAveragePooling2D
+- UpSampling2D
+- ...
+
+## 已支持网络
+- VGG16
+- SqueezeNet
+- InceptionV3
+- InceptionV4
+- Xception V1
+- UNet
+- ...
+
 
 # 标准
 
