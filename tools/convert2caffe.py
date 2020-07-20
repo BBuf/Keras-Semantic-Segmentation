@@ -32,8 +32,8 @@ input_height = args.input_height
 input_width = args.input_width
 model_name = args.model_name
 input_model_path = args.input_model
-output_model = args.output_weight
-output_weight = args.output_model
+output_model = args.output_model
+output_weight = args.output_weight
 
 model = build_model(model_name,
                     n_classes,
@@ -42,4 +42,4 @@ model = build_model(model_name,
 
 model.load_weights(input_model_path)  
 
-keras2caffe.convert(model, output_weight, output_model)
+keras2caffe.convert(model, output_model, output_weight)
