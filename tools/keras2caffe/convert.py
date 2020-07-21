@@ -369,6 +369,8 @@ def convert(keras_model, caffe_net_file, caffe_params_file):
             elif len(shape)==1:
                 #shape = (layer.input_shape[0], 1, 1, shape[0])
                 shape = (1, 1, 1, shape[0])
+            elif len(shape)==2:
+                shape = (0, shape[1], -1, 0)
             caffe_net[name] = L.Reshape(caffe_net[outputs[bottom]], 
                 reshape_param={'shape':{'dim': list(shape)}})
         
