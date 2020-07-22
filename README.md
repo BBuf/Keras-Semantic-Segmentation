@@ -182,6 +182,7 @@ python test.py ...
 - 
 - 本工程训练和测试的一个2类的简单分割数据集，下载地址为：https://pan.baidu.com/s/1sVjBfmgALVK7uEjeWgIMug
 - 本工程训练和测试的CamVid数据集，下载地址为：https://pan.baidu.com/s/1zequLd0aYXNseGoXn-tdog
+- 本工程训练和测试的一个包的数据集，下载地址为：https://pan.baidu.com/s/1iau4E0tjm6179z_XTSqExw，提取码：sg22
 
 
 
