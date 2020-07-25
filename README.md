@@ -13,6 +13,7 @@
 - Cuda 10.0 + Cudnn7
 - opencv-python
 - labelme（标注数据需要用）
+- PyCaffe（模型部署时用）
 
 # 目录结构
 
@@ -194,7 +195,7 @@ https://github.com/BBuf/Keras-Semantic-Segmentation-Model-Zoo
 
 # 模型部署
 
-首先将Keras模型转为Caffe模型，然后再转为NCNN/OpenVINO/TensorRT模型进行部署，已支持转换OP。
+首先将Keras模型转为Caffe模型，然后再转为NCNN/OpenVINO/TensorRT/M模型进行部署，已支持转换OP和网络如下。
 
 ## 已支持OP
 
