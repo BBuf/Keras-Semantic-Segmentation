@@ -35,8 +35,8 @@ keras2Msnh(model,"resnet50.msnhnet", "resnet50.msnhbin")
 - 1.Build and install Msnhnet with cmake.</br>
 **Detial**: https://github.com/msnh2012/Msnhnet/blob/master/ReadMe.md
 - 2.Build "project" with cmake.
-- 3.Download pred model and extract it.(7zip is required)
-- 4.Open terminal. ```unet /your/extract/pred model/path```
+- 3.Download pred model and extract it.(7zip is required) **eg**. D:/
+- 4.Open terminal. ```unet /your/extract/pred model/path``` **eg**.```unet D:/models/```
 - 5.Also you can use msnhnet viewer to view msnhnet.
 ![img](https://github.com/msnh2012/Msnhnet/blob/master/readme_imgs/msnhnetviewer.png)
 - 6.Enjoy it! :D
