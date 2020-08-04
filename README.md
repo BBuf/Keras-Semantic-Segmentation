@@ -267,7 +267,7 @@ https://github.com/BBuf/Keras-Semantic-Segmentation-Model-Zoo
 | --- | --- | ---|---|---|---|---|---|---|---|---|
 |960x704|1|50|enet|ENet|Enet|||||
 |960x704|1|50|fcn8|Vanilla CNN|FCN8|||||
-|960x720|1|50|unet|Vanilla CNN|UNet|||||
+|960x720|1|50|unet|Vanilla CNN|UNet|0.70|0.51|0.67|0.67|
 ||1|50|attunet|Vanilla CNN|AttUNet|||||
 ||1|50|r2unet|Vanilla CNN|R2UNet|||||
 ||1|50|r2attunet|Vanilla CNN|R2AttUNet|||||
