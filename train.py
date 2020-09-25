@@ -43,7 +43,7 @@ parser.add_argument("--train_save_path", type=str, default="weights/")
 parser.add_argument("--resume", type=str, default="")
 parser.add_argument("--optimizer_name", type=str, default="sgd")
 parser.add_argument("--image_init", type=str, default="divide")
-parser.add_argument("--multi_gpus", type=bool, default=False)
+parser.add_argument("--multi_gpus", type=bool, default=True)
 parser.add_argument("--gpu_count", type=int, default=1)
 parser.add_argument("--loss", type=str, default='ce')
 
